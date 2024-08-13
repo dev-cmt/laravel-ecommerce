@@ -18,9 +18,9 @@ class RoleSeeder extends Seeder
         Role::truncate();
         \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         $roles = [
-            'SuperAdmin', 
-            'Administrator',
-            'Member' 
+            'Super-Admin', 
+            'Moderator',
+            'User' 
          ]; 
          foreach ($roles as $role) { 
             Role::create(['name' => $role]); 

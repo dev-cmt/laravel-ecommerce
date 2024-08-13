@@ -1,692 +1,2161 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-layout="horizontal" data-topbar="dark" data-sidebar-size="lg" data-sidebar="light" data-sidebar-image="none" data-preloader="disable">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+<x-frontend-layout> 
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="{{asset('public/backend')}}/images/favicon.ico">
-
-    <!--Swiper slider css-->
-    <link href="{{asset('public/backend')}}/libs/swiper/swiper-bundle.min.css" rel="stylesheet" type="text/css" />
-
-    <!-- Layout config Js -->
-    <script src="{{asset('public/backend')}}/js/layout.js"></script>
-    <!-- Bootstrap Css -->
-    <link href="{{asset('public/backend')}}/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <!-- Icons Css -->
-    <link href="{{asset('public/backend')}}/css/icons.min.css" rel="stylesheet" type="text/css" />
-    <!-- App Css-->
-    <link href="{{asset('public/backend')}}/css/app.min.css" rel="stylesheet" type="text/css" />
-    <!-- custom Css-->
-    <link href="{{asset('public/backend')}}/css/custom.min.css" rel="stylesheet" type="text/css" />
-
-
-</head>
-
-<body data-bs-spy="scroll" data-bs-target="#navbar-example">
-
-    <!-- Begin page -->
-    <div class="layout-wrapper landing">
-        <nav class="navbar navbar-expand-lg navbar-landing fixed-top" id="navbar">
-            <div class="container">
-                {{-- <a class="navbar-brand" href="index.html">
-                    <img src="{{asset('public/backend')}}/images/logo-dark.png" class="card-logo card-logo-dark" alt="logo dark" height="17">
-                    <img src="{{asset('public/backend')}}/images/logo-light.png" class="card-logo card-logo-light" alt="logo light" height="17">
-                </a> --}}
-                <a href="{{ route('app.download') }}" class="btn btn-info">Mobile App(.apk) Dwonload <i class="ri-arrow-right-line align-middle ms-1"></i></a>
-
-                <button class="navbar-toggler py-0 fs-20 text-body" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="mdi mdi-menu"></i>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mx-auto mt-2 mt-lg-0" id="navbar-example">
-                        <li class="nav-item">
-                            <a class="nav-link fs-15 fw-semibold active" href="#hero">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fs-15 fw-semibold" href="#services">Services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fs-15 fw-semibold" href="#features">Features</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fs-15 fw-semibold" href="#plans">Plans</a>
-                        </li>
-                    </ul>
-                    <div class="">
-                        @auth
-                            <a href="{{ url('/dashboard') }}" class="btn btn-link fw-medium text-decoration-none text-body">Dashboard</a>
-                        @else
-                            <a href="{{ route('login') }}" class="btn btn-link fw-medium text-decoration-none text-body">Login</a>
-                            <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
-                        @endauth
-                    </div>
-                </div>
-
-            </div>
-        </nav>
-        <!-- end navbar -->
-        <div class="vertical-overlay" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent.show"></div>
-
-        <!-- start hero section -->
-        <section class="section pb-0 hero-section" id="hero">
-            <div class="bg-overlay bg-overlay-pattern"></div>
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8 col-sm-10">
-                        <div class="text-center mt-lg-5 pt-5">
-                            <h1 class="display-6 fw-bold mb-3 lh-base">The better way to manage your website with <span class="text-success">myHEALTHLine </span></h1>
-                            <p class="lead text-muted lh-base">myHEALTHLine is a fully responsive, multipurpose and premium Bootstrap 5 Admin & Dashboard Template built in multiple frameworks.</p>
-
-                            <div class="d-flex gap-2 justify-content-center my-5 pb-4">
-                                {{-- <a href="#" class="btn btn-info">Mobile App(.apk) Dwonload <i class="ri-arrow-right-line align-middle ms-1"></i></a> --}}
-                                {{-- <a href="pages-pricing.html" class="btn btn-danger">View Plans <i class="ri-eye-line align-middle ms-1"></i></a> --}}
+    <section class="sg-convenience mb-3">
+        <div class="container">
+            <div class="sa-box">
+                <ul class="global-list convenience-slider">
+                    <li>
+                        <div class="convenience">
+                            <div class="icon">
+                                <i class="fa-solid fa-truck"></i>
+                            </div>
+                            <div class="text">
+                                <span>Free Delivery</span>
+                                <p>For all orders over 5%</p>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <!-- end row -->
-            </div>
-            <!-- end container -->
-            <div class="position-absolute start-0 end-0 bottom-0 hero-shape-svg">
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1440 120">
-                    <g mask="url(&quot;#SvgjsMask1003&quot;)" fill="none">
-                        <path d="M 0,118 C 288,98.6 1152,40.4 1440,21L1440 140L0 140z">
-                        </path>
-                    </g>
-                </svg>
-            </div>
-            <!-- end shape -->
-        </section>
-        <!-- end hero section -->
+                    </li>
+                    <li>
+                        <div class="convenience">
+                            <div class="icon">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </div>
+                            <div class="text">
+                                <span>30 Days Return</span>
+                                <p>If goods have problems</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="convenience">
+                            <div class="icon">
+                                <i class="fa-regular fa-credit-card"></i>
+                            </div>
+                            <div class="text">
+                                <span>Secure Payment</span>
+                                <p>100% secure payment</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="convenience">
+                            <div class="icon">
+                                <i class="fa-solid fa-headset"></i>
+                            </div>
+                            <div class="text">
+                                <span>24/7 Support</span>
+                                <p>Dedicated Support</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>                    
+            </div><!-- /.sa-box -->
+        </div><!-- /.container -->
+    </section><!-- /.sg-convenience -->
 
-        <!-- start client section -->
-        <div class="pt-5 mt-5 bg-light">
-            <div class="container">
+    <section class="campaign-section p-0">
+        <div class="container">
+            <div class="title justify-content-between">
+                <h1>Campaign</h1>
+                <a href="#">More Campaign <span class="fa-solid fa-arrow-right"></span></a>              
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="#" class="add-banner">
+                        <img src="{{asset('public/frontend')}}/images/others/b3.jpg" alt="Image" class="img-fluid">
+                        <div class="text">
+                            <h2>Clearance Offer</h2>
+                            <h3><span>80%</span> Discount</h3>
+                            <p>Stock ending soon</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="#" class="add-banner">
+                        <img src="{{asset('public/frontend')}}/images/others/b4.jpg" alt="Image" class="img-fluid">
+                        <div class="text text-end">
+                            <h2>Cyber Monday</h2>
+                            <h3>50% <span>Discount</span></h3>
+                            <p>Ending 01 December</p>
+                        </div>
+                    </a>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /.campaign-section -->
+
+    <section class="categories-section">
+        <div class="container">
+            <div class="title justify-content-between">
+                <h1>Popular Categories</h1>
+                <a href="#">All Categories <span class="icon fas fa-arrow-right"></span></a>
+            </div>
+            <div class="category-content style-1">
+                <ul class="global-list grid-6">
+                    <li>
+                        <a href="#">
+                            <span class="icon"><img src="{{asset('public/frontend')}}/images/others/c1.png" alt="Image" class="img-fluid"></span>
+                            <span>Women Clothing</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon"><img src="{{asset('public/frontend')}}/images/others/c2.png" alt="Image" class="img-fluid"></span>
+                            <span>Computer</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon"><img src="{{asset('public/frontend')}}/images/others/c3.png" alt="Image" class="img-fluid"></span>
+                            <span>Home decoration</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon">
+                                <img src="{{asset('public/frontend')}}/images/others/c4.png" alt="Image" class="img-fluid">
+                            </span>
+                            <span>Jewelry</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon">
+                                <img src="{{asset('public/frontend')}}/images/others/c5.png" alt="Image" class="img-fluid">
+                            </span>
+                            <span>Beauty, Health</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon"><img src="{{asset('public/frontend')}}/images/others/c6.png" alt="Image" class="img-fluid"></span>
+                            <span>Sports & outdoor</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div><!-- /.container -->
+    </section><!-- /.section -->        
+
+    <section class="products-section pt-0">
+        <div class="container">
+            <div class="sa-box">
+                <div class="title">
+                    <h1>Today Deals</h1>
+                </div>
+                <ul class="products product-slider">
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <a href="details.html"><img src="{{asset('public/frontend')}}/images/product/1.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div>                                     
+                                <span class="price"><del>$450.00</del> $320.00</span>
+                                <h3><a href="#">Apple MacBook Air Retina Display...</a></h3>  
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>   
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <a href="details.html"><img src="{{asset('public/frontend')}}/images/product/2.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div>                                     
+                                <span class="price"><del>$50.00</del> $25.00</span>
+                                <h3><a href="#">Trendy Shoes For Man With High Quality...</a></h3>  
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li data-bs-toggle="modal" data-bs-target="#exampleModal"><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>   
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <a href="details.html"><img src="{{asset('public/frontend')}}/images/product/3.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div>                                     
+                                <span class="price"><del>$110.00</del> $30.00</span>
+                                <h3><a href="#">Wireless Bluetooth Headphones...</a></h3>  
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li data-bs-toggle="modal" data-bs-target="#exampleModal"><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>   
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <a href="details.html"><img src="{{asset('public/frontend')}}/images/product/w1.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div>                                     
+                                <span class="price"><del>$1000.00</del> $700.00</span>
+                                <h3><a href="#">Apple Watch Series 7 45mm Sports Band...</a></h3>  
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li data-bs-toggle="modal" data-bs-target="#exampleModal"><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li> 
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <a href="details.html"><img src="{{asset('public/frontend')}}/images/product/4.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div>                                     
+                                <span class="price"><del>$150.00</del> $85.00</span>
+                                <h3><a href="#">Modern Sofa High Quality Living Room...</a></h3>  
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li data-bs-toggle="modal" data-bs-target="#exampleModal"><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li> 
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <a href="details.html"><img src="{{asset('public/frontend')}}/images/product/6.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div>                                     
+                                <span class="price"><del>$150.00</del> $85.00</span>
+                                <h3><a href="#">Stylish Short Sleeve T-shirt for Men...</a></h3>  
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li data-bs-toggle="modal" data-bs-target="#exampleModal"><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li> 
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <a href="details.html"><img src="{{asset('public/frontend')}}/images/product/b1.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div>                                     
+                                <span class="price"><del>$250.00</del> $195.00</span>
+                                <h3><a href="#">Calvin Klein Men's Slim Fit Suit...</a></h3>  
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li data-bs-toggle="modal" data-bs-target="#exampleModal"><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li> 
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <a href="details.html"><img src="{{asset('public/frontend')}}/images/product/7.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div>                                     
+                                <span class="price"><del>$900.00</del> $720.00</span>
+                                <h3><a href="#">Women's Wedding Dress for Bride Lace...</a></h3>  
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li data-bs-toggle="modal" data-bs-target="#exampleModal"><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>                  
+                </ul>  
+                <div class="view-more">
+                    <a href="#">View All <span class="icon fas fa-arrow-right"></span></a>
+                </div>
+            </div><!-- /.sa-box -->             
+        </div><!-- /.container -->
+    </section><!-- /.section -->     
+
+    <section class="brand-section style-1 pt-0">
+        <div class="container">
+            <div class="title justify-content-between">
+                <h1>Best Saller</h1>
+                <a href="#">Browse All Sellers <span class="icon fas fa-arrow-right"></span></a>
+            </div>
+            <div class="brand-slider">
+                <div class="brand">
+                    <a href="#"><img src="{{asset('public/frontend')}}/images/brand/1.png" alt="Image" class="img-fluid"></a>
+                </div>
+                <div class="brand">
+                    <a href="#"><img src="{{asset('public/frontend')}}/images/brand/2.png" alt="Image" class="img-fluid"></a>
+                </div>
+                <div class="brand">
+                    <a href="#"><img src="{{asset('public/frontend')}}/images/brand/3.png" alt="Image" class="img-fluid"></a>
+                </div>
+                <div class="brand">
+                    <a href="#"><img src="{{asset('public/frontend')}}/images/brand/4.png" alt="Image" class="img-fluid"></a>
+                </div>
+                <div class="brand">
+                    <a href="#"><img src="{{asset('public/frontend')}}/images/brand/5.png" alt="Image" class="img-fluid"></a>
+                </div>
+                <div class="brand">
+                    <a href="#"><img src="{{asset('public/frontend')}}/images/brand/6.png" alt="Image" class="img-fluid"></a>
+                </div>
+                <div class="brand">
+                    <a href="#"><img src="{{asset('public/frontend')}}/images/brand/2.png" alt="Image" class="img-fluid"></a>
+                </div>
+            </div>
+        </div><!-- /.container -->
+    </section><!-- /.brand-section -->
+
+    <section class="products-section pt-0">
+        <div class="container">
+            <div class="sa-box">
+                <div class="title justify-content-between">
+                    <h1>Flash Sale</h1>
+                    <a href="#">View All <span class="icon fas fa-arrow-right"></span></a>
+                </div>
+                <ul class="products grid-4">
+                    <li>
+                        <div class="sg-product style-1">
+                            <div class="product-thumb">
+                                <a href="details.html"><img src="{{asset('public/frontend')}}/images/product/9.png" alt="Image" class="img-fluid"></a>
+                                <div class="sg-countdown">
+                                    <ul class="countdown">
+                                        <li>                    
+                                            <span class="days">00</span>
+                                            <p>Days</p>
+                                        </li>
+                                        <li>
+                                            <span class="hours">00</span>
+                                            <p>Hrs</p>
+                                        </li>
+                                        <li>
+                                            <span class="minutes">00</span>
+                                            <p>Mins</p>
+                                        </li>
+                                        <li>
+                                            <span class="seconds">00</span>
+                                            <p>Secs</p>
+                                        </li>               
+                                    </ul><!-- countdown -->                         
+                                </div>                                  
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div> 
+                                <span class="price"><del>$59.00</del> $48.00</span>
+                                <h3><a href="#">Sony SRS-XB13 Extra BASS Wireless Portable Compact Speaker</a></h3> 
+
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#" class="btn btn-primary">Add to cart</a></li>
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li> 
+                    <li>
+                        <div class="sg-product style-1">
+                            <div class="product-thumb">
+                                <a href="details.html"><img src="{{asset('public/frontend')}}/images/product/10.png" alt="Image" class="img-fluid"></a>
+                                <div class="sg-countdown">
+                                    <ul class="countdown">
+                                        <li>                    
+                                            <span class="days">00</span>
+                                            <p>Days</p>
+                                        </li>
+                                        <li>
+                                            <span class="hours">00</span>
+                                            <p>Hrs</p>
+                                        </li>
+                                        <li>
+                                            <span class="minutes">00</span>
+                                            <p>Mins</p>
+                                        </li>
+                                        <li>
+                                            <span class="seconds">00</span>
+                                            <p>Secs</p>
+                                        </li>               
+                                    </ul><!-- countdown -->                         
+                                </div>   
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div> 
+                                <span class="price"><del>$445.00</del> $355.00</span>
+                                <h3><a href="#">Withings ScanWatch - Hybrid Smartwatch with ECG</a></h3> 
+
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#" class="btn btn-primary">Add to cart</a></li>
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li> 
+                    <li>
+                        <div class="sg-product style-1">
+                            <div class="product-thumb">
+                                <a href="details.html"><img src="{{asset('public/frontend')}}/images/product/8.png" alt="Image" class="img-fluid"></a>
+                                <div class="sg-countdown">
+                                    <ul class="countdown">
+                                        <li>                    
+                                            <span class="days">00</span>
+                                            <p>Days</p>
+                                        </li>
+                                        <li>
+                                            <span class="hours">00</span>
+                                            <p>Hrs</p>
+                                        </li>
+                                        <li>
+                                            <span class="minutes">00</span>
+                                            <p>Mins</p>
+                                        </li>
+                                        <li>
+                                            <span class="seconds">00</span>
+                                            <p>Secs</p>
+                                        </li>               
+                                    </ul><!-- countdown -->                         
+                                </div>   
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div> 
+                                <span class="price"><del>$150.00</del> $85.00</span>
+                                <h3><a href="#">Ball Gowns White Ivory Tulle Bridal Dress For Wedding Dresses</a></h3> 
+
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#" class="btn btn-primary">Add to cart</a></li>
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>
+                    <li>
+                        <div class="sg-product style-1">
+                            <div class="product-thumb">
+                                <a href="details.html"><img src="{{asset('public/frontend')}}/images/product/11.png" alt="Image" class="img-fluid"></a>
+                                <div class="sg-countdown">
+                                    <ul class="countdown">
+                                        <li>                    
+                                            <span class="days">00</span>
+                                            <p>Days</p>
+                                        </li>
+                                        <li>
+                                            <span class="hours">00</span>
+                                            <p>Hrs</p>
+                                        </li>
+                                        <li>
+                                            <span class="minutes">00</span>
+                                            <p>Mins</p>
+                                        </li>
+                                        <li>
+                                            <span class="seconds">00</span>
+                                            <p>Secs</p>
+                                        </li>               
+                                    </ul><!-- countdown -->                         
+                                </div>   
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div> 
+                                <span class="price"><del>$150.00</del> $85.00</span>
+                                <h3><a href="#">Traditional Crystal Wedding Temple Choker Jewelry Set</a></h3>  
+
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#" class="btn btn-primary">Add to cart</a></li>
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>
+                    <li>
+                        <div class="sg-product style-1">
+                            <div class="product-thumb">
+                                <a href="details.html"><img src="{{asset('public/frontend')}}/images/product/12.png" alt="Image" class="img-fluid"></a>
+                                <div class="sg-countdown">
+                                    <ul class="countdown">
+                                        <li>                    
+                                            <span class="days">00</span>
+                                            <p>Days</p>
+                                        </li>
+                                        <li>
+                                            <span class="hours">00</span>
+                                            <p>Hrs</p>
+                                        </li>
+                                        <li>
+                                            <span class="minutes">00</span>
+                                            <p>Mins</p>
+                                        </li>
+                                        <li>
+                                            <span class="seconds">00</span>
+                                            <p>Secs</p>
+                                        </li>               
+                                    </ul><!-- countdown -->                         
+                                </div>   
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div> 
+                                <span class="price"><del>$110.00</del> $85.00</span>
+                                <h3><a href="#">Amazon Brand - Goodthreads Women's Dress</a></h3>
+
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#" class="btn btn-primary">Add to cart</a></li>
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>
+                    <li>
+                        <div class="sg-product style-1">
+                            <div class="product-thumb">
+                                <a href="details.html"><img src="{{asset('public/frontend')}}/images/product/13.png" alt="Image" class="img-fluid"></a>
+                                <div class="sg-countdown">
+                                    <ul class="countdown">
+                                        <li>                    
+                                            <span class="days">00</span>
+                                            <p>Days</p>
+                                        </li>
+                                        <li>
+                                            <span class="hours">00</span>
+                                            <p>Hrs</p>
+                                        </li>
+                                        <li>
+                                            <span class="minutes">00</span>
+                                            <p>Mins</p>
+                                        </li>
+                                        <li>
+                                            <span class="seconds">00</span>
+                                            <p>Secs</p>
+                                        </li>               
+                                    </ul><!-- countdown -->                         
+                                </div>   
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div> 
+                                <span class="price"><del>$2700.00</del> $2570.00</span>
+                                <h3><a href="#">HDD IP NVR Video System - Remote Access via Smart Phone</a></h3> 
+
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#" class="btn btn-primary">Add to cart</a></li>
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>
+                    <li>
+                        <div class="sg-product style-1">
+                            <div class="product-thumb">
+                                <a href="details.html"><img src="{{asset('public/frontend')}}/images/product/5.png" alt="Image" class="img-fluid"></a>
+                                <div class="sg-countdown">
+                                    <ul class="countdown">
+                                        <li>                    
+                                            <span class="days">00</span>
+                                            <p>Days</p>
+                                        </li>
+                                        <li>
+                                            <span class="hours">00</span>
+                                            <p>Hrs</p>
+                                        </li>
+                                        <li>
+                                            <span class="minutes">00</span>
+                                            <p>Mins</p>
+                                        </li>
+                                        <li>
+                                            <span class="seconds">00</span>
+                                            <p>Secs</p>
+                                        </li>               
+                                    </ul><!-- countdown -->                         
+                                </div>   
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div> 
+                                <span class="price"><del>$400.00</del> $344.00</span>
+                                <h3><a href="#">Modern minimalist living room leather small sofa set</a></h3>
+
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#" class="btn btn-primary">Add to cart</a></li>
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>
+                    <li>
+                        <div class="sg-product style-1">
+                            <div class="product-thumb">
+                                <a href="details.html"><img src="{{asset('public/frontend')}}/images/product/14.png" alt="Image" class="img-fluid"></a>
+                                <div class="sg-countdown">
+                                    <ul class="countdown">
+                                        <li>                    
+                                            <span class="days">00</span>
+                                            <p>Days</p>
+                                        </li>
+                                        <li>
+                                            <span class="hours">00</span>
+                                            <p>Hrs</p>
+                                        </li>
+                                        <li>
+                                            <span class="minutes">00</span>
+                                            <p>Mins</p>
+                                        </li>
+                                        <li>
+                                            <span class="seconds">00</span>
+                                            <p>Secs</p>
+                                        </li>               
+                                    </ul><!-- countdown -->                         
+                                </div>   
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div> 
+                                <span class="price"><del>$1500.00</del> $1200.00</span>
+                                <h3><a href="#">Apple 27 inch LCD Screen Black Computer Monitor</a></h3>
+
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#" class="btn btn-primary">Add to cart</a></li>
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>                     
+                </ul>                    
+            </div><!-- /.sa-box -->
+        </div><!-- /.container -->
+    </section><!-- /.products-section -->       
+
+    <section class="products-section category-products pt-0">
+        <div class="container">
+            <div class="sa-box">
+                <div class="title justify-content-between">
+                    <h1>Men's Shopping</h1>
+                    <a href="#">View All <span class="icon fas fa-arrow-right"></span></a>
+                </div>
                 <div class="row">
-                    <div class="col-lg-12">
-
-                        <div class="text-center">
-                            <h5 class="fs-20">Trusted <span class="text-primary text-decoration-underline">by</span> the world's best</h5>
-
-                            <!-- Swiper -->
-                            <div class="swiper trusted-client-slider mt-sm-5 mt-4 mb-sm-5 mb-4" dir="ltr">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <div class="client-images">
-                                            <img src="{{asset('public/backend')}}/images/clients/amazon.svg" alt="client-img" class="mx-auto img-fluid d-block">
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="client-images">
-                                            <img src="{{asset('public/backend')}}/images/clients/walmart.svg" alt="client-img" class="mx-auto img-fluid d-block">
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="client-images">
-                                            <img src="{{asset('public/backend')}}/images/clients/lenovo.svg" alt="client-img" class="mx-auto img-fluid d-block">
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="client-images">
-                                            <img src="{{asset('public/backend')}}/images/clients/paypal.svg" alt="client-img" class="mx-auto img-fluid d-block">
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="client-images">
-                                            <img src="{{asset('public/backend')}}/images/clients/shopify.svg" alt="client-img" class="mx-auto img-fluid d-block">
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="client-images">
-                                            <img src="{{asset('public/backend')}}/images/clients/verizon.svg" alt="client-img" class="mx-auto img-fluid d-block">
-                                        </div>
-                                    </div>
+                    <div class="col-md-3">
+                        <div class="products">
+                            <div class="category-product">
+                                <div class="text">
+                                    <h2>Trending House Utensil</h2>
+                                    <a href="#" class="btn btn-primary">shop now</a>
+                                </div>
+                                <div class="thumb">
+                                    <a href="#"><img src="{{asset('public/frontend')}}/images/product/2.jpg" alt="Image" class="img-fluid"></a>
                                 </div>
                             </div>
                         </div>
-
                     </div>
+
+                    <div class="col-md-9">
+                        <ul class="products product-slider-2 arrow-style-2">
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <span class="base">50% OFF</span>
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/m1.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div> 
+                                        <span class="price"><del>$140.00</del> $70.00</span>
+                                        <h3><a href="#">Trendy Shoes For Man With High Quality...</a></h3>
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                 
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/w1.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div> 
+                                        <span class="price"><del>$1000.00</del> $700.00</span>
+                                        <h3><a href="#">Apple Watch Series 7 45mm Sports Band...</a></h3>
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                     
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/b1.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div> 
+                                        <span class="price">$195.00</span>
+                                        <h3><a href="#">Calvin Klein Men's Slim Fit Suit...</a></h3> 
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                        
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/m2.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div>
+                                        <span class="price">$900.00</span>
+                                        <h3><a href="#">Manufactum Gentleman’s Wallet...</a></h3>
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                              
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/m3.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div>  
+                                        <span class="price">$22.00</span>
+                                        <h3><a href="#">Men's Jogger Pants Drawstring Zipper...</a></h3>
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                      
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/6.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div> 
+                                        <span class="price">$75.00</span>
+                                        <h3><a href="#">Stylish Short Sleeve T-shirt for Men...</a></h3> 
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                      
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                        </ul> 
+                    </div>
+                </div><!-- /.row -->                    
+            </div><!-- /.sa-box -->
+        </div><!-- /.container -->
+    </section><!-- /.products-section -->       
+
+    <section class="products-section category-products pt-0">
+        <div class="container">
+            <div class="sa-box">
+                <div class="title justify-content-between">
+                    <h1>Womens Fashion</h1>
+                    <a href="#">View All <span class="icon fas fa-arrow-right"></span></a>
                 </div>
-                <!-- end row -->
-            </div>
-            <!-- end container -->
-        </div>
-        <!-- end client section -->
-
-        <!-- start faqs -->
-        <section class="section">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        <div class="text-center mb-5">
-                            <h3 class="mb-3 fw-bold">Frequently Asked Questions</h3>
-                            <p class="text-muted mb-4">If you can not find answer to your question in our FAQ, you can
-                                always contact us or email us. We will answer you shortly!</p>
-
-                            <div class="">
-                                <button type="button" class="btn btn-primary btn-label rounded-pill"><i class="ri-mail-line label-icon align-middle rounded-pill fs-16 me-2"></i> Email Us</button>
-                                <button type="button" class="btn btn-info btn-label rounded-pill"><i class="ri-twitter-line label-icon align-middle rounded-pill fs-16 me-2"></i> Send Us Tweet</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- end row -->
-
-                <div class="row g-lg-5 g-4">
-                    <div class="col-lg-6">
-                        <div class="d-flex align-items-center mb-2">
-                            <div class="flex-shrink-0 me-1">
-                                <i class="ri-question-line fs-24 align-middle text-success me-1"></i>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h5 class="mb-0 fw-bold">General Questions</h5>
-                            </div>
-                        </div>
-                        <div class="accordion custom-accordionwithicon custom-accordion-border accordion-border-box" id="genques-accordion">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="genques-headingOne">
-                                    <button class="accordion-button fw-semibold fs-14" type="button" data-bs-toggle="collapse" data-bs-target="#genques-collapseOne" aria-expanded="true" aria-controls="genques-collapseOne">
-                                        What is the purpose of using themes ?
-                                    </button>
-                                </h2>
-                                <div id="genques-collapseOne" class="accordion-collapse collapse show" aria-labelledby="genques-headingOne" data-bs-parent="#genques-accordion">
-                                    <div class="accordion-body">
-                                        A theme is a set of colors, fonts, effects, and more that can be applied to your entire presentation to give it a
-                                        consistent, professional look. You've already been using a theme, even if you didn't know it: the default Office theme,
-                                        which consists.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="genques-headingTwo">
-                                    <button class="accordion-button fw-semibold fs-14 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#genques-collapseTwo" aria-expanded="false" aria-controls="genques-collapseTwo">
-                                        Can a theme have more than one theme?
-                                    </button>
-                                </h2>
-                                <div id="genques-collapseTwo" class="accordion-collapse collapse" aria-labelledby="genques-headingTwo" data-bs-parent="#genques-accordion">
-                                    <div class="accordion-body">
-                                        A story can have as many themes as the reader can identify based on recurring patterns and parallels within the story
-                                        itself. In looking at ways to separate themes into a hierarchy, we might find it useful to follow the example of a
-                                        single book.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="genques-headingThree">
-                                    <button class="accordion-button fw-semibold fs-14 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#genques-collapseThree" aria-expanded="false" aria-controls="genques-collapseThree">
-                                        What are theme features?
-                                    </button>
-                                </h2>
-                                <div id="genques-collapseThree" class="accordion-collapse collapse" aria-labelledby="genques-headingThree" data-bs-parent="#genques-accordion">
-                                    <div class="accordion-body">
-                                        Theme features is a set of specific functionality that may be enabled by theme authors. Themes must register each
-                                        individual Theme Feature that the author wishes to support. Theme support functions should be called in the theme's
-                                        functions.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="genques-headingFour">
-                                    <button class="accordion-button fw-semibold fs-14 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#genques-collapseFour" aria-expanded="false" aria-controls="genques-collapseFour">
-                                        What is simple theme?
-                                    </button>
-                                </h2>
-                                <div id="genques-collapseFour" class="accordion-collapse collapse" aria-labelledby="genques-headingFour" data-bs-parent="#genques-accordion">
-                                    <div class="accordion-body">
-                                        Simple is a free WordPress theme, by Themify, built exactly what it is named for: simplicity. Immediately upgrade the
-                                        quality of your WordPress site with the simple theme To use the built-in Chrome theme editor.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end accordion-->
-
-                    </div>
-                    <!-- end col -->
-                    <div class="col-lg-6">
-                        <div class="d-flex align-items-center mb-2">
-                            <div class="flex-shrink-0 me-1">
-                                <i class="ri-shield-keyhole-line fs-24 align-middle text-success me-1"></i>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h5 class="mb-0 fw-bold">Privacy &amp; Security</h5>
-                            </div>
-                        </div>
-
-                        <div class="accordion custom-accordionwithicon custom-accordion-border accordion-border-box" id="privacy-accordion">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="privacy-headingOne">
-                                    <button class="accordion-button fw-semibold fs-14 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#privacy-collapseOne" aria-expanded="false" aria-controls="privacy-collapseOne">
-                                        Does Word have night mode?
-                                    </button>
-                                </h2>
-                                <div id="privacy-collapseOne" class="accordion-collapse collapse" aria-labelledby="privacy-headingOne" data-bs-parent="#privacy-accordion">
-                                    <div class="accordion-body">
-                                        You can run Microsoft Word in dark mode, which uses a dark color palette to help reduce eye strain in low light
-                                        settings. You can choose to make the document white or black using the Switch Modes button in the ribbon's View tab.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="privacy-headingTwo">
-                                    <button class="accordion-button fw-semibold fs-14" type="button" data-bs-toggle="collapse" data-bs-target="#privacy-collapseTwo" aria-expanded="true" aria-controls="privacy-collapseTwo">
-                                        Is theme an opinion?
-                                    </button>
-                                </h2>
-                                <div id="privacy-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="privacy-headingTwo" data-bs-parent="#privacy-accordion">
-                                    <div class="accordion-body">
-                                        A theme is an opinion the author expresses on the subject, for instance, the author's dissatisfaction with the narrow
-                                        confines of French bourgeois marriage during that period theme is an idea that a writer repeats.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="privacy-headingThree">
-                                    <button class="accordion-button fw-semibold fs-14 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#privacy-collapseThree" aria-expanded="false" aria-controls="privacy-collapseThree">
-                                        How do you develop a theme?
-                                    </button>
-                                </h2>
-                                <div id="privacy-collapseThree" class="accordion-collapse collapse" aria-labelledby="privacy-headingThree" data-bs-parent="#privacy-accordion">
-                                    <div class="accordion-body">
-                                        A short story, novella, or novel presents a narrative to its reader. Perhaps that narrative involves mystery, terror,
-                                        romance, comedy, or all of the above. These works of fiction may also contain memorable characters, vivid
-                                        world-building, literary devices.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="privacy-headingFour">
-                                    <button class="accordion-button fw-semibold fs-14 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#privacy-collapseFour" aria-expanded="false" aria-controls="privacy-collapseFour">
-                                        Do stories need themes?
-                                    </button>
-                                </h2>
-                                <div id="privacy-collapseFour" class="accordion-collapse collapse" aria-labelledby="privacy-headingFour" data-bs-parent="#privacy-accordion">
-                                    <div class="accordion-body">
-                                        A story can have as many themes as the reader can identify based on recurring patterns and parallels within the story
-                                        itself. In looking at ways to separate themes into a hierarchy, we might find it useful to follow the example of a
-                                        single book.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end accordion-->
-                    </div>
-                    <!-- end col -->
-                </div>
-                <!-- end row -->
-            </div>
-            <!-- end container -->
-        </section>
-        <!-- end faqs -->
-
-        <!-- start review -->
-        <section class="section bg-primary" id="reviews">
-            <div class="bg-overlay bg-overlay-pattern"></div>
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-10">
-                        <div class="text-center">
-                            <div>
-                                <i class="ri-double-quotes-l text-success display-3"></i>
-                            </div>
-                            <h4 class="text-white mb-5"><span class="text-white">19k</span>+ Satisfied clients</h4>
-
-                            <!-- Swiper -->
-                            <div class="swiper client-review-swiper rounded" dir="ltr">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <div class="row justify-content-center">
-                                            <div class="col-10">
-                                                <div class="text-white-50">
-                                                    <p class="fs-20 mb-4">" I am givng 5 stars. Theme is great and everyone one stuff everything in theme. Future request should not affect current
-                                                        state of theme. "</p>
-
-                                                    <div>
-                                                        <h5 class="text-white">gregoriusus</h5>
-                                                        <p>- Skote User</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end slide -->
-                                    <div class="swiper-slide">
-                                        <div class="row justify-content-center">
-                                            <div class="col-10">
-                                                <div class="text-white-50">
-                                                    <p class="fs-20 mb-4">" Awesome support. Had few issues while setting up because of my device, the support team helped me fix them up in a day.
-                                                        Everything looks clean and good. Highly recommended! "</p>
-
-                                                    <div>
-                                                        <h5 class="text-white">GeekyGreenOwl</h5>
-                                                        <p>- Skote User</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end slide -->
-                                    <div class="swiper-slide">
-                                        <div class="row justify-content-center">
-                                            <div class="col-10">
-                                                <div class="text-white-50">
-                                                    <p class="fs-20 mb-4">" Amazing template, Redux store and components is nicely designed.
-                                                        It's a great start point for an admin based project. Clean Code and good documentation. Template is
-                                                        completely in React and absolutely no usage of jQuery "</p>
-
-                                                    <div>
-                                                        <h5 class="text-white">sreeks456</h5>
-                                                        <p>- Veltrix User</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end slide -->
-                                </div>
-                                <div class="swiper-button-next bg-white rounded-circle"></div>
-                                <div class="swiper-button-prev bg-white rounded-circle"></div>
-                                <div class="swiper-pagination position-relative mt-2"></div>
-                            </div>
-                            <!-- end slider -->
-                        </div>
-                    </div>
-                    <!-- end col -->
-                </div>
-                <!-- end row -->
-            </div>
-            <!-- end container -->
-        </section>
-        <!-- end review -->
-
-        <!-- start counter -->
-        <section class="py-5 position-relative bg-light">
-            <div class="container">
-                <div class="row text-center gy-4">
-                    <div class="col-lg-3 col-6">
-                        <div>
-                            <h2 class="mb-2"><span class="counter-value" data-target="100">0</span>+</h2>
-                            <div class="text-muted">Projects Completed</div>
-                        </div>
-                    </div>
-                    <!-- end col -->
-
-                    <div class="col-lg-3 col-6">
-                        <div>
-                            <h2 class="mb-2"><span class="counter-value" data-target="24">0</span></h2>
-                            <div class="text-muted">Win Awards</div>
-                        </div>
-                    </div>
-                    <!-- end col -->
-
-                    <div class="col-lg-3 col-6">
-                        <div>
-                            <h2 class="mb-2"><span class="counter-value" data-target="20.3">0</span>k</h2>
-                            <div class="text-muted">Satisfied Clients</div>
-                        </div>
-                    </div>
-                    <!-- end col -->
-                    <div class="col-lg-3 col-6">
-                        <div>
-                            <h2 class="mb-2"><span class="counter-value" data-target="50">0</span></h2>
-                            <div class="text-muted">Employees</div>
-                        </div>
-                    </div>
-                    <!-- end col -->
-                </div>
-                <!-- end row -->
-            </div>
-            <!-- end container -->
-        </section>
-        <!-- end counter -->
-
-        <!-- start contact -->
-        <section class="section" id="contact">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        <div class="text-center mb-5">
-                            <h3 class="mb-3 fw-bold">Get In Touch</h3>
-                            <p class="text-muted mb-4">We thrive when coming up with innovative ideas but also
-                                understand that a smart concept should be supported with faucibus sapien odio measurable
-                                results.</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- end row -->
-
-                <div class="row gy-4">
-                    <div class="col-lg-4">
-                        <div>
-                            <div class="mt-4">
-                                <h5 class="fs-13 text-muted text-uppercase">Office Address 1:</h5>
-                                <div class="fw-semibold">4461 Cedar Street Moro, <br />AR 72368</div>
-                            </div>
-                            <div class="mt-4">
-                                <h5 class="fs-13 text-muted text-uppercase">Office Address 2:</h5>
-                                <div class="fw-semibold">2467 Swick Hill Street <br />New Orleans, LA</div>
-                            </div>
-                            <div class="mt-4">
-                                <h5 class="fs-13 text-muted text-uppercase">Working Hours:</h5>
-                                <div class="fw-semibold">9:00am to 6:00pm</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end col -->
-                    <div class="col-lg-8">
-                        <div>
-                            <form>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mb-4">
-                                            <label for="name" class="form-label fs-13">Name</label>
-                                            <input name="name" id="name" type="text" class="form-control bg-light border-light" placeholder="Your name*">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-4">
-                                            <label for="email" class="form-label fs-13">Email</label>
-                                            <input name="email" id="email" type="email" class="form-control bg-light border-light" placeholder="Your email*">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="mb-4">
-                                            <label for="subject" class="form-label fs-13">Subject</label>
-                                            <input type="text" class="form-control bg-light border-light" id="subject" name="subject" placeholder="Your Subject.." />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <label for="comments" class="form-label fs-13">Message</label>
-                                            <textarea name="comments" id="comments" rows="3" class="form-control bg-light border-light" placeholder="Your message..."></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12 text-end">
-                                        <input type="submit" id="submit" name="send" class="submitBnt btn btn-primary" value="Send Message">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- end row -->
-            </div>
-            <!-- end container -->
-        </section>
-        <!-- end contact -->
-
-        <!-- start cta -->
-        <section class="py-5 bg-primary position-relative">
-            <div class="bg-overlay bg-overlay-pattern opacity-50"></div>
-            <div class="container">
-                <div class="row align-items-center gy-4">
-                    <div class="col-sm">
-                        <div>
-                            <h4 class="text-white mb-0 fw-semibold">Build your web App/SaaS with myHEALTHLine dashboard</h4>
-                        </div>
-                    </div>
-                    <!-- end col -->
-                    <div class="col-sm-auto">
-                        <div>
-                            <a href="https://1.envato.market/myHEALTHLine-admin" target="_blank" class="btn bg-gradient btn-danger"><i class="ri-shopping-cart-2-line align-middle me-1"></i> Buy Now</a>
-                        </div>
-                    </div>
-                    <!-- end col -->
-                </div>
-                <!-- end row -->
-            </div>
-            <!-- end container -->
-        </section>
-        <!-- end cta -->
-
-        <!-- Start footer -->
-        <footer class="custom-footer bg-dark py-5 position-relative">
-            <div class="container">
                 <div class="row">
-                    <div class="col-lg-4 mt-4">
-                        <div>
-                            <div>
-                                <img src="{{asset('public/backend')}}/images/logo-light.png" alt="logo light" height="17">
-                            </div>
-                            <div class=mt-4 fs-13">
-                                <p>Premium Multipurpose Admin & Dashboard Template</p>
-                                <p class="ff-secondary">You can build any type of web application like eCommerce, CRM, CMS, Project
-                                    management apps, Admin Panels, etc using myHEALTHLine.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-7 ms-lg-auto">
-                        <div class="row">
-                            <div class="col-sm-4 mt-4">
-                                <h5 class="text-white mb-0">Company</h5>
-                                <div class="text-muted mt-3">
-                                    <ul class="list-unstyled ff-secondary footer-list fs-14">
-                                        <li><a href="pages-profile.html">About Us</a></li>
-                                        <li><a href="pages-gallery.html">Gallery</a></li>
-                                        <li><a href="apps-projects-overview.html">Projects</a></li>
-                                        <li><a href="pages-timeline.html">Timeline</a></li>
-                                    </ul>
+                    <div class="col-md-3">
+                        <div class="products">
+                            <div class="category-product">
+                                <div class="text">
+                                    <h2>Trending House Utensil</h2>
+                                    <a href="#" class="btn btn-primary">shop now</a>
                                 </div>
-                            </div>
-                            <div class="col-sm-4 mt-4">
-                                <h5 class="text-white mb-0">Apps Pages</h5>
-                                <div class="text-muted mt-3">
-                                    <ul class="list-unstyled ff-secondary footer-list fs-14">
-                                        <li><a href="pages-pricing.html">Calendar</a></li>
-                                        <li><a href="apps-mailbox.html">Mailbox</a></li>
-                                        <li><a href="apps-chat.html">Chat</a></li>
-                                        <li><a href="apps-crm-deals.html">Deals</a></li>
-                                        <li><a href="apps-tasks-kanban.html">Kanban Board</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 mt-4">
-                                <h5 class="text-white mb-0">Support</h5>
-                                <div class="text-muted mt-3">
-                                    <ul class="list-unstyled ff-secondary footer-list fs-14">
-                                        <li><a href="pages-faqs.html">FAQ</a></li>
-                                        <li><a href="pages-faqs.html">Contact</a></li>
-                                    </ul>
+                                <div class="thumb">
+                                    <a href="#"><img src="{{asset('public/frontend')}}/images/product/3.jpg" alt="Image" class="img-fluid"></a>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <div class="col-md-9">
+                        <ul class="products product-slider-2 arrow-style-2">
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/wo1.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div>
+                                        <span class="price"><del>$150.00</del> $85.00</span>
+                                        <h3><a href="#">Women Fashion Spring and Summer...</a></h3>  
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                  
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/wo3.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div>
+                                        <span class="price">$85.00</span>
+                                        <h3><a href="#">Kids Cat Ear Decor Sunglasses...</a></h3>  
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                 
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <span class="base">50% OFF</span>
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/wo2.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div>  
+                                        <span class="price"><del>$70.00</del> $35.00</span>
+                                        <h3><a href="#">Women's Classic Jersey Stripe Boy Tee</a></h3>
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                       
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/wo4.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div>  
+                                        <span class="price"><del>$150.00</del> $122.00</span>
+                                        <h3><a href="#">Woman Fashion Ladies Heel Shoes...</a></h3>
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                       
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/wo5.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div> 
+                                        <span class="price"><del>$3000.00</del> $2800.00</span>
+                                        <h3><a href="#">Woman Fashion Gold Jewellery...</a></h3> 
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                    
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/12.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div> 
+                                        <span class="price"><del>$150.00</del> $85.00</span>
+                                        <h3><a href="#">Goodthreads Women's Dress...</a></h3> 
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                    
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                        </ul> 
+                    </div>
+                </div><!-- /.row -->                    
+            </div><!-- /.sa-box -->
+        </div><!-- /.container -->
+    </section><!-- /.products-section -->   
+
+    <section class="offers-section pt-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="#" class="add-banner">
+                        <img src="{{asset('public/frontend')}}/images/others/of4.jpg" alt="Image" class="img-fluid">
+                    </a>
                 </div>
+                <div class="col-md-3">
+                    <a href="#" class="add-banner">
+                        <img src="{{asset('public/frontend')}}/images/others/of9.jpg" alt="Image" class="img-fluid">
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" class="add-banner">
+                        <img src="{{asset('public/frontend')}}/images/others/of6.jpg" alt="Image" class="img-fluid">
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" class="add-banner">
+                        <img src="{{asset('public/frontend')}}/images/others/of7.jpg" alt="Image" class="img-fluid">
+                    </a>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /.offers-section -->       
 
-                <div class="row text-center text-sm-start align-items-center mt-5">
-                    <div class="col-sm-6">
-
-                        <div>
-                            <p class="copy-rights mb-0">
-                                <script>
-                                    document.write(new Date().getFullYear())
-                                </script> © myHEALTHLine - Themesbrand
-                            </p>
+    <section class="products-section category-products pt-0">
+        <div class="container">
+            <div class="sa-box">
+                <div class="title justify-content-between">
+                    <h1>Gadget & Electronics</h1>
+                    <a href="#">View All <span class="icon fas fa-arrow-right"></span></a>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="products">
+                            <div class="category-product">
+                                <div class="text">
+                                    <h2>Trending House Utensil</h2>
+                                    <a href="#" class="btn btn-primary">shop now</a>
+                                </div>
+                                <div class="thumb">
+                                    <a href="#"><img src="{{asset('public/frontend')}}/images/product/1.jpg" alt="Image" class="img-fluid"></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="text-sm-end mt-3 mt-sm-0">
-                            <ul class="list-inline mb-0 footer-social-link">
-                                <li class="list-inline-item">
-                                    <a href="javascript: void(0);" class="avatar-xs d-block">
-                                        <div class="avatar-title rounded-circle">
-                                            <i class="ri-facebook-fill"></i>
+
+                    <div class="col-md-9">
+                        <ul class="products product-slider-2 arrow-style-2">
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/e1.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div> 
+                                        <span class="price">$1999.00</span>
+                                        <h3><a href="#">Apple iPhone 13 Pro Max Full...</a></h3>
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                              
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <span class="base">50% OFF</span>
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/e2.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li><span class="fa-solid fa-star"></span></li>
+                                            </ul>
                                         </div>
-                                    </a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="javascript: void(0);" class="avatar-xs d-block">
-                                        <div class="avatar-title rounded-circle">
-                                            <i class="ri-github-fill"></i>
+                                        <span class="price"><del>$1600.00</del> $800.00</span>
+                                        <h3><a href="#">Canon EOS M10 Mirrorless Camera...</a></h3>  
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                              
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/e3.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li><span class="fa-solid fa-star"></span></li>
+                                            </ul>
                                         </div>
-                                    </a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="javascript: void(0);" class="avatar-xs d-block">
-                                        <div class="avatar-title rounded-circle">
-                                            <i class="ri-linkedin-fill"></i>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="javascript: void(0);" class="avatar-xs d-block">
-                                        <div class="avatar-title rounded-circle">
-                                            <i class="ri-google-fill"></i>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="javascript: void(0);" class="avatar-xs d-block">
-                                        <div class="avatar-title rounded-circle">
-                                            <i class="ri-dribbble-line"></i>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
+                                        <span class="price"><del>$150.00</del> $85.00</span>
+                                        <h3><a href="#">Apacer AH360 32GB USB 3.1 Metal Body... </a></h3>  
+
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                       
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/e4.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div> 
+                                        <span class="price"><del>$900.00</del> $799.00</span>
+                                        <h3><a href="#">HP OfficeJet 200 Mobile Printers...</a></h3> 
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                        
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/3.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div> 
+                                        <span class="price"><del>$110.00</del> $30.00</span>
+                                        <h3><a href="#">Wireless Bluetooth Headphones...</a></h3> 
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                       
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/9.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div> 
+                                        <span class="price"><del>$59.00</del> $48.00</span>
+                                        <h3><a href="#">Wireless Bluetooth Headphones...</a></h3> 
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                       
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                        </ul> 
+                    </div>
+                </div><!-- /.row -->                    
+            </div><!-- /.sa-box -->
+        </div><!-- /.container -->
+    </section><!-- /.products-section -->    
+
+    <section class="products-section category-products pt-0">
+        <div class="container">
+            <div class="sa-box">
+                <div class="title justify-content-between">
+                    <h1>Home & Living</h1>
+                    <a href="#">View All <span class="icon fas fa-arrow-right"></span></a>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="products">
+                            <div class="category-product">
+                                <div class="text">
+                                    <h2>Trending House Utensil</h2>
+                                    <a href="#" class="btn btn-primary">shop now</a>
+                                </div>
+                                <div class="thumb">
+                                    <a href="#"><img src="{{asset('public/frontend')}}/images/product/4.jpg" alt="Image" class="img-fluid"></a>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+
+                    <div class="col-md-9">
+                        <ul class="products product-slider-2 arrow-style-2">
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/hm1.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div>
+                                        <span class="price">$210.00</span>
+                                        <h3><a href="#">Wooden round table isolated on white</a></h3>
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                     
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/hm2.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div>  
+                                        <span class="price"><del>$330.00</del> $285.00</span>
+                                        <h3><a href="#">Simple folding single sofa bed furniture</a></h3>
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                       
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <span class="base">50% OFF</span>
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/hm3.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div>
+                                        <span class="price"><del>$550.00</del> $225.00</span>
+                                        <h3><a href="#">Student Housing Desks - Made in...</a></h3>  
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                       
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/hm4.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div> 
+                                        <span class="price"><del>$350.00</del> $285.00</span>
+                                        <h3><a href="#">Adesso Director Table Lamp, Black...</a></h3> 
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                     
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/hm5.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div> 
+                                        <span class="price"><del>$700.00</del> $659.00</span>
+                                        <h3><a href="#">Le Klint 160 Carronade Large Pendant...</a></h3> 
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                  
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                            <li>
+                                <div class="sg-product">
+                                    <div class="product-thumb">
+                                        <a href="#"><img src="{{asset('public/frontend')}}/images/product/hm2.png" alt="Image" class="img-fluid"></a>
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="sg-rating">
+                                            <ul class="global-list">
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li class="active"><span class="fa-solid fa-star"></span></li>
+                                                <li><span class="fa-solid fa-star"></span></li>
+                                            </ul>
+                                        </div> 
+                                        <span class="price"><del>$700.00</del> $659.00</span>
+                                        <h3><a href="#">Simple folding single sofa bed furniture</a></h3> 
+                                        <div class="icons">
+                                            <ul class="global-list">
+                                                <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                                <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                                <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                            </ul>
+                                        </div>                                                  
+                                    </div>
+                                </div><!-- /.sg-product -->                                  
+                            </li>
+                        </ul> 
+                    </div>
+                </div><!-- /.row -->                    
+            </div><!-- /.sa-box -->
+        </div><!-- /.container -->
+    </section><!-- /.products-section --> 
+
+    <section class="cta-section" style="background-image: url(images/bg/cta-bg.jpg);">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-6">
+                    <div class="cta-text">
+                        <h1>Big Sale Up To <span>70% Off</span></h1>
+                        <p>Exclussive Offers For Limited Time</p>
+                        <a href="#" class="btn btn-primary">Explore Your Order</a>
                     </div>
                 </div>
             </div>
-        </footer>
-        <!-- end footer -->
+        </div><!-- /.container -->
+    </section><!-- /.cta-section -->
 
-        <!--start back-to-top-->
-        <button onclick="topFunction()" class="btn btn-danger btn-icon landing-back-top" id="back-to-top">
-            <i class="ri-arrow-up-line"></i>
-        </button>
-        <!--end back-to-top-->
+    <section class="products-section">
+        <div class="container">
+            <div class="sa-box">
+                <div class="title justify-content-between">
+                    <h1>Popular Product</h1>
+                    <a href="#">View All <span class="icon fas fa-arrow-right"></span></a>
+                </div>
 
-    </div>
-    <!-- end layout wrapper -->
+                <ul class="products grid-6">
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <span class="base">50% OFF</span>
+                                <a href="#"><img src="{{asset('public/frontend')}}/images/product/wo6.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div> 
+                                <span class="price"><del>$150.00</del> $85.00</span>
+                                <h3><a href="#">Classic T-shirt Sleeves and Formal...</a></h3> 
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <a href="#"><img src="{{asset('public/frontend')}}/images/product/e2.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div> 
+                                <span class="price"><del>$1500.00</del> $800.00</span>
+                                <h3><a href="#">Canon EOS M10 Mirrorless Camera...</a></h3> 
 
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <a href="#"><img src="{{asset('public/frontend')}}/images/product/wo3.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div>  
+                                <span class="price"><del>$36.00</del> $30.00</span>
+                                <h3><a href="#">Kids Cat Ear Decor Sunglasses...</a></h3>
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <a href="#"><img src="{{asset('public/frontend')}}/images/product/wo4.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div>  
+                                <span class="price"><del>$150.00</del> $122.00</span>
+                                <h3><a href="#">Woman Fashion Ladies Heel Shoes...</a></h3>
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <span class="base">50% OFF</span>
+                                <a href="#"><img src="{{asset('public/frontend')}}/images/product/hm5.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div> 
+                                <span class="price"><del>$340.00</del> $170.00</span>
+                                <h3><a href="#">Le Klint 160 Carronade Large...</a></h3>
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <a href="#"><img src="{{asset('public/frontend')}}/images/product/b1.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div>
+                                <span class="price">$195.00</span>
+                                <h3><a href="#">Calvin Klein Men's Slim Fit Suit...</a></h3>
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <a href="#"><img src="{{asset('public/frontend')}}/images/product/m1.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div> 
+                                <span class="price">$110.00</span>
+                                <h3><a href="#">Trendy Shoes For Man With High Quality...</a></h3>
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <a href="#"><img src="{{asset('public/frontend')}}/images/product/wo5.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div>  
+                                <span class="price">$2800.00</span>
+                                <h3><a href="#">Woman Fashion Gold Jewellery...</a></h3>
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <span class="base">50% OFF</span>
+                                <a href="#"><img src="{{asset('public/frontend')}}/images/product/wo7.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div> 
+                                <span class="price"><del>$300.00</del> $150.00</span>
+                                <h3><a href="#">Self Grooming Tips for Aspiring Female...</a></h3>
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <a href="#"><img src="{{asset('public/frontend')}}/images/product/hm4.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div>  
+                                <span class="price"><del>$350.00</del> $285.00</span>
+                                <h3><a href="#">Adesso Director Table Lamp, Black...</a></h3>
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <a href="#"><img src="{{asset('public/frontend')}}/images/product/wo1.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div>  
+                                <span class="price"><del>$150.00</del> $85.00</span>
+                                <h3><a href="#">Women Fashion Spring and Summer...</a></h3>
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>
+                    <li>
+                        <div class="sg-product">
+                            <div class="product-thumb">
+                                <span class="base">50% OFF</span>
+                                <a href="#"><img src="{{asset('public/frontend')}}/images/product/10.png" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="product-info">
+                                <div class="sg-rating">
+                                    <ul class="global-list">
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li class="active"><span class="fa-solid fa-star"></span></li>
+                                        <li><span class="fa-solid fa-star"></span></li>
+                                    </ul>
+                                </div> 
+                                <span class="price"><del>$700.00</del> $350.00</span>
+                                <h3><a href="#">Withings ScanWatch Hybrid...</a></h3> 
+                                <div class="icons">
+                                    <ul class="global-list">
+                                        <li><a href="#"><span><i class="far fa-heart"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-cart-plus"></i></span></a></li>
+                                        <li><a href="#"><span><i class="fas fa-random"></i></span></a></li>
+                                        <li><a href="#"><span><i class="far fa-eye"></i></span></a></li>
+                                    </ul>
+                                </div>                                                              
+                            </div>
+                        </div><!-- /.sg-product -->                                  
+                    </li>
+                </ul>                    
+            </div><!-- /.sa-box -->               
+        </div><!-- /.container -->
+    </section><!-- /.section -->
 
-    <!-- JAVASCRIPT -->
-    <script src="{{asset('public/backend')}}/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="{{asset('public/backend')}}/libs/simplebar/simplebar.min.js"></script>
-    <script src="{{asset('public/backend')}}/libs/node-waves/waves.min.js"></script>
-    <script src="{{asset('public/backend')}}/libs/feather-icons/feather.min.js"></script>
-    <script src="{{asset('public/backend')}}/js/pages/plugins/lord-icon-2.1.0.js"></script>
-    <script src="{{asset('public/backend')}}/js/plugins.js"></script>
+    <section class="sg-blog-section pt-0">
+        <div class="container">
+            <div class="sa-box">
+                <div class="title justify-content-between">
+                    <h1>Latest News</h1>
+                    <a href="#">More Post <span class="icon fas fa-arrow-right"></span></a>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="post">
+                            <div class="entry-header">
+                                <div class="entry-thumbnail">
+                                    <a href="#"><img src="{{asset('public/frontend')}}/images/blog/1.jpg" alt="Image" class="img-fluid"></a>
+                                </div>
+                                <div class="entry-content">
+                                    <h2 class="entry-title"><a href="#">Fashion Trends In 2022 Styles,
+                                    Colors, Accessories</a></h2>
+                                    <p>passages of Lorem Ipsum available, but the majority have suffered alteration in</p>
+                                    <a href="#" class="read-more">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="post">
+                            <div class="entry-header">
+                                <div class="entry-thumbnail">
+                                    <a href="#"><img src="{{asset('public/frontend')}}/images/blog/2.jpg" alt="Image" class="img-fluid"></a>
+                                </div>
+                                <div class="entry-content">
+                                    <h2 class="entry-title"><a href="#">Objectively conceptualize value-added human...</a></h2>
+                                    <p>passages of Lorem Ipsum available, but the majority have suffered alteration in</p>
+                                    <a href="#" class="read-more">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="post">
+                            <div class="entry-header">
+                                <div class="entry-thumbnail">
+                                    <a href="#"><img src="{{asset('public/frontend')}}/images/blog/3.jpg" alt="Image" class="img-fluid"></a>
+                                </div>
+                                <div class="entry-content">
+                                    <h2 class="entry-title"><a href="#">Simple folding single sofa bed furniture</a></h2>
+                                    <p>passages of Lorem Ipsum available, but the majority have suffered alteration in</p>
+                                    <a href="#" class="read-more">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="post">
+                            <div class="entry-header">
+                                <div class="entry-thumbnail">
+                                    <a href="#"><img src="{{asset('public/frontend')}}/images/blog/4.jpg" alt="Image" class="img-fluid"></a>
+                                </div>
+                                <div class="entry-content">
+                                    <h2 class="entry-title"><a href="#">Consectetur adipisicing. magnam commodi doloribus.</a></h2>
+                                    <p>passages of Lorem Ipsum available, but the majority have suffered alteration in</p>
+                                    <a href="#" class="read-more">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.row -->                    
+            </div><!-- /.sa-box -->
+        </div><!-- /.container -->
+    </section><!-- /.sg-blog-section -->
 
-    <!--Swiper slider js-->
-    <script src="{{asset('public/backend')}}/libs/swiper/swiper-bundle.min.js"></script>
+    <section class="product-section pt-0">
+        <div class="container">
+            <div class="sa-box">
+                <div class="title justify-content-between">
+                    <h1>Recent Viewed Product</h1>
+                </div>
 
-    <!-- landing init -->
-    <script src="{{asset('public/backend')}}/js/pages/landing.init.js"></script>
-</body>
-</html>
+                <div class="recent-product-slider">
+                    <div class="recent-product">
+                        <div class="product-thumb">
+                            <a href="#"><img src="{{asset('public/frontend')}}/images/product/wo1.png" alt="Image" class="img-fluid"></a>
+                        </div>
+                        <div class="overlay">
+                            <h2><a href="#"><i class="fa-solid fa-link"></i></a></h2>
+                        </div>
+                    </div>
+                    <div class="recent-product">
+                        <div class="product-thumb">
+                            <a href="#"><img src="{{asset('public/frontend')}}/images/product/w1.png" alt="Image" class="img-fluid"></a>
+                        </div>
+                        <div class="overlay">
+                            <h2><a href="#"><i class="fa-solid fa-link"></i></a></h2>
+                        </div>
+                    </div>
+                    <div class="recent-product">
+                        <div class="product-thumb">
+                            <a href="#"><img src="{{asset('public/frontend')}}/images/product/e2.png" alt="Image" class="img-fluid"></a>
+                        </div>
+                        <div class="overlay">
+                            <h2><a href="#"><i class="fa-solid fa-link"></i></a></h2>
+                        </div>
+                    </div>
+                    <div class="recent-product">
+                        <div class="product-thumb">
+                            <a href="#"><img src="{{asset('public/frontend')}}/images/product/hm5.png" alt="Image" class="img-fluid"></a>
+                        </div>
+                        <div class="overlay">
+                            <h2><a href="#"><i class="fa-solid fa-link"></i></a></h2>
+                        </div>
+                    </div>
+                    <div class="recent-product">
+                        <div class="product-thumb">
+                            <a href="#"><img src="{{asset('public/frontend')}}/images/product/m1.png" alt="Image" class="img-fluid"></a>
+                        </div>
+                        <div class="overlay">
+                            <h2><a href="#"><i class="fa-solid fa-link"></i></a></h2>
+                        </div>
+                    </div>
+                    <div class="recent-product">
+                        <div class="product-thumb">
+                            <a href="#"><img src="{{asset('public/frontend')}}/images/product/m2.png" alt="Image" class="img-fluid"></a>
+                        </div>
+                        <div class="overlay">
+                            <h2><a href="#"><i class="fa-solid fa-link"></i></a></h2>
+                        </div>
+                    </div>
+                    <div class="recent-product">
+                        <div class="product-thumb">
+                            <a href="#"><img src="{{asset('public/frontend')}}/images/product/wo4.png" alt="Image" class="img-fluid"></a>
+                        </div>
+                        <div class="overlay">
+                            <h2><a href="#"><i class="fa-solid fa-link"></i></a></h2>
+                        </div>
+                    </div>
+                    <div class="recent-product">
+                        <div class="product-thumb">
+                            <a href="#"><img src="{{asset('public/frontend')}}/images/product/hm2.png" alt="Image" class="img-fluid"></a>
+                        </div>
+                        <div class="overlay">
+                            <h2><a href="#"><i class="fa-solid fa-link"></i></a></h2>
+                        </div>
+                    </div>
+                    <div class="recent-product">
+                        <div class="product-thumb">
+                            <a href="#"><img src="{{asset('public/frontend')}}/images/product/hm3.png" alt="Image" class="img-fluid"></a>
+                        </div>
+                        <div class="overlay">
+                            <h2><a href="#"><i class="fa-solid fa-link"></i></a></h2>
+                        </div>
+                    </div>
+                </div>                    
+            </div><!-- /.sa-box -->
+        </div><!-- /.container -->
+    </section><!-- /.product-section -->
+    
+</x-frontend-layout> 
+        

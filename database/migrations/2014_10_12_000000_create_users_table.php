@@ -18,11 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-
-            $table->string('unique_patient_id')->unique()->nullable();
-            $table->string('gender')->nullable();
-            $table->string('blood_group')->nullable();
-            $table->string('marital_status')->nullable();
+            
             $table->string('phone')->nullable();
             $table->string('profile_images')->nullable();
             $table->tinyInteger('status')->default(true);
