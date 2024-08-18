@@ -18,7 +18,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with('category', 'brand')->paginate(10);
-        return view('ecommerce.products.index', compact('products'));
+        return view('ecommerce.backend.products.index', compact('products'));
     }
 
     /**
@@ -28,7 +28,7 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $brands = Brand::all();
-        return view('ecommerce.products.create', compact('categories', 'brands'));
+        return view('ecommerce.backend.products.create', compact('categories', 'brands'));
     }
 
     /**
@@ -64,7 +64,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::with('category', 'brand', 'variants', 'images', 'details', 'specifications', 'reviews')->findOrFail($id);
-        return view('ecommerce.products.show', compact('product'));
+        return view('ecommerce.backend.products.show', compact('product'));
     }
 
     /**
@@ -75,7 +75,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $categories = Category::all();
         $brands = Brand::all();
-        return view('ecommerce.products.edit', compact('product', 'categories', 'brands'));
+        return view('ecommerce.backend.products.edit', compact('product', 'categories', 'brands'));
     }
 
     /**

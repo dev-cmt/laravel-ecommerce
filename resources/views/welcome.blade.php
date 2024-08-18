@@ -1,5 +1,5 @@
 <x-frontend-layout> 
-
+    
     <section class="sg-convenience mb-3">
         <div class="container">
             <div class="sa-box">
@@ -52,37 +52,6 @@
             </div><!-- /.sa-box -->
         </div><!-- /.container -->
     </section><!-- /.sg-convenience -->
-
-    <section class="campaign-section p-0">
-        <div class="container">
-            <div class="title justify-content-between">
-                <h1>Campaign</h1>
-                <a href="#">More Campaign <span class="fa-solid fa-arrow-right"></span></a>              
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <a href="#" class="add-banner">
-                        <img src="{{asset('public/frontend')}}/images/others/b3.jpg" alt="Image" class="img-fluid">
-                        <div class="text">
-                            <h2>Clearance Offer</h2>
-                            <h3><span>80%</span> Discount</h3>
-                            <p>Stock ending soon</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6">
-                    <a href="#" class="add-banner">
-                        <img src="{{asset('public/frontend')}}/images/others/b4.jpg" alt="Image" class="img-fluid">
-                        <div class="text text-end">
-                            <h2>Cyber Monday</h2>
-                            <h3>50% <span>Discount</span></h3>
-                            <p>Ending 01 December</p>
-                        </div>
-                    </a>
-                </div>
-            </div><!-- /.row -->
-        </div><!-- /.container -->
-    </section><!-- /.campaign-section -->
 
     <section class="categories-section">
         <div class="container">

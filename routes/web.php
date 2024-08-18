@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Response;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Ecommerce\ProductController;
+use App\Http\Controllers\Ecommerce\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,6 +57,11 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::post('products/{id}/add-specification', [ProductController::class, 'addSpecification'])->name('products.addSpecification');
     Route::post('products/{id}/add-review', [ProductController::class, 'addReview'])->name('products.addReview');
 
+
+    Route::resource('orders', OrderController::class);
+    
+    Route::get('/order-index', [OrderController::class, 'orderIndex'])->name('order.index');
+    Route::get('/order-details', [OrderController::class, 'orderDetailsView'])->name('order.details');
 });
 
 

@@ -17,7 +17,7 @@
                     <h3 class="text-white mb-1">{{Auth::user()->name}}</h3>
                     <p class="text-white text-opacity-75">Joining Data: {{date("j F, Y", strtotime(Auth::user()->created_at))}}</p>
                     <div class="hstack text-white-50 gap-1">
-                        <div class="me-2"><i class="ri-map-pin-user-line me-1 text-white text-opacity-75 fs-16 align-middle"></i>{{Auth::user()->generalProfile->address}}</div>
+                        <div class="me-2"><i class="ri-map-pin-user-line me-1 text-white text-opacity-75 fs-16 align-middle"></i>{{Auth::user()->id}}</div>
                     </div>
                 </div>
             </div>

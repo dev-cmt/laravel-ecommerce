@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Ecommerce;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Ecommerce\Order;
 
 class OrderController extends Controller
 {
     public function index()
     {
         $orders = Order::with('user')->paginate(10);
-        return view('ecommerce.orders.index', compact('orders'));
+        return view('ecommerce.backend.orders.index', compact('orders'));
     }
 
     public function show($id)

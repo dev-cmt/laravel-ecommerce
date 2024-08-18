@@ -66,8 +66,13 @@
                 </div>
                 <div class="right-content">
                     <ul class="global-list">
-                        <li><span><i class="fas fa-phone-volume"></i></span><a href="#">Live Chat: +12 345 678 99</a></li>
-                        <li><span><i class="far fa-user"></i></span><a href="{{route('login')}}">Sign In/ </a> <a href="{{route('register')}}"> Register</a></li>
+                        <li><span><i class="fas fa-phone-volume"></i></span><a href="#">Live Chat: +880 190 930 2126</a></li>
+                        @guest
+                            <li><span><i class="far fa-user"></i></span><a href="{{route('login')}}">Sign In/ </a> <a href="{{route('register')}}"> Register</a></li>
+                        @endguest
+                        @auth
+                            <li><span><i class="far fa-user"></i></span><a href="{{route('profile.index')}}">{{auth()->user()->name}}</a></li>
+                        @endauth
                     </ul>
                 </div>
             </div>
@@ -265,36 +270,19 @@
                             </button>                                  
                             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                                 <ul class="navbar-nav">
-                                    <li class="nav-item active sg-dropdown">
-                                        <a href="index-2.html">Home</a>
-                                        <ul class="sg-dropdown-menu">
-                                            <li><a href="index-2.html">Home V-1</a></li>
-                                            <li class="active"><a href="index1.html">Home V-2<span class="badge">New</span></a></li>
-                                        </ul>
-                                    </li> 
+                                    <li class="nav-item active"><a href="{{route('/')}}">Home</a></li>
                                     <li class="nav-item"><a href="shop.html">Shop</a></li>
                                     <li class="nav-item"><a href="gift-voucher.html">gift voucher</a></li>
                                     <li class="nav-item sg-dropdown">
                                         <a href="#">Page</a>
                                         <ul class="sg-dropdown-menu">
-                                            <li><a href="details.html">Shop Details</a></li>
-                                            <li><a href="blog-details.html">Blog Details</a></li>
-                                            <li><a href="campaign-page.html">Campaign Page</a></li>
-                                            <li><a href="check-out.html">Check Out Page</a></li>
-                                            <li><a href="order-history.html">Order History</a></li>
-                                            <li><a href="shopping-cart.html">Shopping Cart</a></li>
-                                            <li><a href="payment.html">Payment Page</a></li>
-                                            <li><a href="profile.html">Profile Page</a></li>
-                                            <li><a href="edit-profile.html">Edit Profile</a></li>
-                                            <li><a href="notification.html">Notification</a></li>
-                                            <li><a href="wishlist.html">wishlist</a></li>
-                                            <li><a href="contact.html">Contact Us</a></li>
                                             <li><a href="sign-in.html">Sign In</a></li>
                                             <li><a href="sign-up.html">Sign Up</a></li>
                                         </ul>
                                     </li>                                    
-                                    <li class="nav-item"><a href="blog.html">Blog</a></li>
-                                    <li class="nav-item"><a href="about.html">About Us</a></li>        
+                                    <li class="nav-item"><a href="about.html">About Us</a></li>  
+                                    <li class="nav-item"><a href="blog.html">Blog</a></li>      
+                                    <li class="nav-item"><a href="about.html">Contact Us</a></li>        
                                 </ul>
                             </div>
                         </nav><!-- /.navbar -->

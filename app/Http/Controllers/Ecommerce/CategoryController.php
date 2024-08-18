@@ -10,13 +10,13 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::with('parent')->paginate(10);
-        return view('ecommerce.categories.index', compact('categories'));
+        return view('ecommerce.backend.categories.index', compact('categories'));
     }
 
     public function create()
     {
         $parentCategories = Category::whereNull('parent_cat_id')->get();
-        return view('ecommerce.categories.create', compact('parentCategories'));
+        return view('ecommerce.backend.categories.create', compact('parentCategories'));
     }
 
     public function store(Request $request)
@@ -37,14 +37,14 @@ class CategoryController extends Controller
     public function show($id)
     {
         $category = Category::with('children')->findOrFail($id);
-        return view('ecommerce.categories.show', compact('category'));
+        return view('ecommerce.backend.categories.show', compact('category'));
     }
 
     public function edit($id)
     {
         $category = Category::findOrFail($id);
         $parentCategories = Category::whereNull('parent_cat_id')->get();
-        return view('ecommerce.categories.edit', compact('category', 'parentCategories'));
+        return view('ecommerce.backend.categories.edit', compact('category', 'parentCategories'));
     }
 
     public function update(Request $request, $id)
