@@ -4,6 +4,7 @@ namespace App\Models\Ecommerce;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -20,6 +21,30 @@ class Product extends Model
         'price',
         'status'
     ];
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            // Generate slug from product_name
+            $model->url_slug = Str::slug($model->product_name);
+            
+            // Generate SKU code if not provided
+            if (empty($model->sku_code)) {
+                $model->sku_code = 'SKU-' . strtoupper(Str::random(8));
+            }
+        });
+
+        static::updating(function ($model) {
+            // Update slug if product_name is changed
+            $model->url_slug = Str::slug($model->product_name);
+        });
+    }
+
+
+
 
     public function category()
     {
