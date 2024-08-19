@@ -96,11 +96,11 @@
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarApps">
                         <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="apps-chat.html" class="nav-link" data-key="t-chat"> Chat </a>
+                            <li class="nav-item ">
+                                <a href="{{route('categories.index')}}" class="nav-link active" data-key="t-chat">Category </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="apps-file-manager.html" class="nav-link"> <span data-key="t-file-manager">File Manager</span></a>
+                            <li class="nav-item ">
+                                <a href="{{route('brands.index')}}" class="nav-link" data-key="t-chat">Brand </a>
                             </li>
                         </ul>
                     </div>

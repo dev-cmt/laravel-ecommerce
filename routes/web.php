@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Ecommerce\ProductController;
 use App\Http\Controllers\Ecommerce\OrderController;
+use App\Http\Controllers\Ecommerce\CategoryController;
+use App\Http\Controllers\Ecommerce\BrandController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -62,6 +64,10 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     
     Route::get('/order-index', [OrderController::class, 'orderIndex'])->name('order.index');
     Route::get('/order-details', [OrderController::class, 'orderDetailsView'])->name('order.details');
+
+    
+    Route::resource('categories', CategoryController::class);
+    Route::resource('brands', BrandController::class);
 });
 
 

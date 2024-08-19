@@ -4,18 +4,19 @@ namespace App\Http\Controllers\Ecommerce;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Ecommerce\Brand;
 
 class BrandController extends Controller
 {
     public function index()
     {
         $brands = Brand::paginate(10);
-        return view('ecommerce.brands.index', compact('brands'));
+        return view('ecommerce.backend.brands.index', compact('brands'));
     }
 
     public function create()
     {
-        return view('ecommerce.brands.create');
+        return view('ecommerce.backend.brands.create');
     }
 
     public function store(Request $request)
@@ -35,13 +36,13 @@ class BrandController extends Controller
     public function show($id)
     {
         $brand = Brand::findOrFail($id);
-        return view('ecommerce.brands.show', compact('brand'));
+        return view('ecommerce.backend.brands.show', compact('brand'));
     }
 
     public function edit($id)
     {
         $brand = Brand::findOrFail($id);
-        return view('ecommerce.brands.edit', compact('brand'));
+        return view('ecommerce.backend.brands.edit', compact('brand'));
     }
 
     public function update(Request $request, $id)
