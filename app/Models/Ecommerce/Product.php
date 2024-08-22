@@ -18,9 +18,18 @@ class Product extends Model
         'category_id',
         'brand_id',
         'description',
+        'short_description',
         'price',
-        'status'
+        'discount',
+        'tags',
+        'publish_schedule',
+        'visibility',
+        'status',
+        'meta_title',
+        'meta_keywords',
+        'meta_description'
     ];
+    
 
 
     protected static function boot()

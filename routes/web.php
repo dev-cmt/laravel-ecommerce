@@ -58,6 +58,8 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::post('products/{id}/add-detail', [ProductController::class, 'addDetail'])->name('products.addDetail');
     Route::post('products/{id}/add-specification', [ProductController::class, 'addSpecification'])->name('products.addSpecification');
     Route::post('products/{id}/add-review', [ProductController::class, 'addReview'])->name('products.addReview');
+    
+    Route::post('/upload-images', [ProductController::class, 'storeImages'])->name('upload.images');
 
 
     Route::resource('orders', OrderController::class);

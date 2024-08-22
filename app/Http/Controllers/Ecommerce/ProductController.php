@@ -27,41 +27,52 @@ class ProductController extends Controller
         return view('ecommerce.backend.products.create', compact('categories', 'brands'));
     }
 
-    public function store(Request $request)
-    {
-        // Validate the request data
-        $request->validate([
-            'product_name' => 'required|string|max:255',
-            'sku_code' => 'nullable|string|max:255',
-            'url_slug' => 'required|string|max:255|unique:products,url_slug',
-            'img_path' => 'nullable|image|max:2048',
-            'category_id' => 'required|exists:categories,id',
-            'brand_id' => 'required|exists:brands,id',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
-            'status' => 'required|in:active,inactive',
-            'variants.*.color' => 'required|string|max:255',
-            'variants.*.size' => 'required|string|max:255',
-            'variants.*.price' => 'required|numeric|min:0',
-            'images.*.image_path' => 'required|image|max:2048',
-            'details.*.detail_name' => 'required|string|max:255',
-            'details.*.detail_value' => 'required|string',
-            'specifications.*.specification_name' => 'required|string|max:255',
-            'specifications.*.specification_value' => 'required|string',
-        ]);
-
-        // Store the product image if uploaded
-        $imgPath = null;
-        if ($request->hasFile('img_path')) {
-            $imgPath = $request->file('img_path')->store('product_images', 'public');
+    public function store(Request $request){
+        // Handle Dropzone file uploads
+        if ($request->hasFile('file')) {
+            foreach ($request->file('file') as $image) {
+                $imagePath = $image['image_path']->store('product_images', 'public');
+                ProductImage::create([
+                    'product_id' => 1,
+                    'image_path' => $imagePath,
+                ]);
+            }
         }
+        return redirect()->route('products.index')->with('success', 'Product created successfully.');
+    }
+    public function store2(Request $request)
+    {
+        // // Validate request
+        // $validatedData = $request->validate([
+        //     'product_name' => 'required|string|max:255',
+        //     'sku_code' => 'required|string|max:255',
+        //     'url_slug' => 'nullable|string|max:255',
+        //     'img_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        //     'category_id' => 'required|integer|exists:categories,id',
+        //     'brand_id' => 'nullable|integer|exists:brands,id',
+        //     'description' => 'nullable|string',
+        //     'price' => 'nullable|numeric',
+        //     'discount' => 'nullable|numeric',
+        //     'tags' => 'nullable|string',
+        //     'publish_schedule' => 'nullable|date',
+        //     'visibility' => 'nullable|string',
+        //     'status' => 'nullable|string',
+        //     'variants.*.color' => 'nullable|string|max:255',
+        //     'variants.*.size' => 'nullable|string|max:255',
+        //     'variants.*.price' => 'nullable|numeric',
+        //     'variants.*.quantity' => 'nullable|integer',
+        //     'specifications.*.specification_name' => 'nullable|string|max:255',
+        //     'specifications.*.specification_value' => 'nullable|string',
+        //     'details.*.detail_name' => 'nullable|string|max:255',
+        //     'details.*.detail_value' => 'nullable|string',
+        //     'file.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Validation for Dropzone images
+        // ]);
 
         // Create the product
         $product = Product::create([
             'product_name' => $request->input('product_name'),
             'sku_code' => $request->input('sku_code'),
             'url_slug' => $request->input('url_slug'),
-            'img_path' => $imgPath,
             'category_id' => $request->input('category_id'),
             'brand_id' => $request->input('brand_id'),
             'description' => $request->input('description'),
@@ -69,22 +80,16 @@ class ProductController extends Controller
             'status' => $request->input('status'),
         ]);
 
-        // Store product variants
-        if ($request->has('variants')) {
-            foreach ($request->input('variants') as $variant) {
-                ProductVariant::create([
-                    'product_id' => $product->id,
-                    'color' => $variant['color'],
-                    'size' => $variant['size'],
-                    'price' => $variant['price'],
-                ]);
-            }
+        // Handle main image upload
+        if ($request->hasFile('img_path')) {
+            $product->img_path = $this->uploadImage($request->file('img_path'), 'images/product');
         }
+        $product->save();
 
-        // Store product images
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $imagePath = $image['image_path']->store('product_images', 'public');
+        // Handle Dropzone file uploads
+        if ($request->hasFile('file')) {
+            foreach ($request->file('file') as $image) {
+                $imagePath = $this->uploadImage($image, 'product_images');
                 ProductImage::create([
                     'product_id' => $product->id,
                     'image_path' => $imagePath,
@@ -92,13 +97,17 @@ class ProductController extends Controller
             }
         }
 
-        // Store product details
-        if ($request->has('details')) {
-            foreach ($request->input('details') as $detail) {
-                ProductDetail::create([
+        // Store product variants
+        if ($request->has('variants')) {
+            foreach ($request->input('variants') as $variant) {
+                $imagePath = $this->uploadImage($variant, 'images/variant');
+                ProductVariant::create([
                     'product_id' => $product->id,
-                    'detail_name' => $detail['detail_name'],
-                    'detail_value' => $detail['detail_value'],
+                    'img_path' => $imagePath ?? null,
+                    'color' => $variant['color'] ?? null,
+                    'size' => $variant['size'] ?? null,
+                    'price' => $variant['price'] ?? null,
+                    'quantity' => $variant['quantity'] ?? null,
                 ]);
             }
         }
@@ -108,14 +117,44 @@ class ProductController extends Controller
             foreach ($request->input('specifications') as $specification) {
                 ProductSpecification::create([
                     'product_id' => $product->id,
-                    'specification_name' => $specification['specification_name'],
-                    'specification_value' => $specification['specification_value'],
+                    'specification_name' => $specification['specification_name'] ?? null,
+                    'specification_value' => $specification['specification_value'] ?? null,
                 ]);
             }
         }
 
-        // Redirect to the product listing page with a success message
-        return redirect()->route('products.index')->with('success', 'Product created successfully!');
+        // Store product details
+        if ($request->has('details')) {
+            foreach ($request->input('details') as $detail) {
+                ProductDetail::create([
+                    'product_id' => $product->id,
+                    'detail_name' => $detail['detail_name'] ?? null,
+                    'detail_value' => $detail['detail_value'] ?? null,
+                ]);
+            }
+        }
+
+        return redirect()->route('products.index')->with('success', 'Product created successfully.');
+    }
+
+    protected function uploadImage($image, $folder)
+    {
+        // Generate a unique name for the image
+        $imageName = time() . '.' . $image->extension();
+
+        // Move the image to the specified folder
+        $image->move(public_path($folder), $imageName);
+
+        // Return the image path
+        return $folder . '/' . $imageName;
+    }
+
+     
+
+    public function show($id)
+    {
+        $product = Product::with('category', 'brand', 'variants', 'images', 'details', 'specifications')->findOrFail($id);
+        return view('ecommerce.backend.products.show', compact('product'));
     }
     
     public function update(Request $request, Product $product)
@@ -178,14 +217,6 @@ class ProductController extends Controller
         }
 
         return redirect()->route('products.index')->with('success', 'Product updated successfully');
-    }
-
-    
-
-    public function show($id)
-    {
-        $product = Product::with('category', 'brand', 'variants', 'images', 'details', 'specifications')->findOrFail($id);
-        return view('ecommerce.backend.products.show', compact('product'));
     }
 
     public function edit($id)

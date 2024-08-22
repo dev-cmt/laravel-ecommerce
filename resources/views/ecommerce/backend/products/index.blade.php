@@ -36,7 +36,7 @@
                         <td>{{ $product->product_name }}</td>
                         <td>{{ $product->sku_code }}</td>
                         <td>{{ $product->category->category_name }}</td>
-                        <td>{{ $product->brand->brand_name }}</td>
+                        <td>{{ $product->brand->brand_name ?? 'No Brand'}}</td>
                         <td>{{ $product->price }}</td>
                         <td>{{ $product->status === 'active' ? 'Active' : 'Inactive' }}</td>
                         <td>

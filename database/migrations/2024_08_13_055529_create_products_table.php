@@ -13,15 +13,26 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('product_name');
+            $table->string('product_name')->nullable();
             $table->string('sku_code')->nullable();
             $table->text('url_slug')->unique();
             $table->string('img_path')->nullable();
             $table->foreignId('category_id')->constrained('categories');
-            $table->foreignId('brand_id')->constrained('brands');
-            $table->text('description')->nullable();
-            $table->decimal('price', 10, 2);
-            $table->enum('status', ['active', 'inactive']);
+            $table->unsignedBigInteger('brand_id')->nullable();
+            $table->longText('description')->nullable();
+            $table->text('short_description')->nullable();
+            $table->decimal('price', 10, 2)->nullable();
+            $table->decimal('discount', 5, 2)->nullable();
+            $table->json('tags')->nullable();
+            $table->timestamp('publish_schedule')->nullable();
+            $table->enum('visibility', ['Public', 'Hidden'])->default('Public'); // Fixed default value
+            $table->enum('status', ['Published', 'Scheduled', 'Draft'])->default('Draft'); // Fixed default value
+            
+            // Meta data fields
+            $table->string('meta_title')->nullable();  // Meta Title
+            $table->string('meta_keywords')->nullable();  // Meta Keywords
+            $table->text('meta_description')->nullable();  // Meta Description
+            
             $table->timestamps();
         });
     }
