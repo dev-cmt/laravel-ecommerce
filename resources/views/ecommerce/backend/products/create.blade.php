@@ -1,9 +1,8 @@
 <x-app-layout>
-
     @push('style')
         <!-- Dropzone CSS -->
-        <link href="{{ asset('public/backend/libs/dropzone')}}/5.9.3/dropzone.min.css" rel="stylesheet" type="text/css" />
-      
+        <link href="{{ asset('public/backend/libs/dropzone/5.9.3/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
+
         <!-- Custom Dropzone Styles -->
         <style>
             #product-gallery-dropzone {
@@ -49,11 +48,10 @@
             }
         </style>
 
-        <!-- quill css -->
+        <!-- Quill CSS -->
         <link href="{{ asset('public/backend/libs/quill/quill.core.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('public/backend/libs/quill/quill.bubble.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('public/backend/libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
-        
     @endpush
 
     <form action="{{ route('products.store') }}" method="POST" class="dropzone" id="my-dropzone" enctype="multipart/form-data">
@@ -62,7 +60,6 @@
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
-                        <!-- Product Title -->
                         <div class="mb-3">
                             <label class="form-label" for="product_name">Product Title</label>
                             <input type="text" name="product_name" id="product_name" class="form-control @error('product_name') is-invalid @enderror" placeholder="Enter product title" value="{{ old('product_name') }}" required>
@@ -70,8 +67,7 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-    
-                        <!-- Product Description -->
+
                         <div class="mb-3">
                             <label for="product_description">Product Description</label>
                             <div id="product_description" class="snow-editor" style="height: 300px;">
@@ -79,11 +75,11 @@
                             </div>
                             <input type="hidden" name="description" id="description" value="{{ old('description', $product->description ?? '') }}">
                         </div>
-    
+
                     </div>
                 </div>
                 <!-- end card -->
-    
+
                 <!-- Product Image -->
                 <div class="card">
                     <div class="card-header">
@@ -118,7 +114,7 @@
                                 </div>
                             </div>
                         </div>
-    
+
                         <!-- JavaScript for image preview -->
                         <script>
                             document.getElementById('product-image-input').addEventListener('change', function() {
@@ -128,7 +124,7 @@
                                 }
                             });
                         </script>
-    
+
                         <!-- Product Gallery Images -->
                         <div>
                             <h5 class="fs-14 mb-1">Product Gallery Images</h5>
@@ -141,11 +137,12 @@
                                 </div>
                             </div>
                         </div>
-    
+
                     </div>
                 </div>
                 <!-- end card -->
-                
+
+
                 <div class="card">
                     <div class="card-header">
                         <ul class="nav nav-tabs-custom card-header-tabs border-bottom-0" role="tablist">
@@ -184,7 +181,7 @@
                                     <div class="col-lg-6 col-sm-12">
                                         <div class="mb-3">
                                             <label class="form-label" for="manufacturer-name-input">Manufacturer Company Name</label>
-                                            <input type="text" class="form-control" id="manufacturer-name-input" placeholder="Enter manufacturer name">
+                                            <input type="text" name="manufacturer_name" class="form-control" id="manufacturer-name-input" placeholder="Enter manufacturer name">
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-6">
@@ -192,7 +189,7 @@
                                             <label class="form-label" for="product-price-input">Price</label>
                                             <div class="input-group has-validation mb-3">
                                                 <span class="input-group-text" id="product-price-addon">$</span>
-                                                <input type="text" class="form-control" id="product-price-input" placeholder="Enter price" aria-label="Price" aria-describedby="product-price-addon" required>
+                                                <input type="text" name="price" class="form-control" id="product-price-input" placeholder="Enter price" aria-label="Price" aria-describedby="product-price-addon" required>
                                                 <div class="invalid-feedback">Please Enter a product price.</div>
                                             </div>
 
@@ -203,7 +200,7 @@
                                             <label class="form-label" for="product-discount-input">Discount</label>
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text" id="product-discount-addon">%</span>
-                                                <input type="text" class="form-control" id="product-discount-input" placeholder="Enter discount" aria-label="discount" aria-describedby="product-discount-addon">
+                                                <input type="text" name="discount" class="form-control" id="product-discount-input" placeholder="Enter discount" aria-label="discount" aria-describedby="product-discount-addon">
                                             </div>
                                         </div>
                                     </div>
@@ -217,7 +214,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="meta-title-input">Meta title</label>
-                                            <input type="text" class="form-control" placeholder="Enter meta title" id="meta-title-input">
+                                            <input type="text" name="meta_title" class="form-control" placeholder="Enter meta title" id="meta-title-input">
                                         </div>
                                     </div>
                                     <!-- end col -->
@@ -225,7 +222,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="meta-keywords-input">Meta Keywords</label>
-                                            <input type="text" class="form-control" placeholder="Enter meta keywords" id="meta-keywords-input">
+                                            <input type="text" name="meta_keywords" class="form-control" placeholder="Enter meta keywords" id="meta-keywords-input">
                                         </div>
                                     </div>
                                     <!-- end col -->
@@ -234,7 +231,7 @@
 
                                 <div>
                                     <label class="form-label" for="meta-description-input">Meta Description</label>
-                                    <textarea class="form-control" id="meta-description-input" placeholder="Enter meta description" rows="3"></textarea>
+                                    <textarea name="meta_description" class="form-control" id="meta-description-input" placeholder="Enter meta description" rows="3"></textarea>
                                 </div>
                             </div>
                             <!-- end tab pane -->
@@ -323,6 +320,7 @@
                     <!-- end card body -->
                 </div>
                 <!-- end card -->
+
                 <div class="text-end mb-3">
                     <button type="submit" id="product-submit" class="btn btn-success w-sm">Submit</button>
                 </div>
@@ -417,7 +415,7 @@
                     <div class="card-body">
                         <div class="hstack gap-3 align-items-start">
                             <div class="flex-grow-1">
-                                <input type="text" class="form-control" name="tags" data-choices data-choices-multiple-remove="true" placeholder="Enter tags" value="Cotton" />
+                                <input type="text"  name="tags" class="form-control"data-choices data-choices-multiple-remove="true" placeholder="Enter tags" value="Cotton" />
                             </div>
                         </div>
                     </div>
@@ -431,7 +429,7 @@
                     </div>
                     <div class="card-body">
                         <p class="text-muted mb-2">Add short description for product</p>
-                        <textarea class="form-control" name="short_description" placeholder="Must enter minimum of a 100 characters" rows="3"></textarea>
+                        <textarea name="short_description" class="form-control" placeholder="Must enter minimum of a 100 characters" rows="3"></textarea>
                     </div>
                     <!-- end card body -->
                 </div>
@@ -439,6 +437,7 @@
 
             </div>
             <!-- end col -->
+
         </div>
         <!-- end row -->
 
@@ -447,6 +446,7 @@
     @push('scripts')
         <!-- Quill JS -->
         <script src="{{ asset('public/backend/libs/quill/quill.min.js') }}"></script>
+
         <script>
             // Initialize Quill editor
             var quill = new Quill('#product_description', {
@@ -454,15 +454,22 @@
             });
 
             // Update hidden field before form submission
-            document.getElementById('createproduct-form').addEventListener('submit', function () {
+            document.getElementById('product-submit').addEventListener('click', function (e) {
+                e.preventDefault(); // Prevent the form from submitting immediately
                 var description = document.querySelector('#product_description .ql-editor').innerHTML;
                 document.getElementById('description').value = description;
+
+                if (myDropzone.getQueuedFiles().length > 0) {
+                    myDropzone.processQueue(); // Manually trigger Dropzone upload
+                } else {
+                    // If no files are selected, submit the form immediately
+                    document.getElementById('my-dropzone').submit();
+                }
             });
-
         </script>
-
+        
         <!-- Dropzone JS -->
-        <script src="{{ asset('public/backend/libs/dropzone')}}/5.9.3/dropzone.min.js"></script>
+        <script src="{{ asset('public/backend/libs/dropzone/5.9.3/dropzone.min.js') }}"></script>
         <script>
             // Dropzone initialization
             Dropzone.options.myDropzone = {
@@ -507,6 +514,10 @@
                             <div class="dz-size"><span data-dz-size></span></div>
                             <div class="dz-filename"><span data-dz-name></span></div>
                         </div>
+                        <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+                        <div class="dz-success-mark"><span>✔</span></div>
+                        <div class="dz-error-mark"><span>✘</span></div>
+                        <div class="dz-error-message"><span data-dz-errormessage></span></div>
                     </div>
                 `
             };
@@ -565,6 +576,7 @@
             });
 
         </script>
+
     @endpush
 
 </x-app-layout>

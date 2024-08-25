@@ -19,6 +19,7 @@ class Product extends Model
         'brand_id',
         'description',
         'short_description',
+        'manufacturer_name',
         'price',
         'discount',
         'tags',

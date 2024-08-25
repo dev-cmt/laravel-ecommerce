@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Ecommerce;
 
+use App\Helpers\ImageHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Ecommerce\Product;
@@ -28,45 +29,11 @@ class ProductController extends Controller
     }
 
     public function store(Request $request){
-        // Handle Dropzone file uploads
-        if ($request->hasFile('file')) {
-            foreach ($request->file('file') as $image) {
-                $imagePath = $image['image_path']->store('product_images', 'public');
-                ProductImage::create([
-                    'product_id' => 1,
-                    'image_path' => $imagePath,
-                ]);
-            }
-        }
-        return redirect()->route('products.index')->with('success', 'Product created successfully.');
-    }
-    public function store2(Request $request)
-    {
-        // // Validate request
-        // $validatedData = $request->validate([
-        //     'product_name' => 'required|string|max:255',
-        //     'sku_code' => 'required|string|max:255',
-        //     'url_slug' => 'nullable|string|max:255',
-        //     'img_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        //     'category_id' => 'required|integer|exists:categories,id',
-        //     'brand_id' => 'nullable|integer|exists:brands,id',
-        //     'description' => 'nullable|string',
-        //     'price' => 'nullable|numeric',
-        //     'discount' => 'nullable|numeric',
-        //     'tags' => 'nullable|string',
-        //     'publish_schedule' => 'nullable|date',
-        //     'visibility' => 'nullable|string',
-        //     'status' => 'nullable|string',
-        //     'variants.*.color' => 'nullable|string|max:255',
-        //     'variants.*.size' => 'nullable|string|max:255',
-        //     'variants.*.price' => 'nullable|numeric',
-        //     'variants.*.quantity' => 'nullable|integer',
-        //     'specifications.*.specification_name' => 'nullable|string|max:255',
-        //     'specifications.*.specification_value' => 'nullable|string',
-        //     'details.*.detail_name' => 'nullable|string|max:255',
-        //     'details.*.detail_value' => 'nullable|string',
-        //     'file.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Validation for Dropzone images
-        // ]);
+
+        // Convert tags from comma-separated string to JSON array
+        $tags = $request->input('tags') ? explode(',', $request->input('tags')) : [];
+        // Ensure tags are properly encoded
+        $tagsJson = json_encode($tags);
 
         // Create the product
         $product = Product::create([
@@ -76,20 +43,27 @@ class ProductController extends Controller
             'category_id' => $request->input('category_id'),
             'brand_id' => $request->input('brand_id'),
             'description' => $request->input('description'),
+            'short_description' => $request->input('short_description'),
+            'manufacturer_name' => $request->input('manufacturer_name'),
             'price' => $request->input('price'),
-            'status' => $request->input('status'),
+            'discount' => $request->input('discount'),
+            'tags' => $tagsJson,
+            // 'publish_schedule' => $request->input('publish_schedule'),
+            // 'visibility' => $request->input('visibility'),
+            // 'status' => $request->input('status'),
+            
+            'meta_title' => $request->input('meta_title'),
+            'meta_keywords' => $request->input('meta_keywords'),
+            'meta_description' => $request->input('meta_description'),
         ]);
-
-        // Handle main image upload
-        if ($request->hasFile('img_path')) {
-            $product->img_path = $this->uploadImage($request->file('img_path'), 'images/product');
-        }
-        $product->save();
 
         // Handle Dropzone file uploads
         if ($request->hasFile('file')) {
             foreach ($request->file('file') as $image) {
-                $imagePath = $this->uploadImage($image, 'product_images');
+                // Upload each image using the ImageHelper
+                $imagePath = ImageHelper::uploadImage($image, 'images/product/gallery', null);
+
+                // Save the uploaded image path to the database
                 ProductImage::create([
                     'product_id' => $product->id,
                     'image_path' => $imagePath,
@@ -100,10 +74,13 @@ class ProductController extends Controller
         // Store product variants
         if ($request->has('variants')) {
             foreach ($request->input('variants') as $variant) {
-                $imagePath = $this->uploadImage($variant, 'images/variant');
+                if (isset($variant['image']) && $variant['image']) {
+                    $imagePath = $this->uploadImage($variant['image'], 'images/variant');
+                }
+
                 ProductVariant::create([
                     'product_id' => $product->id,
-                    'img_path' => $imagePath ?? null,
+                    'img_path' => $imagePath ?? null, // Image path will be null if no image is uploaded
                     'color' => $variant['color'] ?? null,
                     'size' => $variant['size'] ?? null,
                     'price' => $variant['price'] ?? null,
@@ -111,6 +88,7 @@ class ProductController extends Controller
                 ]);
             }
         }
+
 
         // Store product specifications
         if ($request->has('specifications')) {
@@ -134,26 +112,15 @@ class ProductController extends Controller
             }
         }
 
-        return redirect()->route('products.index')->with('success', 'Product created successfully.');
+
+        return redirect()->back()->with('success', 'Product created successfully.');
     }
-
-    protected function uploadImage($image, $folder)
-    {
-        // Generate a unique name for the image
-        $imageName = time() . '.' . $image->extension();
-
-        // Move the image to the specified folder
-        $image->move(public_path($folder), $imageName);
-
-        // Return the image path
-        return $folder . '/' . $imageName;
-    }
-
      
 
     public function show($id)
     {
-        $product = Product::with('category', 'brand', 'variants', 'images', 'details', 'specifications')->findOrFail($id);
+        // Fetch the product with its related data
+        $product = Product::with(['variants', 'specifications', 'details'])->findOrFail($id);
         return view('ecommerce.backend.products.show', compact('product'));
     }
     

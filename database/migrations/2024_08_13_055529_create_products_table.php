@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->longText('description')->nullable();
             $table->text('short_description')->nullable();
+            $table->string('manufacturer_name')->nullable();
             $table->decimal('price', 10, 2)->nullable();
             $table->decimal('discount', 5, 2)->nullable();
             $table->json('tags')->nullable();
