@@ -114,16 +114,29 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- JavaScript for image preview -->
+                        
                         <script>
                             document.getElementById('product-image-input').addEventListener('change', function() {
                                 const [file] = this.files;
                                 if (file) {
+                                    // Validate file type and size in JavaScript (optional)
+                                    if (!file.type.match('image.*')) {
+                                        alert("Please select a valid image file.");
+                                        this.value = ''; // Clear file input
+                                        return;
+                                    }
+                                    if (file.size > 2 * 1024 * 1024) { // 2MB limit
+                                        alert("File size exceeds the 2MB limit.");
+                                        this.value = ''; // Clear file input
+                                        return;
+                                    }
+                                    // Preview the image
                                     document.getElementById('product-img').src = URL.createObjectURL(file);
                                 }
                             });
                         </script>
+                        
+                        
 
                         <!-- Product Gallery Images -->
                         <div>
