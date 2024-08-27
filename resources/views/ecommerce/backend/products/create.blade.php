@@ -374,7 +374,7 @@
                     </div>
                     <div class="card-body">
                         <p class="text-muted mb-2"> <a href="{{route('categories.create')}}" class="float-end text-decoration-underline">Add New</a>Select product category</p>
-                        <select name="category_id" id="category_id" class="form-select @error('category_id') is-invalid @enderror">
+                        <select name="category_id" id="category_id" class="form-select @error('category_id') is-invalid @enderror" required>
                             <option value="">Select Category</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->category_name }}</option>
@@ -450,7 +450,23 @@
         <script>
             // Initialize Quill editor
             var quill = new Quill('#product_description', {
-                theme: 'snow'
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{ 'font': [] }],                     // Font style
+                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }], // Header levels
+                        ['bold', 'italic', 'underline'],      // Basic text styles
+                        [{ 'color': [] }, { 'background': [] }],  // Text color and highlight
+                        [{ 'script': 'sub'}, { 'script': 'super' }], // Subscript/Superscript
+                        ['blockquote', 'code-block'],         // Blockquote and code block
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }], // Lists
+                        [{ 'indent': '-1'}, { 'indent': '+1' }], // Indent
+                        [{ 'direction': 'rtl' }],             // Text direction
+                        [{ 'align': [] }],                    // Text alignment
+                        ['link'],                             // Insert link, image, and video
+                        ['clean']                             // Clear formatting
+                    ]
+                }
             });
 
             // Update hidden field before form submission
@@ -471,9 +487,7 @@
         <!-- Dropzone JS -->
         <script src="{{ asset('public/backend/libs/dropzone/5.9.3/dropzone.min.js') }}"></script>
         <script>
-            // Dropzone initialization
             Dropzone.options.myDropzone = {
-                // url: "{{ route('products.store') }}",
                 autoProcessQueue: false,
                 uploadMultiple: true,
                 parallelUploads: 10,
@@ -485,24 +499,73 @@
                     var submitButton = document.getElementById('product-submit');
                     var myDropzone = this;
 
+                    // Function to clear all previews
+                    // function clearPreviews() {
+                    //     myDropzone.removeAllFiles(true);
+                    // }
+        
                     submitButton.addEventListener("click", function(e) {
-                        e.preventDefault();
                         e.stopPropagation();
-
-                        if (myDropzone.getQueuedFiles().length > 0) {
-                            myDropzone.processQueue();
+        
+                        // Check for required fields
+                        var requiredFields = document.querySelectorAll('[required]');
+                        var allValid = true;
+        
+                        requiredFields.forEach(function(field) {
+                            if (!field.value.trim()) {
+                                allValid = false;
+                                field.focus();
+                                field.classList.add('is-invalid'); // Add Bootstrap invalid class
+                                field.classList.remove('is-valid'); // Remove Bootstrap valid class
+                            } else {
+                                field.classList.remove('is-invalid');
+                                field.classList.add('is-valid'); // Add Bootstrap valid class
+                            }
+                        });
+        
+                        if (allValid) {
+                            if (myDropzone.getQueuedFiles().length > 0) {
+                                myDropzone.processQueue(); // Process Dropzone queue
+                            } else if (myDropzone.files.length > 0) {
+                                // Files are already in Dropzone, so allow submission
+                                alert("Please select at least one image to upload.");
+                            } else {
+                                alert("Please select at least one image to upload.");
+                            }
                         } else {
-                            alert("Please select at least one image to upload.");
+                            alert("Please fill in all required fields.");
                         }
                     });
-
-                    // this.on("successmultiple", function(files, response) {
-                    //     console.log("Files uploaded successfully:", response);
-                    //     window.location.href = "{{ url()->previous() }}";
-                    // });
-
-                    this.on("errormultiple", function(files, response) {
-                        console.error("Error during upload:", response);
+        
+                    // Handle server-side errors
+                    this.on("error", function(file, response) {
+                        if (response.errors) {
+                            for (let [field, messages] of Object.entries(response.errors)) {
+                                alert(messages.join(', '));
+                                myDropzone.removeAllFiles(true);
+                                if (field === 'img_path') {
+                                    myDropzone.removeFile(file); // Remove the invalid file from Dropzone
+                                }
+                            }
+                        } else {
+                            console.error("Upload error:", response);
+                            file.previewElement.classList.add("dz-error");
+                            file.previewElement.querySelector("[data-dz-errormessage]").textContent = response.message || response;
+                        }
+                    });
+        
+                    // Handle successful upload
+                    this.on("successmultiple", function(files, response) {
+                        console.log("Files uploaded successfully:", response);
+                        myDropzone.removeAllFiles(true); // Clear Dropzone queue and previews on success
+                        // Optionally, redirect or update UI here
+                        window.location.href = "{{ url()->previous() }}";
+                    });
+        
+                    // Optionally append additional data before uploading
+                    this.on("sendingmultiple", function(files, xhr, formData) {
+                        // Append any additional data before uploading, if needed
+                        // Example: formData.append("product_name", document.querySelector("input[name='product_name']").value);
                     });
                 },
                 previewTemplate: `
@@ -522,6 +585,10 @@
                 `
             };
         </script>
+        
+        
+        
+        
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>

@@ -13,6 +13,9 @@ use App\Models\Ecommerce\ProductImage;
 use App\Models\Ecommerce\ProductDetail;
 use App\Models\Ecommerce\ProductSpecification;
 
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\QueryException;
+
 class ProductController extends Controller
 {
     public function index()
@@ -28,18 +31,81 @@ class ProductController extends Controller
         return view('ecommerce.backend.products.create', compact('categories', 'brands'));
     }
 
-    public function store(Request $request){
 
+    public function store(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'product_name' => 'required|string|max:255|unique:products,product_name',
+                'img_path' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
+                'description' => 'nullable|string',
+                'category_id' => 'required|exists:categories,id',
+            ], [
+                'product_name.required' => 'The product title is required.',
+                'product_name.unique' => 'The product title has already been taken.',
+                'category_id.required' => 'The category is required.',
+                'category_id.exists' => 'The selected category is invalid.',
+                'img_path.image' => 'The file must be an image.',
+                'img_path.mimes' => 'The image must be a file of type: jpeg, jpg, png, gif.',
+                'img_path.max' => 'The image may not be greater than 2MB.',
+            ]);
+        
+            // Save the product or perform the desired action
+        
+        } catch (ValidationException $e) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $e->errors(),
+            ], 422);
+        }
+        // Create the product
+        $product = Product::create([
+            'product_name' => $validated['product_name'],
+            'category_id' => 1,
+            'description' => $validated['description'],
+        ]);
+
+
+        // Handle Dropzone file uploads
+        if ($request->hasFile('file')) {
+            foreach ($request->file('file') as $image) {
+                // Upload each image using the ImageHelper
+                $imagePath = ImageHelper::uploadImage($image, 'images/product/gallery', null);
+
+                // Save the uploaded image path to the database
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image_path' => $imagePath,
+                ]);
+            }
+        }
+
+
+        return redirect()->route('products.index')->with('success', 'Product created successfully.');
+
+    }
+
+
+
+
+    public function store2(Request $request){
         // Convert tags from comma-separated string to JSON array
         $tags = $request->input('tags') ? explode(',', $request->input('tags')) : [];
         // Ensure tags are properly encoded
         $tagsJson = json_encode($tags);
+
+        // Store the product image if uploaded
+        $imgPath = null;
+        if ($request->hasFile('img_path')) {
+            $imgPath = ImageHelper::uploadImage($request->file('img_path'), 'images/product', null);
+        }
 
         // Create the product
         $product = Product::create([
             'product_name' => $request->input('product_name'),
             'sku_code' => $request->input('sku_code'),
             'url_slug' => $request->input('url_slug'),
+            'img_path' => $imgPath,
             'category_id' => $request->input('category_id'),
             'brand_id' => $request->input('brand_id'),
             'description' => $request->input('description'),
@@ -48,14 +114,15 @@ class ProductController extends Controller
             'price' => $request->input('price'),
             'discount' => $request->input('discount'),
             'tags' => $tagsJson,
-            // 'publish_schedule' => $request->input('publish_schedule'),
-            // 'visibility' => $request->input('visibility'),
-            // 'status' => $request->input('status'),
+            'publish_schedule' => $request->input('publish_schedule'),
+            'visibility' => $request->input('visibility'),
+            'status' => $request->input('status'),
             
             'meta_title' => $request->input('meta_title'),
             'meta_keywords' => $request->input('meta_keywords'),
             'meta_description' => $request->input('meta_description'),
         ]);
+
 
         // Handle Dropzone file uploads
         if ($request->hasFile('file')) {
