@@ -32,7 +32,7 @@ class ProductController extends Controller
     }
 
 
-    public function store(Request $request){
+    public function store(Request $request) {
         try {
             $validated = $request->validate([
                 'product_name' => 'required|string|max:255|unique:products,product_name',
@@ -40,22 +40,16 @@ class ProductController extends Controller
             ], [
                 'product_name.unique' => 'The product title has already been taken.',
             ]);
-            
-
+    
             // Convert tags from comma-separated string to JSON array
-            $tags = $request->input('tags') ? explode(',', $request->input('tags')) : [];
-            // Ensure tags are properly encoded
-            $tagsJson = json_encode($tags);
-
+            $tagsJson = $request->input('tags') ? json_encode(explode(',', $request->input('tags'))) : null;
+    
             // Store the product image if uploaded
-            $imgPath = null;
-            if ($request->hasFile('img_path')) {
-                $imgPath = ImageHelper::uploadImage($request->file('img_path'), 'images/product', null);
-            }
-
+            $imgPath = $request->hasFile('main_img_path') ? ImageHelper::uploadImage($request->file('main_img_path'), 'images/product', null) : null;
+    
             // Create the product
             $product = Product::create([
-                'product_name' => $request->input('product_name'),
+                'product_name' => $validated['product_name'],
                 'sku_code' => $request->input('sku_code'),
                 'url_slug' => $request->input('url_slug'),
                 'img_path' => $imgPath,
@@ -70,19 +64,16 @@ class ProductController extends Controller
                 'publish_schedule' => $request->input('publish_schedule'),
                 'visibility' => $request->input('visibility'),
                 'status' => $request->input('status'),
-                
                 'meta_title' => $request->input('meta_title'),
                 'meta_keywords' => $request->input('meta_keywords'),
                 'meta_description' => $request->input('meta_description'),
             ]);
-
-
+    
             // Handle Dropzone file uploads
             if ($request->hasFile('file')) {
                 foreach ($request->file('file') as $image) {
-                    // Upload each image using the ImageHelper
                     $imagePath = ImageHelper::uploadImage($image, 'images/product/gallery', null);
-
+    
                     // Save the uploaded image path to the database
                     ProductImage::create([
                         'product_id' => $product->id,
@@ -90,17 +81,15 @@ class ProductController extends Controller
                     ]);
                 }
             }
-
+    
             // Store product variants
             if ($request->has('variants')) {
                 foreach ($request->input('variants') as $variant) {
-                    if (isset($variant['image']) && $variant['image']) {
-                        $imagePath = $this->uploadImage($variant['image'], 'images/variant');
-                    }
-
+                    $imagePath = isset($variant['image']) && $variant['image'] ? ImageHelper::uploadImage($variant['image'], 'images/variant') : null;
+    
                     ProductVariant::create([
                         'product_id' => $product->id,
-                        'img_path' => $imagePath ?? null, // Image path will be null if no image is uploaded
+                        'img_path' => $imagePath,
                         'color' => $variant['color'] ?? null,
                         'size' => $variant['size'] ?? null,
                         'price' => $variant['price'] ?? null,
@@ -108,8 +97,7 @@ class ProductController extends Controller
                     ]);
                 }
             }
-
-
+    
             // Store product specifications
             if ($request->has('specifications')) {
                 foreach ($request->input('specifications') as $specification) {
@@ -120,7 +108,7 @@ class ProductController extends Controller
                     ]);
                 }
             }
-
+    
             // Store product details
             if ($request->has('details')) {
                 foreach ($request->input('details') as $detail) {
@@ -131,9 +119,8 @@ class ProductController extends Controller
                     ]);
                 }
             }
-
+    
             return redirect()->back()->with('success', 'Product created successfully.');
-
         } catch (ValidationException $e) {
             return response()->json([
                 'status' => 'error',
@@ -141,6 +128,7 @@ class ProductController extends Controller
             ], 422);
         }
     }
+    
      
 
     public function show($id)

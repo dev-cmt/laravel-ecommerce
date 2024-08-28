@@ -87,6 +87,8 @@
                     </div>
                     <div class="card-body">
                         <div class="mb-4">
+                            <input type="file" name="main_img_path" class="form-control @error('main_img_path') is-invalid @enderror">
+
                             <h5 class="fs-14 mb-1">Product Image</h5>
                             <p class="text-muted">Add Product main Image.</p>
                             <div class="text-center">
@@ -100,8 +102,8 @@
                                                 </div>
                                             </div>
                                         </label>
-                                        <input type="file" name="img_path" class="form-control d-none @error('img_path') is-invalid @enderror" id="product-image-input" accept="image/png, image/gif, image/jpeg">
-                                        @error('img_path')
+                                        {{-- <input type="file" name="main_img_path" class="form-control d-none @error('main_img_path') is-invalid @enderror" id="product-image-input" accept="image/png, image/gif, image/jpeg"> --}}
+                                        @error('main_img_path')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -135,6 +137,7 @@
                                 }
                             });
                         </script>
+                        
                         
                         
 
@@ -539,12 +542,12 @@
                         if (allValid) {
                             if (myDropzone.getQueuedFiles().length > 0) {
                                 myDropzone.processQueue(); // Process Dropzone queue
-                            } else if (myDropzone.files.length > 0) {
-                                // Files are already in Dropzone, so allow submission
-                                alert("Please select at least one image to upload.");
-                            } else {
-                                alert("Please select at least one image to upload.");
-                            }
+                            } //else if (myDropzone.files.length > 0) {
+                            //     Files are already in Dropzone, so allow submission
+                            //     alert("Please select at least one image to upload.");
+                            // } else {
+                            //     alert("Please select at least one image to upload.");
+                            // }
                         } else {
                             alert("Please fill in all required fields.");
                         }
