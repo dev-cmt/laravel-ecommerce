@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('product_name')->nullable();
             $table->string('sku_code')->nullable();
             $table->text('url_slug')->unique();
-            $table->string('img_path')->nullable();
+            $table->string('main_image')->nullable();
             $table->foreignId('category_id')->constrained('categories');
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->longText('description')->nullable();

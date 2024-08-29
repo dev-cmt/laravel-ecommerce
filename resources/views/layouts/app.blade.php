@@ -121,7 +121,7 @@
 
     <!-- App js -->
     <script src="{{asset('public/backend')}}/js/app.js"></script>
-    <script src="{{asset('public/backend')}}/js/jquery.js"></script>
+    <script src="{{asset('public/backend')}}/js/jquery-3.6.0.min.js"></script>
 
     @stack('scripts')
 </body>

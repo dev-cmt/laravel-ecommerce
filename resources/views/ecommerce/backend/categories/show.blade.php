@@ -1,31 +1,61 @@
-<x-app-layout :title="'Products List'">
-    @push('style')
-    
-    @endpush
-    @push('scripts')
-
-    @endpush
-
+<x-app-layout>
     <div class="container">
-        <h1>Category Details</h1>
-
-        <p><strong>Name:</strong> {{ $category->category_name }}</p>
-        <p><strong>Slug:</strong> {{ $category->url_slug }}</p>
-        <p><strong>Description:</strong> {{ $category->description }}</p>
-        <p><strong>Status:</strong> {{ $category->status ? 'Active' : 'Inactive' }}</p>
-
-        <h3>Subcategories</h3>
-        @if($category->children->isEmpty())
-            <p>No subcategories available.</p>
-        @else
-            <ul>
-                @foreach($category->children as $child)
-                    <li>{{ $child->category_name }}</li>
-                @endforeach
-            </ul>
+        <!-- Display errors if any -->
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
         @endif
 
-        <a href="{{ route('categories.index') }}" class="btn btn-secondary">Back to Categories</a>
-    </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header align-items-center d-flex">
+                        <h4 class="card-title mb-0 flex-grow-1">Category Details</h4>
+                        <div class="flex-shrink-0">
+                            <a href="{{ route('categories.index') }}" class="btn btn-sm btn-danger">Back to List</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Display category details -->
+                        <dl class="row">
+                            <dt class="col-sm-3">Category Name:</dt>
+                            <dd class="col-sm-9">{{ $category->category_name }}</dd>
 
+                            <dt class="col-sm-3">Parent Category:</dt>
+                            <dd class="col-sm-9">
+                                @if($category->parentCategory)
+                                    {{ $category->parentCategory->category_name }}
+                                @else
+                                    None
+                                @endif
+                            </dd>
+
+                            <dt class="col-sm-3">Description:</dt>
+                            <dd class="col-sm-9">{{ $category->description }}</dd>
+
+                            <dt class="col-sm-3">Status:</dt>
+                            <dd class="col-sm-9">
+                                @if($category->status)
+                                    Active
+                                @else
+                                    Inactive
+                                @endif
+                            </dd>
+                        </dl>
+
+                        <!-- Action buttons -->
+                        <div class="mt-3">
+                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning">Edit</a>
+                            <a href="{{ route('categories.index') }}" class="btn btn-danger">Back to List</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </x-app-layout>

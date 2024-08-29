@@ -14,7 +14,7 @@ class Product extends Model
         'product_name',
         'sku_code',
         'url_slug',
-        'img_path',
+        'main_image',
         'category_id',
         'brand_id',
         'description',

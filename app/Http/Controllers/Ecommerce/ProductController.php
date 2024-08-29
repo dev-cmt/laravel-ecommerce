@@ -31,9 +31,7 @@ class ProductController extends Controller
         return view('ecommerce.backend.products.create', compact('categories', 'brands'));
     }
 
-
     public function store(Request $request) {
-        try {
             $validated = $request->validate([
                 'product_name' => 'required|string|max:255|unique:products,product_name',
                 'description' => 'nullable|string',
@@ -44,15 +42,12 @@ class ProductController extends Controller
             // Convert tags from comma-separated string to JSON array
             $tagsJson = $request->input('tags') ? json_encode(explode(',', $request->input('tags'))) : null;
     
-            // Store the product image if uploaded
-            $imgPath = $request->hasFile('main_img_path') ? ImageHelper::uploadImage($request->file('main_img_path'), 'images/product', null) : null;
-    
             // Create the product
             $product = Product::create([
                 'product_name' => $validated['product_name'],
                 'sku_code' => $request->input('sku_code'),
                 'url_slug' => $request->input('url_slug'),
-                'img_path' => $imgPath,
+                'main_image' => ImageHelper::uploadImage($request->file('main_image'), 'images/product'),
                 'category_id' => $request->input('category_id'),
                 'brand_id' => $request->input('brand_id'),
                 'description' => $request->input('description'),
@@ -69,15 +64,12 @@ class ProductController extends Controller
                 'meta_description' => $request->input('meta_description'),
             ]);
     
-            // Handle Dropzone file uploads
-            if ($request->hasFile('file')) {
-                foreach ($request->file('file') as $image) {
-                    $imagePath = ImageHelper::uploadImage($image, 'images/product/gallery', null);
-    
-                    // Save the uploaded image path to the database
+            // Handle Images file uploads
+            if ($request->hasFile('product_images')) {
+                foreach ($request->file('product_images') as $file) {
                     ProductImage::create([
                         'product_id' => $product->id,
-                        'image_path' => $imagePath,
+                        'image_path' => ImageHelper::uploadImage($file, 'images/product/gallery', null),
                     ]);
                 }
             }
@@ -121,12 +113,6 @@ class ProductController extends Controller
             }
     
             return redirect()->back()->with('success', 'Product created successfully.');
-        } catch (ValidationException $e) {
-            return response()->json([
-                'status' => 'error',
-                'errors' => $e->errors(),
-            ], 422);
-        }
     }
     
      

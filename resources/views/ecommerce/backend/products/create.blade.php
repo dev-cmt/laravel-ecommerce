@@ -1,50 +1,39 @@
 <x-app-layout>
     @push('style')
-        <!-- Dropzone CSS -->
-        <link href="{{ asset('public/backend/libs/dropzone/5.9.3/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
 
-        <!-- Custom Dropzone Styles -->
+        <!-- Custom Styles -->
         <style>
-            #product-gallery-dropzone {
-                border: 2px dashed #ced4da;
-                background-color: #f8f9fa;
-                padding: 30px;
+            .upload-area {
+                border: 2px dashed #d3d3d3;
+                padding: 20px;
                 text-align: center;
+                background-color: #f9f9f9;
                 cursor: pointer;
+                border-radius: 5px;
+                margin-bottom: 20px;
             }
-
-            #product-gallery-dropzone .dz-message {
-                font-size: 18px;
-                font-weight: 500;
-                color: #495057;
+            .upload-area:hover {
+                background-color: #f0f0f0;
             }
-
-            #product-gallery-dropzone .dz-message:hover {
-                color: #007bff;
+            .upload-area i {
+                font-size: 48px;
+                color: #6c757d;
             }
-
-            .dz-preview {
-                display: inline-block;
-                margin: 10px;
-            }
-
-            .dz-preview .dz-image img {
-                width: 100px;
-                height: 100px;
-                object-fit: cover;
-                border-radius: 10px;
-            }
-
-            .dz-preview .dz-remove {
+            .upload-area p {
                 margin-top: 10px;
-                display: block;
-                text-align: center;
-                cursor: pointer;
-                color: #dc3545;
+                font-size: 16px;
+                color: #6c757d;
             }
-
-            .dz-preview .dz-error-message {
-                display: none !important;
+            .preview-area {
+                margin-top: 10px;
+            }
+            .preview-item {
+                display: flex;
+                align-items: center;
+                padding: 10px !important;
+            }
+            .preview-item img{
+                margin-right: 25px;
             }
         </style>
 
@@ -54,7 +43,7 @@
         <link href="{{ asset('public/backend/libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
     @endpush
 
-    <form action="{{ route('products.store') }}" method="POST" class="dropzone" id="my-dropzone" enctype="multipart/form-data">
+    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-lg-8">
@@ -87,8 +76,6 @@
                     </div>
                     <div class="card-body">
                         <div class="mb-4">
-                            <input type="file" name="main_img_path" class="form-control @error('main_img_path') is-invalid @enderror">
-
                             <h5 class="fs-14 mb-1">Product Image</h5>
                             <p class="text-muted">Add Product main Image.</p>
                             <div class="text-center">
@@ -102,8 +89,8 @@
                                                 </div>
                                             </div>
                                         </label>
-                                        {{-- <input type="file" name="main_img_path" class="form-control d-none @error('main_img_path') is-invalid @enderror" id="product-image-input" accept="image/png, image/gif, image/jpeg"> --}}
-                                        @error('main_img_path')
+                                        <input type="file" name="main_image" class="form-control d-none @error('main_image') is-invalid @enderror" id="product-image-input" accept="image/png, image/gif, image/jpeg">
+                                        @error('main_image')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -137,21 +124,21 @@
                                 }
                             });
                         </script>
-                        
-                        
-                        
+
 
                         <!-- Product Gallery Images -->
-                        <div>
-                            <h5 class="fs-14 mb-1">Product Gallery Images</h5>
-                            <p class="text-muted">Add multiple images for the product gallery.</p>
-                            <div class="dropzone" id="product-gallery-dropzone">
-                                <div class="dz-message">
-                                    <i class="ri-upload-cloud-2-fill display-4 mb-3"></i>
-                                    <h3>Drop files here to upload</h3>
-                                    <p>or click to select files</p>
-                                </div>
+                        <div class="container mt-5">
+                            <h4>Product Gallery Images</h4>
+                            <p>Add multiple images for the product gallery.</p>
+                            <div class="upload-area" onclick="document.getElementById('file-input').click()">
+                                <i class="mdi mdi-cloud-upload"></i>
+                                <p>Drop files here to upload<br>or click to select files</p>
                             </div>
+                            <input type="file" id="file-input" name="product_images[]" multiple style="display: none;">
+                            <div class="preview-area" id="preview-area">
+                                <!-- Preview items will be inserted here -->
+                            </div>
+                            <button type="button" id="clear-all" class="btn btn-danger" style="display: none">Clear All</button>
                         </div>
 
                     </div>
@@ -456,7 +443,6 @@
 
         </div>
         <!-- end row -->
-
     </form>
 
     @push('scripts')
@@ -464,7 +450,7 @@
         <script src="{{ asset('public/backend/libs/quill/quill.min.js') }}"></script>
 
         <script>
-            // Initialize Quill editor
+            // Initialize Quill editor with table module
             var quill = new Quill('#product_description', {
                 theme: 'snow',
                 modules: {
@@ -479,134 +465,108 @@
                         [{ 'indent': '-1'}, { 'indent': '+1' }], // Indent
                         [{ 'direction': 'rtl' }],             // Text direction
                         [{ 'align': [] }],                    // Text alignment
-                        ['link'],                             // Insert link, image, and video
-                        ['clean']                             // Clear formatting
-                    ]
+                        ['link', 'image', 'video'],           // Insert link
+                        ['clean'],                            // Clear formatting
+                        ['table'],                            // Table functionality
+                    ],
+                    table: true // Enable table module
                 }
             });
-
-            // Update hidden field before form submission
-            document.getElementById('product-submit').addEventListener('click', function (e) {
-                e.preventDefault(); // Prevent the form from submitting immediately
+        
+            // Event listener to update hidden input on text change
+            quill.on('text-change', function() {
                 var description = document.querySelector('#product_description .ql-editor').innerHTML;
                 document.getElementById('description').value = description;
+            });
+        </script>
+        
 
-                if (myDropzone.getQueuedFiles().length > 0) {
-                    myDropzone.processQueue(); // Manually trigger Dropzone upload
-                } else {
-                    // If no files are selected, submit the form immediately
-                    document.getElementById('my-dropzone').submit();
+        <script>
+            let allFiles = [];
+        
+            $(document).ready(function(){
+                $(".upload-area").on("dragover", function(event) {
+                    event.preventDefault();  
+                    event.stopPropagation();
+                    $(this).css("background-color", "#e9ecef");
+                });
+        
+                $(".upload-area").on("dragleave", function(event) {
+                    event.preventDefault();  
+                    event.stopPropagation();
+                    $(this).css("background-color", "#f9f9f9");
+                });
+        
+                $(".upload-area").on("drop", function(event) {
+                    event.preventDefault();  
+                    event.stopPropagation();
+                    $(this).css("background-color", "#f9f9f9");
+        
+                    let files = event.originalEvent.dataTransfer.files;
+                    addFiles(files);
+                });
+        
+                $("#file-input").on("change", function() {
+                    let files = this.files;
+                    addFiles(files);
+                });
+                $("#clear-all").on("click", function() {
+                    allFiles = [];
+                    showPreview();
+                    $("#clear-all").hide();
+                });
+        
+                function addFiles(files) {
+                    for (let i = 0; i < files.length; i++) {
+                        allFiles.push(files[i]);
+                    }
+                    showPreview();
+                }
+        
+                function showPreview() {
+                    $("#preview-area").empty();
+                    $("#clear-all").show();
+                    allFiles.forEach((file, i) => {
+                        let reader = new FileReader();
+        
+                        reader.onload = function(e) {
+                            let filePreview = `
+                                <div data-index="${i}" class="preview-item alert alert-success alert-dismissible fade show material-shadow" role="alert">
+                                    <img src="${e.target.result}" height="50">
+                                    <div>
+                                        <p class="m-0"><strong>Name: </strong> ${file.name} </p>
+                                        <p class="m-0"><strong>Size: </strong> ${(file.size / 1024).toFixed(2)} KB </p>
+                                        <!--<button type="button" class="btn-close" style="top: 15px"></button>-->
+                                    </div>
+                                </div>
+                            `;
+                            $("#preview-area").append(filePreview);
+                        };
+        
+                        reader.readAsDataURL(file);
+                    });
+        
+                    // Update the hidden file input with all selected files
+                    let dataTransfer = new DataTransfer();
+                    allFiles.forEach(file => dataTransfer.items.add(file));
+                    document.getElementById('file-input').files = dataTransfer.files;
+        
+                    // Re-bind click event to remove buttons
+                    $(".btn-close").off("click").on("click", function() {
+                        let index = $(this).closest('.preview-item').data('index');
+                        removeFile(index);
+                    });
+                }
+        
+                function removeFile(index) {
+                    allFiles.splice(index, 1);
+                    showPreview();
                 }
             });
         </script>
         
-        <!-- Dropzone JS -->
-        <script src="{{ asset('public/backend/libs/dropzone/5.9.3/dropzone.min.js') }}"></script>
-        <script>
-            Dropzone.options.myDropzone = {
-                autoProcessQueue: false,
-                uploadMultiple: true,
-                parallelUploads: 10,
-                maxFilesize: 2, // MB
-                acceptedFiles: ".jpeg,.jpg,.png,.gif",
-                addRemoveLinks: true,
-                previewsContainer: "#product-gallery-dropzone", // Preview images inside the dropzone
-                init: function() {
-                    var submitButton = document.getElementById('product-submit');
-                    var myDropzone = this;
-
-                    // Function to clear all previews
-                    // function clearPreviews() {
-                    //     myDropzone.removeAllFiles(true);
-                    // }
-        
-                    submitButton.addEventListener("click", function(e) {
-                        e.stopPropagation();
-        
-                        // Check for required fields
-                        var requiredFields = document.querySelectorAll('[required]');
-                        var allValid = true;
-        
-                        requiredFields.forEach(function(field) {
-                            if (!field.value.trim()) {
-                                allValid = false;
-                                field.focus();
-                                field.classList.add('is-invalid'); // Add Bootstrap invalid class
-                                field.classList.remove('is-valid'); // Remove Bootstrap valid class
-                            } else {
-                                field.classList.remove('is-invalid');
-                                field.classList.add('is-valid'); // Add Bootstrap valid class
-                            }
-                        });
-        
-                        if (allValid) {
-                            if (myDropzone.getQueuedFiles().length > 0) {
-                                myDropzone.processQueue(); // Process Dropzone queue
-                            } //else if (myDropzone.files.length > 0) {
-                            //     Files are already in Dropzone, so allow submission
-                            //     alert("Please select at least one image to upload.");
-                            // } else {
-                            //     alert("Please select at least one image to upload.");
-                            // }
-                        } else {
-                            alert("Please fill in all required fields.");
-                        }
-                    });
-        
-                    // Handle server-side errors
-                    this.on("error", function(file, response) {
-                        if (response.errors) {
-                            for (let [field, messages] of Object.entries(response.errors)) {
-                                alert(messages.join(', '));
-                                myDropzone.removeAllFiles(true);
-                                if (field === 'img_path') {
-                                    myDropzone.removeFile(file); // Remove the invalid file from Dropzone
-                                }
-                            }
-                        } else {
-                            console.error("Upload error:", response);
-                            file.previewElement.classList.add("dz-error");
-                            file.previewElement.querySelector("[data-dz-errormessage]").textContent = response.message || response;
-                        }
-                    });
-        
-                    // Handle successful upload
-                    this.on("successmultiple", function(files, response) {
-                        console.log("Files uploaded successfully:", response);
-                        myDropzone.removeAllFiles(true); // Clear Dropzone queue and previews on success
-                        // Optionally, redirect or update UI here
-                        window.location.href = "{{ url()->previous() }}";
-                    });
-        
-                    // Optionally append additional data before uploading
-                    this.on("sendingmultiple", function(files, xhr, formData) {
-                        // Append any additional data before uploading, if needed
-                        // Example: formData.append("product_name", document.querySelector("input[name='product_name']").value);
-                    });
-                },
-                previewTemplate: `
-                    <div class="dz-preview dz-file-preview">
-                        <div class="dz-image">
-                            <img data-dz-thumbnail />
-                        </div>
-                        <div class="dz-details">
-                            <div class="dz-size"><span data-dz-size></span></div>
-                            <div class="dz-filename"><span data-dz-name></span></div>
-                        </div>
-                        <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
-                        <div class="dz-success-mark"><span>✔</span></div>
-                        <div class="dz-error-mark"><span>✘</span></div>
-                        <div class="dz-error-message"><span data-dz-errormessage></span></div>
-                    </div>
-                `
-            };
-        </script>
-        
-        
-        
         
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function () {
                 let variantCount = 1;
