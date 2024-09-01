@@ -1,50 +1,38 @@
 <x-app-layout>
     @push('style')
-        <!-- Dropzone CSS -->
-        <link href="{{ asset('public/backend/libs/dropzone/5.9.3/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
-
-        <!-- Custom Dropzone Styles -->
+        <!-- Custom Styles -->
         <style>
-            #product-gallery-dropzone {
-                border: 2px dashed #ced4da;
-                background-color: #f8f9fa;
-                padding: 30px;
+            .upload-area {
+                border: 2px dashed #d3d3d3;
+                padding: 20px;
                 text-align: center;
+                background-color: #f9f9f9;
                 cursor: pointer;
+                border-radius: 5px;
+                margin-bottom: 20px;
             }
-
-            #product-gallery-dropzone .dz-message {
-                font-size: 18px;
-                font-weight: 500;
-                color: #495057;
+            .upload-area:hover {
+                background-color: #f0f0f0;
             }
-
-            #product-gallery-dropzone .dz-message:hover {
-                color: #007bff;
+            .upload-area i {
+                font-size: 48px;
+                color: #6c757d;
             }
-
-            .dz-preview {
-                display: inline-block;
-                margin: 10px;
-            }
-
-            .dz-preview .dz-image img {
-                width: 100px;
-                height: 100px;
-                object-fit: cover;
-                border-radius: 10px;
-            }
-
-            .dz-preview .dz-remove {
+            .upload-area p {
                 margin-top: 10px;
-                display: block;
-                text-align: center;
-                cursor: pointer;
-                color: #dc3545;
+                font-size: 16px;
+                color: #6c757d;
             }
-
-            .dz-preview .dz-error-message {
-                display: none !important;
+            .preview-area {
+                margin-top: 10px;
+            }
+            .preview-item {
+                display: flex;
+                align-items: center;
+                padding: 10px !important;
+            }
+            .preview-item img{
+                margin-right: 25px;
             }
         </style>
 
@@ -54,15 +42,16 @@
         <link href="{{ asset('public/backend/libs/quill/quill.snow.css') }}" rel="stylesheet" type="text/css" />
     @endpush
 
-    <form action="{{ route('products.store') }}" method="POST" class="dropzone" id="my-dropzone" enctype="multipart/form-data">
+    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" name="product_id" id="product_id" value="{{ old('product_id', $product->id) }}">
         <div class="row">
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
                         <div class="mb-3">
                             <label class="form-label" for="product_name">Product Title</label>
-                            <input type="text" name="product_name" id="product_name" class="form-control @error('product_name') is-invalid @enderror" placeholder="Enter product title" value="{{ old('product_name') }}" required>
+                            <input type="text" name="product_name" id="product_name" class="form-control @error('product_name') is-invalid @enderror" placeholder="Enter product title" value="{{ old('product_name', $product->product_name) }}" required>
                             @error('product_name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -73,7 +62,7 @@
                             <div id="product_description" class="snow-editor" style="height: 300px;">
                                 {!! old('description', $product->description) !!}
                             </div>
-                            <input type="hidden" name="description" id="description" value="{{ old('description', $product->description ?? '') }}">
+                            <input type="hidden" name="description" id="description" value="{{ old('description', $product->description) }}">
                         </div>
 
                     </div>
@@ -100,49 +89,84 @@
                                                 </div>
                                             </div>
                                         </label>
-                                        <input type="file" name="img_path" class="form-control d-none @error('img_path') is-invalid @enderror" id="product-image-input" accept="image/png, image/gif, image/jpeg">
-                                        @error('img_path')
+                                        <input type="file" name="main_image" class="form-control d-none @error('main_image') is-invalid @enderror" id="product-image-input" accept="image/png, image/gif, image/jpeg">
+                                        @error('main_image')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <!-- Image Preview -->
                                     <div class="avatar-lg">
                                         <div class="avatar-title bg-light rounded">
-                                            <img src="{{ asset('public/backend/images/product-img.png') }}" id="product-img" class="avatar-md h-auto" />
+                                            <img src="{{ asset( 'public/' . $product->main_image ?? 'public/backend/images/product-img.png') }}" id="product-img" class="avatar-md h-auto" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- JavaScript for image preview -->
+                        
                         <script>
                             document.getElementById('product-image-input').addEventListener('change', function() {
                                 const [file] = this.files;
                                 if (file) {
+                                    // Validate file type and size in JavaScript (optional)
+                                    if (!file.type.match('image.*')) {
+                                        alert("Please select a valid image file.");
+                                        this.value = ''; // Clear file input
+                                        return;
+                                    }
+                                    if (file.size > 2 * 1024 * 1024) { // 2MB limit
+                                        alert("File size exceeds the 2MB limit.");
+                                        this.value = ''; // Clear file input
+                                        return;
+                                    }
+                                    // Preview the image
                                     document.getElementById('product-img').src = URL.createObjectURL(file);
                                 }
                             });
                         </script>
 
+
                         <!-- Product Gallery Images -->
-                        <div>
-                            <h5 class="fs-14 mb-1">Product Gallery Images</h5>
-                            <p class="text-muted">Add multiple images for the product gallery.</p>
-                            <div class="dropzone" id="product-gallery-dropzone">
-                                <div class="dz-message">
-                                    <i class="ri-upload-cloud-2-fill display-4 mb-3"></i>
-                                    <h3>Drop files here to upload</h3>
-                                    <p>or click to select files</p>
-                                </div>
+                        <div class="container mt-5">
+                            <h4>Product Gallery Images</h4>
+                            <p>Add multiple images for the product gallery.</p>
+                            <div class="upload-area" onclick="document.getElementById('file-input').click()">
+                                <i class="mdi mdi-cloud-upload"></i>
+                                <p>Drop files here to upload<br>or click to select files</p>
                             </div>
+                            <input type="file" id="file-input" name="product_images[]" multiple style="display: none;">
+                            <div class="preview-area" id="preview-area">
+                                <!-- Preview items will be inserted here -->
+                                @if (count($product->images))
+                                    @foreach ($product->images as $item)
+                                        @php
+                                            $imagePath = public_path($item->image_path); // Full path to the image file
+                                            $imageName = basename($item->image_path); // Extract the image name
+                                            $imageSize = file_exists($imagePath) ? number_format(filesize($imagePath) / 1024, 2) : 'Unknown'; // Get file size in KB
+                                        @endphp
+                                    
+                                        <div class="preview-item alert alert-success alert-dismissible fade show material-shadow" role="alert">
+                                            <img src="{{ asset('public/' . $item->image_path) }}" height="50">
+                                            <div>
+                                                <p class="m-0"><strong>Name: </strong> {{ $imageName }} </p>
+                                                <p class="m-0"><strong>Size: </strong> {{ $imageSize }} KB </p>
+                                                <!-- Button to handle deletion -->
+                                                <button type="button" class="btn-close delete-image" data-id="{{ $item->id }}" data-url="{{ route('product-images.destroy', $item->id) }}" aria-label="Close"></button>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                            
+                            
+                                @endif
+                            </div>
+                            <button type="button" id="clear-all" class="btn btn-danger" style="display: none">Clear All</button>
                         </div>
 
                     </div>
                 </div>
                 <!-- end card -->
 
-
+                <!-- Others Setting -->
                 <div class="card">
                     <div class="card-header">
                         <ul class="nav nav-tabs-custom card-header-tabs border-bottom-0" role="tablist">
@@ -181,7 +205,7 @@
                                     <div class="col-lg-6 col-sm-12">
                                         <div class="mb-3">
                                             <label class="form-label" for="manufacturer-name-input">Manufacturer Company Name</label>
-                                            <input type="text" name="manufacturer_name" class="form-control" id="manufacturer-name-input" placeholder="Enter manufacturer name">
+                                            <input type="text" name="manufacturer_name" class="form-control" id="manufacturer-name-input" value="{{ old('manufacturer_name', $product->manufacturer_name) }}" placeholder="Enter manufacturer name">
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-6">
@@ -189,7 +213,7 @@
                                             <label class="form-label" for="product-price-input">Price</label>
                                             <div class="input-group has-validation mb-3">
                                                 <span class="input-group-text" id="product-price-addon">$</span>
-                                                <input type="text" name="price" class="form-control" id="product-price-input" placeholder="Enter price" aria-label="Price" aria-describedby="product-price-addon" required>
+                                                <input type="number" name="price" min="0" class="form-control" id="product-price-input" value="{{ old('price', $product->price) }}" placeholder="Enter price" aria-label="Price" aria-describedby="product-price-addon" required>
                                                 <div class="invalid-feedback">Please Enter a product price.</div>
                                             </div>
 
@@ -200,7 +224,7 @@
                                             <label class="form-label" for="product-discount-input">Discount</label>
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text" id="product-discount-addon">%</span>
-                                                <input type="text" name="discount" class="form-control" id="product-discount-input" placeholder="Enter discount" aria-label="discount" aria-describedby="product-discount-addon">
+                                                <input type="number" name="discount" min="0" max="100" class="form-control" value="{{ old('discount', $product->discount) }}" id="product-discount-input" placeholder="Enter discount" aria-label="discount" aria-describedby="product-discount-addon">
                                             </div>
                                         </div>
                                     </div>
@@ -214,7 +238,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="meta-title-input">Meta title</label>
-                                            <input type="text" name="meta_title" class="form-control" placeholder="Enter meta title" id="meta-title-input">
+                                            <input type="text" name="meta_title" class="form-control" value="{{ old('meta_title', $product->meta_title) }}" placeholder="Enter meta title" id="meta-title-input">
                                         </div>
                                     </div>
                                     <!-- end col -->
@@ -222,7 +246,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="meta-keywords-input">Meta Keywords</label>
-                                            <input type="text" name="meta_keywords" class="form-control" placeholder="Enter meta keywords" id="meta-keywords-input">
+                                            <input type="text" name="meta_keywords" class="form-control" value="{{ old('meta_keywords', $product->meta_keywords) }}" placeholder="Enter meta keywords" id="meta-keywords-input">
                                         </div>
                                     </div>
                                     <!-- end col -->
@@ -231,7 +255,7 @@
 
                                 <div>
                                     <label class="form-label" for="meta-description-input">Meta Description</label>
-                                    <textarea name="meta_description" class="form-control" id="meta-description-input" placeholder="Enter meta description" rows="3"></textarea>
+                                    <textarea name="meta_description" class="form-control" id="meta-description-input" placeholder="Enter meta description" rows="2">{{ old('meta_description', $product->meta_description) }}</textarea>
                                 </div>
                             </div>
                             <!-- end tab pane -->
@@ -251,14 +275,17 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr id="variant-row-0">
-                                                <td><input type="file" name="variants[0][img_path]" class="form-control"></td>
-                                                <td><input type="text" name="variants[0][color]" class="form-control"></td>
-                                                <td><input type="text" name="variants[0][size]" class="form-control"></td>
-                                                <td><input type="text" name="variants[0][price]" class="form-control"></td>
-                                                <td><input type="text" name="variants[0][quantity]" class="form-control"></td>
+                                            @foreach ($product->variants as $key => $item)
+                                            <tr class="variant-row-edit">
+                                                <input type="hidden" name="variants[{{ $key }}][id]" value="{{$item->id}}">
+                                                <td><input type="file" name="variants[{{ $key }}][img_path]" class="form-control" value="{{$item->img_path}}"></td>
+                                                <td><input type="text" name="variants[{{ $key }}][color]" class="form-control" value="{{$item->color}}"></td>
+                                                <td><input type="text" name="variants[{{ $key }}][size]" class="form-control" value="{{$item->size}}"></td>
+                                                <td><input type="number" min="0" name="variants[{{ $key }}][price]" class="form-control" value="{{$item->price}}"></td>
+                                                <td><input type="number" min="0" name="variants[{{ $key }}][quantity]" class="form-control" value="{{$item->quantity}}"></td>
                                                 <td><button type="button" class="btn btn-danger btn-sm remove-row">Remove</button></td>
                                             </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                     <button type="button" id="add-variant" class="btn btn-success">Add Variant</button>
@@ -278,11 +305,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr id="specification-row-0">
-                                                <td><input type="text" name="specifications[0][specification_name]" class="form-control"></td>
-                                                <td><textarea name="specifications[0][specification_value]" rows="1" class="form-control"></textarea></td>
+                                            @foreach ($product->specifications as $item)
+                                            <tr class="specification-row-edit">
+                                                <td><input type="text" name="specifications[0][specification_name]" value="{{$item->specification_name}}" class="form-control"></td>
+                                                <td><textarea name="specifications[0][specification_value]" rows="1" value="{{$item->specification_value}}" class="form-control"></textarea></td>
                                                 <td><button type="button" class="btn btn-danger btn-sm remove-row">Remove</button></td>
                                             </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                     <button type="button" id="add-specification" class="btn btn-success">Add Specification</button>
@@ -302,11 +331,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr id="detail-row-0">
-                                                <td><input type="text" name="details[0][detail_name]" class="form-control"></td>
-                                                <td><textarea name="details[0][detail_value]" rows="1" class="form-control"></textarea></td>
+                                            @foreach ($product->details as $item)
+                                            <tr class="detail-row-edit">
+                                                <td><input type="text" name="details[0][detail_name]" value="{{$item->detail_name}}" class="form-control"></td>
+                                                <td><textarea name="details[0][detail_value]" rows="1" value="{{$item->detail_value}}" class="form-control"></textarea></td>
                                                 <td><button type="button" class="btn btn-danger btn-sm remove-row">Remove</button></td>
                                             </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                     <button type="button" id="add-detail" class="btn btn-success">Add Detail</button>
@@ -327,6 +358,127 @@
             </div>
             <!-- end col -->
 
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Publish</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="choices-publish-status-input" class="form-label">Status</label>
+                            <select name="status" class="form-select" id="choices-publish-status-input" data-choices data-choices-search-false>
+                                <option value="Published" {{ old('status', $product->status) == 'Published' ? 'selected' : '' }}>Published</option>
+                                <option value="Scheduled" {{ old('status', $product->status) == 'Scheduled' ? 'selected' : '' }}>Scheduled</option>
+                                <option value="Draft" {{ old('status', $product->status) == 'Draft' ? 'selected' : '' }}>Draft</option>
+                            </select>
+                        </div>                        
+
+                        <div class="mb-3">
+                            <label for="choices-publish-visibility-input" class="form-label">Visibility</label>
+                            <select name="visibility" class="form-select" id="choices-publish-visibility-input" data-choices data-choices-search-false>
+                                <option value="Public" {{ old('visibility', $product->visibility) == 'Public' ? 'selected' : '' }}>Public</option>
+                                <option value="Hidden" {{ old('visibility', $product->visibility) == 'Hidden' ? 'selected' : '' }}>Hidden</option>
+                            </select>
+                        </div>                        
+                    </div>
+                    <!-- end card body -->
+                </div>
+                <!-- end card -->
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Publish Schedule</h5>
+                    </div>
+                    <!-- end card body -->
+                    <div class="card-body">
+                        <div>
+                            <label for="datepicker-publish-input" class="form-label">Publish Date & Time</label>
+                            <input type="date" name="publish_schedule" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <!-- end card -->
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Product Categories</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted mb-2">
+                            <a href="{{ route('categories.create') }}" class="float-end text-decoration-underline">Add New</a>
+                            Select product category
+                        </p>
+                        <select name="category_id" id="category_id" class="form-select @error('category_id') is-invalid @enderror" required>
+                            <option value="">Select Category</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
+                                    {{ $category->category_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('category_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <!-- end card body -->
+                </div>                
+                <!-- end card -->
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Product Brand</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted mb-2">
+                            <a href="{{ route('brands.create') }}" class="float-end text-decoration-underline">Add New</a>
+                            Select product brand
+                        </p>
+                        <select name="brand_id" id="brand_id" class="form-select @error('brand_id') is-invalid @enderror">
+                            <option value="">No Brand</option>
+                            @foreach($brands as $brand)
+                                <option value="{{ $brand->id }}" {{ old('brand_id', $product->brand_id) == $brand->id ? 'selected' : '' }}>
+                                    {{ $brand->brand_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('brand_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <!-- end card body -->
+                </div>
+                <!-- end card -->                
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Product Tags</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="hstack gap-3 align-items-start">
+                            <div class="flex-grow-1">
+                                <input type="text" name="tags" class="form-control" value="{{ old('tags', implode(',', $product->tags)) }}" placeholder="Enter tags" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end card body -->
+                </div>
+                <!-- end card -->
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Product Short Description</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted mb-2">Add short description for product</p>
+                        <textarea name="short_description" class="form-control" placeholder="Must enter minimum of a 100 characters" rows="3">{{ old('tags', $product->short_description) }}</textarea>
+                    </div>
+                    <!-- end card body -->
+                </div>
+                <!-- end card -->
+
+            </div>
+            <!-- end col -->
+
         </div>
         <!-- end row -->
 
@@ -339,103 +491,159 @@
         <script>
             // Initialize Quill editor
             var quill = new Quill('#product_description', {
-                theme: 'snow'
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{ 'font': [] }],                     // Font style
+                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }], // Header levels
+                        ['bold', 'italic', 'underline'],      // Basic text styles
+                        [{ 'color': [] }, { 'background': [] }],  // Text color and highlight
+                        [{ 'script': 'sub'}, { 'script': 'super' }], // Subscript/Superscript
+                        ['blockquote', 'code-block'],         // Blockquote and code block
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }], // Lists
+                        [{ 'indent': '-1'}, { 'indent': '+1' }], // Indent
+                        [{ 'direction': 'rtl' }],             // Text direction
+                        [{ 'align': [] }],                    // Text alignment
+                        ['link'],                             // Insert link, image, and video
+                        ['clean']                             // Clear formatting
+                    ]
+                }
             });
 
             // Update hidden field before form submission
             document.getElementById('product-submit').addEventListener('click', function (e) {
-                e.preventDefault(); // Prevent the form from submitting immediately
                 var description = document.querySelector('#product_description .ql-editor').innerHTML;
                 document.getElementById('description').value = description;
-
-                if (myDropzone.getQueuedFiles().length > 0) {
-                    myDropzone.processQueue(); // Manually trigger Dropzone upload
-                } else {
-                    // If no files are selected, submit the form immediately
-                    document.getElementById('my-dropzone').submit();
-                }
             });
         </script>
         
-        <!-- Dropzone JS -->
-        <script src="{{ asset('public/backend/libs/dropzone/5.9.3/dropzone.min.js') }}"></script>
         <script>
-            // Dropzone initialization
-            Dropzone.options.myDropzone = {
-                // url: "{{ route('products.store') }}",
-                autoProcessQueue: false,
-                uploadMultiple: true,
-                parallelUploads: 10,
-                maxFilesize: 2, // MB
-                acceptedFiles: ".jpeg,.jpg,.png,.gif",
-                addRemoveLinks: true,
-                previewsContainer: "#product-gallery-dropzone", // Preview images inside the dropzone
-                init: function() {
-                    var submitButton = document.getElementById('product-submit');
-                    var myDropzone = this;
-
-                    submitButton.addEventListener("click", function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                        if (myDropzone.getQueuedFiles().length > 0) {
-                            myDropzone.processQueue();
-                        } else {
-                            alert("Please select at least one image to upload.");
-                        }
+            let allFiles = [];
+        
+            $(document).ready(function(){
+                $(".upload-area").on("dragover", function(event) {
+                    event.preventDefault();  
+                    event.stopPropagation();
+                    $(this).css("background-color", "#e9ecef");
+                });
+        
+                $(".upload-area").on("dragleave", function(event) {
+                    event.preventDefault();  
+                    event.stopPropagation();
+                    $(this).css("background-color", "#f9f9f9");
+                });
+        
+                $(".upload-area").on("drop", function(event) {
+                    event.preventDefault();  
+                    event.stopPropagation();
+                    $(this).css("background-color", "#f9f9f9");
+        
+                    let files = event.originalEvent.dataTransfer.files;
+                    addFiles(files);
+                });
+        
+                $("#file-input").on("change", function() {
+                    let files = this.files;
+                    addFiles(files);
+                });
+                $("#clear-all").on("click", function() {
+                    allFiles = [];
+                    showPreview();
+                    $("#clear-all").hide();
+                });
+        
+                function addFiles(files) {
+                    for (let i = 0; i < files.length; i++) {
+                        allFiles.push(files[i]);
+                    }
+                    showPreview();
+                }
+        
+                function showPreview() {
+                    $("#preview-area").empty();
+                    $("#clear-all").show();
+                    allFiles.forEach((file, i) => {
+                        let reader = new FileReader();
+        
+                        reader.onload = function(e) {
+                            let filePreview = `
+                                <div data-index="${i}" class="preview-item alert alert-success alert-dismissible fade show material-shadow" role="alert">
+                                    <img src="${e.target.result}" height="50">
+                                    <div>
+                                        <p class="m-0"><strong>Name: </strong> ${file.name} </p>
+                                        <p class="m-0"><strong>Size: </strong> ${(file.size / 1024).toFixed(2)} KB </p>
+                                        <!--<button type="button" class="btn-close" style="top: 15px"></button>-->
+                                    </div>
+                                </div>
+                            `;
+                            $("#preview-area").append(filePreview);
+                        };
+        
+                        reader.readAsDataURL(file);
                     });
-
-                    // this.on("successmultiple", function(files, response) {
-                    //     console.log("Files uploaded successfully:", response);
-                    //     window.location.href = "{{ url()->previous() }}";
-                    // });
-
-                    this.on("errormultiple", function(files, response) {
-                        console.error("Error during upload:", response);
+        
+                    // Update the hidden file input with all selected files
+                    let dataTransfer = new DataTransfer();
+                    allFiles.forEach(file => dataTransfer.items.add(file));
+                    document.getElementById('file-input').files = dataTransfer.files;
+        
+                    // Re-bind click event to remove buttons
+                    $(".btn-close").off("click").on("click", function() {
+                        let index = $(this).closest('.preview-item').data('index');
+                        removeFile(index);
                     });
-                },
-                previewTemplate: `
-                    <div class="dz-preview dz-file-preview">
-                        <div class="dz-image">
-                            <img data-dz-thumbnail />
-                        </div>
-                        <div class="dz-details">
-                            <div class="dz-size"><span data-dz-size></span></div>
-                            <div class="dz-filename"><span data-dz-name></span></div>
-                        </div>
-                        <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
-                        <div class="dz-success-mark"><span>✔</span></div>
-                        <div class="dz-error-mark"><span>✘</span></div>
-                        <div class="dz-error-message"><span data-dz-errormessage></span></div>
-                    </div>
-                `
-            };
+                }
+        
+                function removeFile(index) {
+                    allFiles.splice(index, 1);
+                    showPreview();
+                }
+            });
         </script>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function () {
-                let variantCount = 1;
-                let specificationCount = 1;
-                let detailCount = 1;
+
+                var variantRow = $('#variants-table tbody .variant-row-edit').length;
+                if(variantRow == 0){
+                    addVariant(0);
+                }
+                var specificationRow = $('#specifications-table tbody .specification-row-edit').length;
+                if(specificationRow == 0){
+                    addSpecification(0);
+                }
+                var detailRow = $('#details-table tbody .detail-row-edit').length;
+                if(detailRow == 0){
+                    addDetail(0);
+                }
+
 
                 // Add Variant
                 $('#add-variant').click(function () {
+                    var rowCount = $('#variants-table tbody tr').length + 1;
+                    addVariant(rowCount);
+                });
+
+                function addVariant(variantCount){
                     $('#variants-table tbody').append(`
                         <tr id="variant-row-${variantCount}">
                             <td><input type="file" name="variants[${variantCount}][img_path]" class="form-control"></td>
                             <td><input type="text" name="variants[${variantCount}][color]" class="form-control"></td>
                             <td><input type="text" name="variants[${variantCount}][size]" class="form-control"></td>
-                            <td><input type="text" name="variants[${variantCount}][price]" class="form-control"></td>
-                            <td><input type="text" name="variants[${variantCount}][quantity]" class="form-control"></td>
+                            <td><input type="number" min="0" name="variants[${variantCount}][price]" class="form-control"></td>
+                            <td><input type="number" min="0" name="variants[${variantCount}][quantity]" class="form-control"></td>
                             <td><button type="button" class="btn btn-danger btn-sm remove-row">Remove</button></td>
                         </tr>
                     `);
                     variantCount++;
-                });
+                }
 
                 // Add Specification
                 $('#add-specification').click(function () {
+                    var rowCount = $('#specifications-table tbody tr').length + 1;
+                    addSpecification(rowCount);
+                });
+                function addSpecification(specificationCount){
                     $('#specifications-table tbody').append(`
                         <tr id="specification-row-${specificationCount}">
                             <td><input type="text" name="specifications[${specificationCount}][specification_name]" class="form-control"></td>
@@ -444,10 +652,14 @@
                         </tr>
                     `);
                     specificationCount++;
-                });
+                }
 
                 // Add Detail
                 $('#add-detail').click(function () {
+                    var rowCount = $('#details-table tbody tr').length + 1;
+                    addDetail(rowCount);
+                });
+                function addDetail(detailCount){
                     $('#details-table tbody').append(`
                         <tr id="detail-row-${detailCount}">
                             <td><input type="text" name="details[${detailCount}][detail_name]" class="form-control"></td>
@@ -456,7 +668,7 @@
                         </tr>
                     `);
                     detailCount++;
-                });
+                }
 
                 // Remove Row
                 $(document).on('click', '.remove-row', function () {
@@ -466,6 +678,40 @@
 
         </script>
 
+        <script>
+            $('.delete-image').on('click', function() {
+                const imageId = $(this).data('id');
+                const deleteUrl = $(this).data('url');
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: deleteUrl,
+                            type: 'DELETE',
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            success: (response) => {
+                                if (response.success) {
+                                    $(`.preview-item:has(.delete-image[data-id="${imageId}"])`).remove();
+                                    Swal.fire('Deleted!', 'Your image has been deleted.', 'success');
+                                } else {
+                                    Swal.fire('Error!', 'An error occurred while deleting the image.', 'error');
+                                }
+                            },
+                            error: () => Swal.fire('Error!', 'An error occurred while deleting the image.', 'error')
+                        });
+                    }
+                });
+            });
+
+        </script>
     @endpush
 
 </x-app-layout>

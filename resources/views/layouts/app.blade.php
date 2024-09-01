@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{{asset('public/backend')}}/libs/nouislider/nouislider.min.css">
     <!-- gridjs css (product.index)-->
     <link rel="stylesheet" href="{{asset('public/backend')}}/libs/gridjs/theme/mermaid.min.css">
+    <!-- Sweet Alert css-->
+    <link rel="stylesheet" href="{{asset('public/backend')}}/libs/sweetalert2/sweetalert2.min.css"/>
 
     <!-- Layout config Js -->
     <script src="{{asset('public/backend')}}/js/layout.js"></script>
@@ -26,6 +28,7 @@
     <link href="{{asset('public/backend')}}/css/app.min.css" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="{{asset('public/backend')}}/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{asset('public/backend')}}/css/toastr.min.css" rel="stylesheet" type="text/css" />
 
     @stack('style')
 </head>
@@ -119,9 +122,15 @@
     <script src="{{asset('public/backend')}}/js/pages/plugins/lord-icon-2.1.0.js"></script>
     <script src="{{asset('public/backend')}}/js/plugins.js"></script>
 
+    
+    <!-- Sweet Alerts js -->
+    <script src="{{asset('public/backend')}}/libs/sweetalert2/sweetalert2.min.js"></script>
+    <script src="{{asset('public/backend')}}/js/pages/sweetalerts.init.js"></script>
+
     <!-- App js -->
     <script src="{{asset('public/backend')}}/js/app.js"></script>
     <script src="{{asset('public/backend')}}/js/jquery-3.6.0.min.js"></script>
+    <script src="{{asset('public/backend')}}/js/toastr.min.js"></script>
 
     @stack('scripts')
 </body>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Ecommerce;
 use App\Helpers\ImageHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\File;
 use App\Models\Ecommerce\Product;
 use App\Models\Ecommerce\Category;
 use App\Models\Ecommerce\Brand;
@@ -31,89 +33,177 @@ class ProductController extends Controller
         return view('ecommerce.backend.products.create', compact('categories', 'brands'));
     }
 
-    public function store(Request $request) {
-            $validated = $request->validate([
-                'product_name' => 'required|string|max:255|unique:products,product_name',
-                'description' => 'nullable|string',
-            ], [
-                'product_name.unique' => 'The product title has already been taken.',
-            ]);
+    public function store(Request $request) 
+    {
+        // Determine if this is an update
+        $productId = $request->input('product_id');
+
+        // Validate the request
+        $validatedData = $request->validate([
+            'product_name' => [
+                'required',
+                'string',
+                'max:255',
+                // Ensure uniqueness excluding the current product ID
+                Rule::unique('products', 'product_name')->ignore($productId, 'id'),
+            ],
+            'description' => 'nullable|string',
+        ]);
+
+        // Determine product to update or create
+        $product = $productId ? Product::findOrFail($productId) : new Product();
+
+        // Assign product attributes
+        $product->product_name = $request->input('product_name');
+        $product->sku_code = $request->input('sku_code');
+        $product->url_slug = $request->input('url_slug');
+        $product->main_image = $request->hasFile('main_image') ? ImageHelper::uploadImage($request->file('main_image'), 'images/product') : $product->main_image;
+        $product->category_id = $request->input('category_id');
+        $product->brand_id = $request->input('brand_id');
+        $product->description = $request->input('description');
+        $product->short_description = $request->input('short_description');
+        $product->manufacturer_name = $request->input('manufacturer_name');
+        $product->price = $request->input('price');
+        $product->discount = $request->input('discount');
+        $product->tags = json_encode(explode(',', $request->input('tags'))) ?? null;
+        $product->publish_schedule = $request->input('publish_schedule');
+        $product->visibility = $request->input('visibility');
+        $product->status = $request->input('status');
+        $product->meta_title = $request->input('meta_title');
+        $product->meta_keywords = $request->input('meta_keywords');
+        $product->meta_description = $request->input('meta_description');
+
+        // Save the product
+        $product->save();
     
-            // Convert tags from comma-separated string to JSON array
-            $tagsJson = $request->input('tags') ? json_encode(explode(',', $request->input('tags'))) : null;
-    
-            // Create the product
-            $product = Product::create([
-                'product_name' => $validated['product_name'],
-                'sku_code' => $request->input('sku_code'),
-                'url_slug' => $request->input('url_slug'),
-                'main_image' => ImageHelper::uploadImage($request->file('main_image'), 'images/product'),
-                'category_id' => $request->input('category_id'),
-                'brand_id' => $request->input('brand_id'),
-                'description' => $request->input('description'),
-                'short_description' => $request->input('short_description'),
-                'manufacturer_name' => $request->input('manufacturer_name'),
-                'price' => $request->input('price'),
-                'discount' => $request->input('discount'),
-                'tags' => $tagsJson,
-                'publish_schedule' => $request->input('publish_schedule'),
-                'visibility' => $request->input('visibility'),
-                'status' => $request->input('status'),
-                'meta_title' => $request->input('meta_title'),
-                'meta_keywords' => $request->input('meta_keywords'),
-                'meta_description' => $request->input('meta_description'),
-            ]);
-    
-            // Handle Images file uploads
-            if ($request->hasFile('product_images')) {
-                foreach ($request->file('product_images') as $file) {
-                    ProductImage::create([
-                        'product_id' => $product->id,
-                        'image_path' => ImageHelper::uploadImage($file, 'images/product/gallery', null),
-                    ]);
-                }
+        // Handle Images file uploads
+        if ($request->hasFile('product_images')) {
+            foreach ($request->file('product_images') as $file) {
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image_path' => ImageHelper::uploadImage($file, 'images/product/gallery', null),
+                ]);
             }
-    
-            // Store product variants
-            if ($request->has('variants')) {
-                foreach ($request->input('variants') as $variant) {
-                    $imagePath = isset($variant['image']) && $variant['image'] ? ImageHelper::uploadImage($variant['image'], 'images/variant') : null;
-    
-                    ProductVariant::create([
-                        'product_id' => $product->id,
-                        'img_path' => $imagePath,
-                        'color' => $variant['color'] ?? null,
-                        'size' => $variant['size'] ?? null,
-                        'price' => $variant['price'] ?? null,
-                        'quantity' => $variant['quantity'] ?? null,
-                    ]);
-                }
-            }
-    
-            // Store product specifications
-            if ($request->has('specifications')) {
-                foreach ($request->input('specifications') as $specification) {
-                    ProductSpecification::create([
-                        'product_id' => $product->id,
-                        'specification_name' => $specification['specification_name'] ?? null,
-                        'specification_value' => $specification['specification_value'] ?? null,
-                    ]);
-                }
-            }
-    
-            // Store product details
-            if ($request->has('details')) {
-                foreach ($request->input('details') as $detail) {
-                    ProductDetail::create([
-                        'product_id' => $product->id,
-                        'detail_name' => $detail['detail_name'] ?? null,
-                        'detail_value' => $detail['detail_value'] ?? null,
-                    ]);
-                }
-            }
-    
-            return redirect()->back()->with('success', 'Product created successfully.');
+        }
+
+        // Store product variants
+        foreach ($request->input('variants') as $key => $variant) {
+            $productVariant= [
+                'product_id' => $product->id,
+                'img_path' => $request->hasFile("variants.{$key}.img_path") ? ImageHelper::uploadImage($request->file("variants.{$key}.img_path"), 'images/product/variant') : null,
+                'color' => $variant['color'] ?? null,
+                'size' => $variant['size'] ?? null,
+                'price' => $variant['price'] ?? null,
+                'quantity' => $variant['quantity'] ?? null,
+            ];
+            ProductVariant::updateOrCreate(['id' => $variant['id'] ?? null], $productVariant);
+        }
+
+
+        // // Store product specifications
+        // if ($request->has('specifications')) {
+        //     foreach ($request->input('specifications') as $specification) {
+        //         ProductSpecification::create([
+        //             'product_id' => $product->id,
+        //             'specification_name' => $specification['specification_name'] ?? null,
+        //             'specification_value' => $specification['specification_value'] ?? null,
+        //         ]);
+        //     }
+        // }
+
+        // // Store product details
+        // if ($request->has('details')) {
+        //     foreach ($request->input('details') as $detail) {
+        //         ProductDetail::create([
+        //             'product_id' => $product->id,
+        //             'detail_name' => $detail['detail_name'] ?? null,
+        //             'detail_value' => $detail['detail_value'] ?? null,
+        //         ]);
+        //     }
+        // }
+
+        return redirect()->route("products.index")->with('success', 'Product created successfully.');
     }
+    // public function store(Request $request) {
+    //         $validated = $request->validate([
+    //             'product_name' => 'required|string|max:255|unique:products,product_name',
+    //             'description' => 'nullable|string',
+    //         ], [
+    //             'product_name.unique' => 'The product title has already been taken.',
+    //         ]);
+    
+    //         // Convert tags from comma-separated string to JSON array
+    //         $tagsJson = $request->input('tags') ? json_encode(explode(',', $request->input('tags'))) : null;
+    
+    //         // Create the product
+    //         $product = Product::create([
+    //             'product_name' => $validated['product_name'],
+    //             'sku_code' => $request->input('sku_code'),
+    //             'url_slug' => $request->input('url_slug'),
+    //             'main_image' => ImageHelper::uploadImage($request->file('main_image'), 'images/product'),
+    //             'category_id' => $request->input('category_id'),
+    //             'brand_id' => $request->input('brand_id'),
+    //             'description' => $request->input('description'),
+    //             'short_description' => $request->input('short_description'),
+    //             'manufacturer_name' => $request->input('manufacturer_name'),
+    //             'price' => $request->input('price'),
+    //             'discount' => $request->input('discount'),
+    //             'tags' => $tagsJson,
+    //             'publish_schedule' => $request->input('publish_schedule'),
+    //             'visibility' => $request->input('visibility'),
+    //             'status' => $request->input('status'),
+    //             'meta_title' => $request->input('meta_title'),
+    //             'meta_keywords' => $request->input('meta_keywords'),
+    //             'meta_description' => $request->input('meta_description'),
+    //         ]);
+    
+    //         // Handle Images file uploads
+    //         if ($request->hasFile('product_images')) {
+    //             foreach ($request->file('product_images') as $file) {
+    //                 ProductImage::create([
+    //                     'product_id' => $product->id,
+    //                     'image_path' => ImageHelper::uploadImage($file, 'images/product/gallery', null),
+    //                 ]);
+    //             }
+    //         }
+    
+    //         // Store product variants
+    //         foreach ($request->input('variants') as $key => $variant) {
+    //             ProductVariant::create([
+    //                 'product_id' => $product->id,
+    //                 'img_path' => $request->hasFile("variants.{$key}.img_path") ? ImageHelper::uploadImage($request->file("variants.{$key}.img_path"), 'images/product/variant') : null,
+    //                 'color' => $variant['color'] ?? null,
+    //                 'size' => $variant['size'] ?? null,
+    //                 'price' => $variant['price'] ?? null,
+    //                 'quantity' => $variant['quantity'] ?? null,
+    //             ]);
+    //         }
+
+    
+    //         // Store product specifications
+    //         if ($request->has('specifications')) {
+    //             foreach ($request->input('specifications') as $specification) {
+    //                 ProductSpecification::create([
+    //                     'product_id' => $product->id,
+    //                     'specification_name' => $specification['specification_name'] ?? null,
+    //                     'specification_value' => $specification['specification_value'] ?? null,
+    //                 ]);
+    //             }
+    //         }
+    
+    //         // Store product details
+    //         if ($request->has('details')) {
+    //             foreach ($request->input('details') as $detail) {
+    //                 ProductDetail::create([
+    //                     'product_id' => $product->id,
+    //                     'detail_name' => $detail['detail_name'] ?? null,
+    //                     'detail_value' => $detail['detail_value'] ?? null,
+    //                 ]);
+    //             }
+    //         }
+    
+    //         return redirect()->route("products.index")->with('success', 'Product created successfully.');
+    // }
     
      
 
@@ -203,4 +293,19 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
     }
+
+
+    public function productImagesDestroy($id)
+    {
+        $image = ProductImage::findOrFail($id);
+
+        // Delete the image file from storage if it exists
+        if (File::exists(public_path($image->image_path))) {
+            File::delete(public_path($image->image_path));
+        }
+        $image->delete();
+
+        return response()->json(['success' => true]);
+    }
+
 }

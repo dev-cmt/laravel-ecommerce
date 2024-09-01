@@ -1,6 +1,5 @@
 <x-app-layout>
     @push('style')
-
         <!-- Custom Styles -->
         <style>
             .upload-area {
@@ -60,9 +59,9 @@
                         <div class="mb-3">
                             <label for="product_description">Product Description</label>
                             <div id="product_description" class="snow-editor" style="height: 300px;">
-                                {{ old('description', $product->description ?? '') }}
+                                {{ old('description') }}
                             </div>
-                            <input type="hidden" name="description" id="description" value="{{ old('description', $product->description ?? '') }}">
+                            <input type="hidden" name="description" id="description" value="{{ old('description') }}">
                         </div>
 
                     </div>
@@ -145,7 +144,7 @@
                 </div>
                 <!-- end card -->
 
-
+                <!-- Others Setting -->
                 <div class="card">
                     <div class="card-header">
                         <ul class="nav nav-tabs-custom card-header-tabs border-bottom-0" role="tablist">
@@ -192,7 +191,7 @@
                                             <label class="form-label" for="product-price-input">Price</label>
                                             <div class="input-group has-validation mb-3">
                                                 <span class="input-group-text" id="product-price-addon">$</span>
-                                                <input type="text" name="price" class="form-control" id="product-price-input" placeholder="Enter price" aria-label="Price" aria-describedby="product-price-addon" required>
+                                                <input type="number" name="price" min="0" class="form-control" id="product-price-input" placeholder="Enter price" aria-label="Price" aria-describedby="product-price-addon" required>
                                                 <div class="invalid-feedback">Please Enter a product price.</div>
                                             </div>
 
@@ -203,7 +202,7 @@
                                             <label class="form-label" for="product-discount-input">Discount</label>
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text" id="product-discount-addon">%</span>
-                                                <input type="text" name="discount" class="form-control" id="product-discount-input" placeholder="Enter discount" aria-label="discount" aria-describedby="product-discount-addon">
+                                                <input type="number" name="discount" min="0" max="100" class="form-control" id="product-discount-input" placeholder="Enter discount" aria-label="discount" aria-describedby="product-discount-addon">
                                             </div>
                                         </div>
                                     </div>
@@ -258,8 +257,8 @@
                                                 <td><input type="file" name="variants[0][img_path]" class="form-control"></td>
                                                 <td><input type="text" name="variants[0][color]" class="form-control"></td>
                                                 <td><input type="text" name="variants[0][size]" class="form-control"></td>
-                                                <td><input type="text" name="variants[0][price]" class="form-control"></td>
-                                                <td><input type="text" name="variants[0][quantity]" class="form-control"></td>
+                                                <td><input type="number" min="0" name="variants[0][price]" class="form-control"></td>
+                                                <td><input type="number" min="0" name="variants[0][quantity]" class="form-control"></td>
                                                 <td><button type="button" class="btn btn-danger btn-sm remove-row">Remove</button></td>
                                             </tr>
                                         </tbody>
@@ -418,7 +417,7 @@
                     <div class="card-body">
                         <div class="hstack gap-3 align-items-start">
                             <div class="flex-grow-1">
-                                <input type="text"  name="tags" class="form-control"data-choices data-choices-multiple-remove="true" placeholder="Enter tags" value="Cotton" />
+                                <input type="text"  name="tags" class="form-control" data-choices data-choices-multiple-remove="true" placeholder="Enter tags" value="Cotton" />
                             </div>
                         </div>
                     </div>
@@ -443,6 +442,7 @@
 
         </div>
         <!-- end row -->
+
     </form>
 
     @push('scripts')
@@ -450,7 +450,7 @@
         <script src="{{ asset('public/backend/libs/quill/quill.min.js') }}"></script>
 
         <script>
-            // Initialize Quill editor with table module
+            // Initialize Quill editor
             var quill = new Quill('#product_description', {
                 theme: 'snow',
                 modules: {
@@ -465,22 +465,19 @@
                         [{ 'indent': '-1'}, { 'indent': '+1' }], // Indent
                         [{ 'direction': 'rtl' }],             // Text direction
                         [{ 'align': [] }],                    // Text alignment
-                        ['link', 'image', 'video'],           // Insert link
-                        ['clean'],                            // Clear formatting
-                        ['table'],                            // Table functionality
-                    ],
-                    table: true // Enable table module
+                        ['link'],                             // Insert link, image, and video
+                        ['clean']                             // Clear formatting
+                    ]
                 }
             });
-        
-            // Event listener to update hidden input on text change
-            quill.on('text-change', function() {
+
+            // Update hidden field before form submission
+            document.getElementById('product-submit').addEventListener('click', function (e) {
                 var description = document.querySelector('#product_description .ql-editor').innerHTML;
                 document.getElementById('description').value = description;
             });
         </script>
         
-
         <script>
             let allFiles = [];
         
@@ -564,8 +561,6 @@
                 }
             });
         </script>
-        
-        
 
         <script>
             $(document).ready(function () {
@@ -580,8 +575,8 @@
                             <td><input type="file" name="variants[${variantCount}][img_path]" class="form-control"></td>
                             <td><input type="text" name="variants[${variantCount}][color]" class="form-control"></td>
                             <td><input type="text" name="variants[${variantCount}][size]" class="form-control"></td>
-                            <td><input type="text" name="variants[${variantCount}][price]" class="form-control"></td>
-                            <td><input type="text" name="variants[${variantCount}][quantity]" class="form-control"></td>
+                            <td><input type="number" min="0" name="variants[${variantCount}][price]" class="form-control"></td>
+                            <td><input type="number" min="0" name="variants[${variantCount}][quantity]" class="form-control"></td>
                             <td><button type="button" class="btn btn-danger btn-sm remove-row">Remove</button></td>
                         </tr>
                     `);
@@ -619,7 +614,6 @@
             });
 
         </script>
-
     @endpush
 
 </x-app-layout>

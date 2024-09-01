@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('color')->nullable();
             $table->string('size')->nullable();
             $table->decimal('price', 10, 2)->nullable();
+            $table->integer('quantity')->nullable();
             $table->timestamps();
         });
     }

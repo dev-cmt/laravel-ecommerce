@@ -14,7 +14,8 @@ class ProductVariant extends Model
         'img_path',
         'color',
         'size',
-        'price'
+        'price',
+        'quantity'
     ];
 
     public function product()
