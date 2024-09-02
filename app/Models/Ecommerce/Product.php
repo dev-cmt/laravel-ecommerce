@@ -30,10 +30,6 @@ class Product extends Model
         'meta_keywords',
         'meta_description'
     ];
-
-    protected $casts = [
-        'tags' => 'array',
-    ];
     
 
 

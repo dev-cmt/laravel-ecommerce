@@ -13,8 +13,8 @@ class ImageHelper
 
         if ($file) {
             // Delete existing file if $update is provided and has a file path
-            if ($update && $update->file) {
-                $oldFilePath = public_path($update->file);
+            if ($update) {
+                $oldFilePath = public_path($update);
                 if (file_exists($oldFilePath)) {
                     unlink($oldFilePath);
                 }
@@ -38,7 +38,7 @@ class ImageHelper
             $file->move($directory, $uniqueName);
             $fileUrl = "{$folder}/{$uniqueName}";
         } else {
-            $fileUrl = $update ? $update->file : null;
+            $fileUrl = $update ? $update : null;
         }
 
         return $fileUrl;

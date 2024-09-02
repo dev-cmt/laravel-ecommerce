@@ -55,8 +55,6 @@ class ProductController extends Controller
 
         // Assign product attributes
         $product->product_name = $request->input('product_name');
-        $product->sku_code = $productId ? $product->sku_code : $request->input('sku_code');
-        $product->url_slug = $request->input('url_slug');
         $product->main_image = $request->hasFile('main_image') ? ImageHelper::uploadImage($request->file('main_image'), 'images/product') : $product->main_image;
         $product->category_id = $request->input('category_id');
         $product->brand_id = $request->input('brand_id');
@@ -86,18 +84,42 @@ class ProductController extends Controller
             }
         }
 
-        // Store product variants
         foreach ($request->input('variants') as $key => $variant) {
-            $productVariant= [
+            // Safely extract the id from the variant array
+            $variantId = $variant['id'] ?? null;
+        
+            // Find the existing variant by ID, if ID is provided
+            $currentVariant = $variantId ? ProductVariant::find($variantId) : null;
+            $currentImagePath = $currentVariant ? $currentVariant->img_path : null;
+        
+            // Retrieve the new image file from the request, if available
+            $requestImg = $request->file("variants.{$key}.img_path");
+        
+            // Prepare the product variant data
+            $productVariant = [
                 'product_id' => $product->id,
-                'img_path' => $request->hasFile("variants.{$key}.img_path") ? ImageHelper::uploadImage($request->file("variants.{$key}.img_path"), 'images/product/variant') : null,
+                'img_path' => ImageHelper::uploadImage(
+                    $requestImg,
+                    'images/product/variant',
+                    $currentImagePath
+                ),
                 'color' => $variant['color'] ?? null,
                 'size' => $variant['size'] ?? null,
                 'price' => $variant['price'] ?? null,
                 'quantity' => $variant['quantity'] ?? null,
             ];
-            ProductVariant::updateOrCreate(['id' => $variant['id'] ?? null], $productVariant);
+        
+            // Update or create the product variant
+            ProductVariant::updateOrCreate(
+                ['id' => $variantId],
+                $productVariant
+            );
         }
+        
+        
+        
+        
+        
 
 
         // // Store product specifications
@@ -122,7 +144,8 @@ class ProductController extends Controller
         //     }
         // }
 
-        return redirect()->route("products.index")->with('success', 'Product created successfully.');
+        return redirect()->back()->with('success', 'Product created successfully.');
+        // return redirect()->route("products.index")->with('success', 'Product created successfully.');
     }
     // public function store(Request $request) {
     //         $validated = $request->validate([
@@ -295,6 +318,17 @@ class ProductController extends Controller
 
 
     public function productImagesDestroy($id)
+    {
+        $image = ProductImage::findOrFail($id);
+
+        // Delete the image file from storage if it exists
+        if (File::exists(public_path($image->image_path))) {
+            File::delete(public_path($image->image_path));
+        }
+        $image->delete();
+        return response()->json(['success' => true]);
+    }
+    public function productVariantDestroy($id)
     {
         $image = ProductImage::findOrFail($id);
 

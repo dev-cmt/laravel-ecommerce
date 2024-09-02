@@ -151,7 +151,7 @@
                                                 <p class="m-0"><strong>Name: </strong> {{ $imageName }} </p>
                                                 <p class="m-0"><strong>Size: </strong> {{ $imageSize }} KB </p>
                                                 <!-- Button to handle deletion -->
-                                                <button type="button" class="btn-close delete-image" data-id="{{ $item->id }}" data-url="{{ route('product-images.destroy', $item->id) }}" aria-label="Close"></button>
+                                                <button type="button" id="delete-image" class="btn-close" data-id="{{ $item->id }}" data-url="{{ route('product-images.destroy', $item->id) }}" aria-label="Close"></button>
                                             </div>
                                         </div>
                                     @endforeach
@@ -278,17 +278,20 @@
                                             @foreach ($product->variants as $key => $item)
                                             <tr class="variant-row-edit">
                                                 <input type="hidden" name="variants[{{ $key }}][id]" value="{{$item->id}}">
-                                                <td><input type="file" name="variants[{{ $key }}][img_path]" class="form-control" value="{{$item->img_path}}"></td>
+                                                <td class="d-flex">
+                                                    <img src="{{asset('public/'. $item->img_path )}}" alt="" height="40">
+                                                    <input type="file" name="variants[{{ $key }}][img_path]" class="form-control" value="{{$item->img_path}}">
+                                                </td>
                                                 <td><input type="text" name="variants[{{ $key }}][color]" class="form-control" value="{{$item->color}}"></td>
                                                 <td><input type="text" name="variants[{{ $key }}][size]" class="form-control" value="{{$item->size}}"></td>
                                                 <td><input type="number" min="0" name="variants[{{ $key }}][price]" class="form-control" value="{{$item->price}}"></td>
                                                 <td><input type="number" min="0" name="variants[{{ $key }}][quantity]" class="form-control" value="{{$item->quantity}}"></td>
-                                                <td><button type="button" class="btn btn-danger btn-sm remove-row">Remove</button></td>
+                                                <td><button type="button" id="delete-variant" class="btn btn-soft-info btn-sm material-shadow-none" data-id="{{ $item->id }}" data-url="{{ route('product-variant.destroy', $item->id) }}">Remove</button></td>
                                             </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <button type="button" id="add-variant" class="btn btn-success">Add Variant</button>
+                                    <button type="button" id="add-variant" class="btn btn-sm btn-primary"><i class="ri-add-line align-middle me-1"></i> Add Variant</button>
                                 </div>
                             </div>
                             
@@ -456,7 +459,7 @@
                     <div class="card-body">
                         <div class="hstack gap-3 align-items-start">
                             <div class="flex-grow-1">
-                                <input type="text" name="tags" class="form-control" value="{{ old('tags', implode(',', $product->tags)) }}" placeholder="Enter tags" />
+                                <input type="text" name="tags" class="form-control" value="{{ old('tags', implode(', ', json_decode($product->tags, true) ?? [])) }}" placeholder="Enter tags" />
                             </div>
                         </div>
                     </div>
@@ -679,7 +682,7 @@
         </script>
 
         <script>
-            $('.delete-image').on('click', function() {
+            $('#delete-image').on('click', function() {
                 const imageId = $(this).data('id');
                 const deleteUrl = $(this).data('url');
 
