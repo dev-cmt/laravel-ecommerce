@@ -55,7 +55,7 @@ class ProductController extends Controller
 
         // Assign product attributes
         $product->product_name = $request->input('product_name');
-        $product->sku_code = $request->input('sku_code');
+        $product->sku_code = $productId ? $product->sku_code : $request->input('sku_code');
         $product->url_slug = $request->input('url_slug');
         $product->main_image = $request->hasFile('main_image') ? ImageHelper::uploadImage($request->file('main_image'), 'images/product') : $product->main_image;
         $product->category_id = $request->input('category_id');
@@ -283,7 +283,6 @@ class ProductController extends Controller
         $brands = Brand::all();
         return view('ecommerce.backend.products.edit', compact('product', 'categories', 'brands'));
     }
-
 
 
     public function destroy($id)
