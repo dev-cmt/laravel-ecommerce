@@ -33,6 +33,10 @@ return new class extends Migration
             $table->string('meta_title')->nullable();  // Meta Title
             $table->string('meta_keywords')->nullable();  // Meta Keywords
             $table->text('meta_description')->nullable();  // Meta Description
+
+            $table->unsignedInteger('sales_count')->default(0);
+            $table->unsignedInteger('view_count')->default(0);
+            $table->unsignedInteger('wishlist_count')->default(0);
             
             $table->timestamps();
         });

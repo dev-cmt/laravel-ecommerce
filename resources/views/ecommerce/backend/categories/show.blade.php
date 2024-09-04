@@ -14,11 +14,9 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header align-items-center d-flex">
-                        <h4 class="card-title mb-0 flex-grow-1">Category Details</h4>
-                        <div class="flex-shrink-0">
-                            <a href="{{ route('categories.index') }}" class="btn btn-sm btn-danger">Back to List</a>
-                        </div>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4 class="card-title mb-0">Category Details</h4>
+                        <a href="{{ route('categories.index') }}" class="btn btn-sm btn-danger">Back to List</a>
                     </div>
                     <div class="card-body">
                         <!-- Display category details -->
@@ -35,15 +33,24 @@
                                 @endif
                             </dd>
 
+                            <dt class="col-sm-3">Category Images:</dt>
+                            <dd class="col-sm-9">
+                                @if($category->img_path)
+                                    <img src="{{ asset('public/' . $category->img_path) }}" height="150" alt="Category Image">
+                                @else
+                                    <img src="{{ asset('public/backend/images/product-img.png') }}" class="img-fluid" alt="Default Image">
+                                @endif
+                            </dd>
+
                             <dt class="col-sm-3">Description:</dt>
-                            <dd class="col-sm-9">{{ $category->description }}</dd>
+                            <dd class="col-sm-9">{{ $category->description ?? 'N/A' }}</dd>
 
                             <dt class="col-sm-3">Status:</dt>
                             <dd class="col-sm-9">
                                 @if($category->status)
-                                    Active
+                                    <span class="badge bg-success">Active</span>
                                 @else
-                                    Inactive
+                                    <span class="badge bg-secondary">Inactive</span>
                                 @endif
                             </dd>
                         </dl>

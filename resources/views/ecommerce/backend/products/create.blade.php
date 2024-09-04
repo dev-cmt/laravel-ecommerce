@@ -6,7 +6,6 @@
                 border: 2px dashed #d3d3d3;
                 padding: 20px;
                 text-align: center;
-                background-color: #f9f9f9;
                 cursor: pointer;
                 border-radius: 5px;
                 margin-bottom: 20px;
@@ -44,13 +43,14 @@
 
     <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" name="product_id" id="product_id" value="{{ old('product_id', $product->id ?? null) }}">
         <div class="row">
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
                         <div class="mb-3">
                             <label class="form-label" for="product_name">Product Title</label>
-                            <input type="text" name="product_name" id="product_name" class="form-control @error('product_name') is-invalid @enderror" placeholder="Enter product title" value="{{ old('product_name') }}" required>
+                            <input type="text" name="product_name" id="product_name" class="form-control @error('product_name') is-invalid @enderror" placeholder="Enter product title" value="{{ old('product_name', $product->product_name ?? null) }}" required>
                             @error('product_name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -59,9 +59,9 @@
                         <div class="mb-3">
                             <label for="product_description">Product Description</label>
                             <div id="product_description" class="snow-editor" style="height: 300px;">
-                                {{ old('description') }}
+                                {!! old('description', $product->description ?? null) !!}
                             </div>
-                            <input type="hidden" name="description" id="description" value="{{ old('description') }}">
+                            <input type="hidden" name="description" id="description" value="{{ old('description', $product->description ?? null) }}">
                         </div>
 
                     </div>
@@ -96,7 +96,7 @@
                                     <!-- Image Preview -->
                                     <div class="avatar-lg">
                                         <div class="avatar-title bg-light rounded">
-                                            <img src="{{ asset('public/backend/images/product-img.png') }}" id="product-img" class="avatar-md h-auto" />
+                                            <img src="{{ asset($product?->main_image ? 'public/' . $product->main_image : 'public/backend/images/product-img.png') }}" id="product-img" class="avatar-md h-auto" />
                                         </div>
                                     </div>
                                 </div>
@@ -136,6 +136,27 @@
                             <input type="file" id="file-input" name="product_images[]" multiple style="display: none;">
                             <div class="preview-area" id="preview-area">
                                 <!-- Preview items will be inserted here -->
+                                @if ($product && $product->images->isNotEmpty())
+                                    @foreach ($product->images as $item)
+                                        @php
+                                            $imagePath = public_path($item->image_path); // Full path to the image file
+                                            $imageName = basename($item->image_path); // Extract the image name
+                                            $imageSize = file_exists($imagePath) ? number_format(filesize($imagePath) / 1024, 2) : 'Unknown'; // Get file size in KB
+                                        @endphp
+                                    
+                                        <div class="preview-item alert alert-success alert-dismissible fade show material-shadow" role="alert">
+                                            <img src="{{ asset('public/' . $item->image_path) }}" height="50">
+                                            <div>
+                                                <p class="m-0"><strong>Name: </strong> {{ $imageName }} </p>
+                                                <p class="m-0"><strong>Size: </strong> {{ $imageSize }} KB </p>
+                                                <!-- Button to handle deletion -->
+                                                <button type="button" id="delete-image" class="btn-close delete-item" data-id="{{ $item->id }}" data-url="{{ route('product-images.destroy', $item->id) }}" aria-label="Close"></button>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                            
+                            
+                                @endif
                             </div>
                             <button type="button" id="clear-all" class="btn btn-danger" style="display: none">Clear All</button>
                         </div>
@@ -183,7 +204,7 @@
                                     <div class="col-lg-6 col-sm-12">
                                         <div class="mb-3">
                                             <label class="form-label" for="manufacturer-name-input">Manufacturer Company Name</label>
-                                            <input type="text" name="manufacturer_name" class="form-control" id="manufacturer-name-input" placeholder="Enter manufacturer name">
+                                            <input type="text" name="manufacturer_name" class="form-control" id="manufacturer-name-input" value="{{ old('manufacturer_name', $product->manufacturer_name ?? null) }}" placeholder="Enter manufacturer name">
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-6">
@@ -191,7 +212,7 @@
                                             <label class="form-label" for="product-price-input">Price</label>
                                             <div class="input-group has-validation mb-3">
                                                 <span class="input-group-text" id="product-price-addon">$</span>
-                                                <input type="number" name="price" min="0" class="form-control" id="product-price-input" placeholder="Enter price" aria-label="Price" aria-describedby="product-price-addon" required>
+                                                <input type="number" name="price" min="0" class="form-control" id="product-price-input" value="{{ old('price', $product->price ?? null) }}" placeholder="Enter price" aria-label="Price" aria-describedby="product-price-addon" required>
                                                 <div class="invalid-feedback">Please Enter a product price.</div>
                                             </div>
 
@@ -202,7 +223,7 @@
                                             <label class="form-label" for="product-discount-input">Discount</label>
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text" id="product-discount-addon">%</span>
-                                                <input type="number" name="discount" min="0" max="100" class="form-control" id="product-discount-input" placeholder="Enter discount" aria-label="discount" aria-describedby="product-discount-addon">
+                                                <input type="number" name="discount" min="0" max="100" class="form-control" value="{{ old('discount', $product->discount ?? null) }}" id="product-discount-input" placeholder="Enter discount" aria-label="discount" aria-describedby="product-discount-addon">
                                             </div>
                                         </div>
                                     </div>
@@ -216,7 +237,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="meta-title-input">Meta title</label>
-                                            <input type="text" name="meta_title" class="form-control" placeholder="Enter meta title" id="meta-title-input">
+                                            <input type="text" name="meta_title" class="form-control" value="{{ old('meta_title', $product->meta_title ?? null) }}" placeholder="Enter meta title" id="meta-title-input">
                                         </div>
                                     </div>
                                     <!-- end col -->
@@ -224,7 +245,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="meta-keywords-input">Meta Keywords</label>
-                                            <input type="text" name="meta_keywords" class="form-control" placeholder="Enter meta keywords" id="meta-keywords-input">
+                                            <input type="text" name="meta_keywords" class="form-control" value="{{ old('meta_keywords', $product->meta_keywords ?? null) }}" placeholder="Enter meta keywords" id="meta-keywords-input">
                                         </div>
                                     </div>
                                     <!-- end col -->
@@ -233,7 +254,7 @@
 
                                 <div>
                                     <label class="form-label" for="meta-description-input">Meta Description</label>
-                                    <textarea name="meta_description" class="form-control" id="meta-description-input" placeholder="Enter meta description" rows="3"></textarea>
+                                    <textarea name="meta_description" class="form-control" id="meta-description-input" placeholder="Enter meta description" rows="2">{{ old('meta_description', $product->meta_description ?? null) }}</textarea>
                                 </div>
                             </div>
                             <!-- end tab pane -->
@@ -253,17 +274,25 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr id="variant-row-0">
-                                                <td><input type="file" name="variants[0][img_path]" class="form-control"></td>
-                                                <td><input type="text" name="variants[0][color]" class="form-control"></td>
-                                                <td><input type="text" name="variants[0][size]" class="form-control"></td>
-                                                <td><input type="number" min="0" name="variants[0][price]" class="form-control"></td>
-                                                <td><input type="number" min="0" name="variants[0][quantity]" class="form-control"></td>
-                                                <td><button type="button" class="btn btn-danger btn-sm remove-row">Remove</button></td>
-                                            </tr>
+                                            @if ($product && $product->variants->isNotEmpty())
+                                                @foreach ($product->variants as $key => $item)
+                                                <tr class="variant-row-edit">
+                                                    <input type="hidden" name="variants[{{ $key }}][id]" value="{{$item->id}}">
+                                                    <td class="d-flex">
+                                                        <img src="{{asset('public/'. $item->img_path )}}" alt="" height="40">
+                                                        <input type="file" name="variants[{{ $key }}][img_path]" class="form-control" value="{{$item->img_path}}">
+                                                    </td>
+                                                    <td><input type="text" name="variants[{{ $key }}][color]" class="form-control" value="{{$item->color}}"></td>
+                                                    <td><input type="text" name="variants[{{ $key }}][size]" class="form-control" value="{{$item->size}}"></td>
+                                                    <td><input type="number" min="0" name="variants[{{ $key }}][price]" class="form-control" value="{{$item->price}}"></td>
+                                                    <td><input type="number" min="0" name="variants[{{ $key }}][quantity]" class="form-control" value="{{$item->quantity}}"></td>
+                                                    <td><button type="button" class="delete-item btn btn-soft-info btn-sm material-shadow-none" data-id="{{ $item->id }}" data-url="{{ route('product-variant.destroy', $item->id) }}">Remove</button></td>
+                                                </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
-                                    <button type="button" id="add-variant" class="btn btn-success">Add Variant</button>
+                                    <button type="button" id="add-variant" class="btn btn-sm btn-primary"><i class="ri-add-line align-middle me-1"></i> Add Variant</button>
                                 </div>
                             </div>
                             
@@ -280,14 +309,19 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr id="specification-row-0">
-                                                <td><input type="text" name="specifications[0][specification_name]" class="form-control"></td>
-                                                <td><textarea name="specifications[0][specification_value]" rows="1" class="form-control"></textarea></td>
-                                                <td><button type="button" class="btn btn-danger btn-sm remove-row">Remove</button></td>
-                                            </tr>
+                                            @if ($product && $product->specifications->isNotEmpty())
+                                                @foreach ($product->specifications as $key => $item)
+                                                <tr class="specification-row-edit">
+                                                    <input type="hidden" name="specifications[{{ $key }}][id]" value="{{$item->id}}">
+                                                    <td><input type="text" name="specifications[{{ $key }}][specification_name]" value="{{$item->specification_name}}" class="form-control"></td>
+                                                    <td><textarea name="specifications[{{ $key }}][specification_value]" rows="1" class="form-control">{{$item->specification_value}}</textarea></td>
+                                                    <td><button type="button" class="delete-item btn btn-soft-info btn-sm material-shadow-none" data-id="{{ $item->id }}" data-url="{{ route('product-specification.destroy', $item->id) }}">Remove</button></td>
+                                                </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
-                                    <button type="button" id="add-specification" class="btn btn-success">Add Specification</button>
+                                    <button type="button" id="add-specification" class="btn btn-sm btn-primary"><i class="ri-add-line align-middle me-1"></i> Add Specification</button>
                                 </div>
                             </div>
                             
@@ -304,14 +338,19 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr id="detail-row-0">
-                                                <td><input type="text" name="details[0][detail_name]" class="form-control"></td>
-                                                <td><textarea name="details[0][detail_value]" rows="1" class="form-control"></textarea></td>
-                                                <td><button type="button" class="btn btn-danger btn-sm remove-row">Remove</button></td>
-                                            </tr>
+                                            @if ($product && $product->details->isNotEmpty())
+                                                @foreach ($product->details as $key => $item)
+                                                <tr class="detail-row-edit">
+                                                    <input type="hidden" name="details[{{ $key }}][id]" value="{{$item->id}}">
+                                                    <td><input type="text" name="details[{{ $key }}][detail_name]" value="{{$item->detail_name}}" class="form-control"></td>
+                                                    <td><textarea name="details[{{ $key }}][detail_value]" rows="1" class="form-control">{{$item->detail_value}}</textarea></td>
+                                                    <td><button type="button" class="delete-item btn btn-soft-info btn-sm material-shadow-none" data-id="{{ $item->id }}" data-url="{{ route('product-detail.destroy', $item->id) }}">Remove</button></td>
+                                                </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
-                                    <button type="button" id="add-detail" class="btn btn-success">Add Detail</button>
+                                    <button type="button" id="add-detail" class="btn btn-sm btn-primary"><i class="ri-add-line align-middle me-1"></i> Add Detail</button>
                                 </div>
                             </div>
                             
@@ -338,19 +377,19 @@
                         <div class="mb-3">
                             <label for="choices-publish-status-input" class="form-label">Status</label>
                             <select name="status" class="form-select" id="choices-publish-status-input" data-choices data-choices-search-false>
-                                <option value="Published" selected>Published</option>
-                                <option value="Scheduled">Scheduled</option>
-                                <option value="Draft">Draft</option>
+                                <option value="Published" {{ old('status', $product->status ?? null) == 'Published' ? 'selected' : '' }}>Published</option>
+                                <option value="Scheduled" {{ old('status', $product->status ?? null) == 'Scheduled' ? 'selected' : '' }}>Scheduled</option>
+                                <option value="Draft" {{ old('status', $product->status ?? null) == 'Draft' ? 'selected' : '' }}>Draft</option>
                             </select>
-                        </div>
+                        </div>                        
 
-                        <div>
+                        <div class="mb-3">
                             <label for="choices-publish-visibility-input" class="form-label">Visibility</label>
                             <select name="visibility" class="form-select" id="choices-publish-visibility-input" data-choices data-choices-search-false>
-                                <option value="Public" selected>Public</option>
-                                <option value="Hidden">Hidden</option>
+                                <option value="Public" {{ old('visibility', $product->visibility ?? null) == 'Public' ? 'selected' : '' }}>Public</option>
+                                <option value="Hidden" {{ old('visibility', $product->visibility ?? null) == 'Hidden' ? 'selected' : '' }}>Hidden</option>
                             </select>
-                        </div>
+                        </div>                        
                     </div>
                     <!-- end card body -->
                 </div>
@@ -375,11 +414,14 @@
                         <h5 class="card-title mb-0">Product Categories</h5>
                     </div>
                     <div class="card-body">
-                        <p class="text-muted mb-2"> <a href="{{route('categories.create')}}" class="float-end text-decoration-underline">Add New</a>Select product category</p>
+                        <p class="text-muted mb-2">
+                            <a href="{{ route('categories.create') }}" class="float-end text-decoration-underline">Add New</a>
+                            Select product category
+                        </p>
                         <select name="category_id" id="category_id" class="form-select @error('category_id') is-invalid @enderror" required>
                             <option value="">Select Category</option>
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->category_name }}</option>
+                            @foreach ($categories->where('parent_cat_id', null) as $category)
+                                @include('ecommerce.backend.partials.category-option', ['category' => $category, 'categories' => $categories, 'level' => 0])
                             @endforeach
                         </select>
                         @error('category_id')
@@ -387,7 +429,7 @@
                         @enderror
                     </div>
                     <!-- end card body -->
-                </div>
+                </div>                
                 <!-- end card -->
 
                 <div class="card">
@@ -395,11 +437,16 @@
                         <h5 class="card-title mb-0">Product Brand</h5>
                     </div>
                     <div class="card-body">
-                        <p class="text-muted mb-2"> <a href="{{route('brands.create')}}" class="float-end text-decoration-underline">Add New</a>Select product brand</p>
+                        <p class="text-muted mb-2">
+                            <a href="{{ route('brands.create') }}" class="float-end text-decoration-underline">Add New</a>
+                            Select product brand
+                        </p>
                         <select name="brand_id" id="brand_id" class="form-select @error('brand_id') is-invalid @enderror">
                             <option value="">No Brand</option>
                             @foreach($brands as $brand)
-                                <option value="{{ $brand->id }}" {{ old('brand_id') == $brand->id ? 'selected' : '' }}>{{ $brand->brand_name }}</option>
+                                <option value="{{ $brand->id }}" {{ old('brand_id', $product->brand_id ?? '') == $brand->id ? 'selected' : '' }}>
+                                    {{ $brand->brand_name }}
+                                </option>
                             @endforeach
                         </select>
                         @error('brand_id')
@@ -408,7 +455,7 @@
                     </div>
                     <!-- end card body -->
                 </div>
-                <!-- end card -->
+                <!-- end card -->                
 
                 <div class="card">
                     <div class="card-header">
@@ -417,7 +464,7 @@
                     <div class="card-body">
                         <div class="hstack gap-3 align-items-start">
                             <div class="flex-grow-1">
-                                <input type="text"  name="tags" class="form-control" data-choices data-choices-multiple-remove="true" placeholder="Enter tags" value="Cotton" />
+                                <input type="text" name="tags" class="form-control" value="{{ old('tags', implode(', ', json_decode($product->tags ?? null, true) ?? [])) }}" placeholder="Enter tags" />
                             </div>
                         </div>
                     </div>
@@ -431,7 +478,7 @@
                     </div>
                     <div class="card-body">
                         <p class="text-muted mb-2">Add short description for product</p>
-                        <textarea name="short_description" class="form-control" placeholder="Must enter minimum of a 100 characters" rows="3"></textarea>
+                        <textarea name="short_description" class="form-control" placeholder="Must enter minimum of a 100 characters" rows="3">{{ old('tags', $product->short_description ?? null) }}</textarea>
                     </div>
                     <!-- end card body -->
                 </div>
@@ -564,12 +611,28 @@
 
         <script>
             $(document).ready(function () {
-                let variantCount = 1;
-                let specificationCount = 1;
-                let detailCount = 1;
+
+                var variantRow = $('#variants-table tbody .variant-row-edit').length;
+                if(variantRow == 0){
+                    addVariant(0);
+                }
+                var specificationRow = $('#specifications-table tbody .specification-row-edit').length;
+                if(specificationRow == 0){
+                    addSpecification(0);
+                }
+                var detailRow = $('#details-table tbody .detail-row-edit').length;
+                if(detailRow == 0){
+                    addDetail(0);
+                }
+
 
                 // Add Variant
                 $('#add-variant').click(function () {
+                    var rowCount = $('#variants-table tbody tr').length + 1;
+                    addVariant(rowCount);
+                });
+
+                function addVariant(variantCount){
                     $('#variants-table tbody').append(`
                         <tr id="variant-row-${variantCount}">
                             <td><input type="file" name="variants[${variantCount}][img_path]" class="form-control"></td>
@@ -581,10 +644,14 @@
                         </tr>
                     `);
                     variantCount++;
-                });
+                }
 
                 // Add Specification
                 $('#add-specification').click(function () {
+                    var rowCount = $('#specifications-table tbody tr').length + 1;
+                    addSpecification(rowCount);
+                });
+                function addSpecification(specificationCount){
                     $('#specifications-table tbody').append(`
                         <tr id="specification-row-${specificationCount}">
                             <td><input type="text" name="specifications[${specificationCount}][specification_name]" class="form-control"></td>
@@ -593,10 +660,14 @@
                         </tr>
                     `);
                     specificationCount++;
-                });
+                }
 
                 // Add Detail
                 $('#add-detail').click(function () {
+                    var rowCount = $('#details-table tbody tr').length + 1;
+                    addDetail(rowCount);
+                });
+                function addDetail(detailCount){
                     $('#details-table tbody').append(`
                         <tr id="detail-row-${detailCount}">
                             <td><input type="text" name="details[${detailCount}][detail_name]" class="form-control"></td>
@@ -605,11 +676,47 @@
                         </tr>
                     `);
                     detailCount++;
-                });
+                }
 
                 // Remove Row
                 $(document).on('click', '.remove-row', function () {
                     $(this).closest('tr').remove();
+                });
+            });
+
+        </script>
+
+        <script>
+            $('.delete-item').on('click', function() {
+                const imageId = $(this).data('id');
+                const deleteUrl = $(this).data('url');
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: deleteUrl,
+                            type: 'DELETE',
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                            success: (response) => {
+                                if (response.success) {
+                                    $(this).closest('tr').remove();
+                                    $(`.preview-item:has(.delete-image[data-id="${imageId}"])`).remove();
+                                    Swal.fire('Deleted!', 'Your image has been deleted.', 'success');
+                                } else {
+                                    Swal.fire('Error!', 'An error occurred while deleting the image.', 'error');
+                                }
+                            },
+                            error: () => Swal.fire('Error!', 'An error occurred while deleting the image.', 'error')
+                        });
+                    }
                 });
             });
 

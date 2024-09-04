@@ -28,9 +28,15 @@
         @stack('style')
     </head>
     <body wclass="sg-active">
+        @include('layouts.partial.frontend-theme-settings')
         @include('layouts.partial.frontend-header')
 
-        @include('layouts.partial.frontend-slider')
+        @if (Route::currentRouteName() == '/')
+            @include('layouts.partial.frontend-slider')
+        @endif
+
+
+        
         
         {{ $slot }}
 

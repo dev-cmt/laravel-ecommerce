@@ -1,41 +1,3 @@
-<div class="popup-modal modal fade" tabindex="-1" id="sg-modal">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <img src="{{asset('public/frontend')}}/images/product/modal.png" alt="Image" class="img-fluid">
-                    </div>
-                    <div class="col-lg-6">
-                        <h2>Get <span>25%</span> Discount</h2>
-                        <p>Subscribe to the yoori shop newsletter to receive updates on special offers.</p>
-                        <form action="#">
-                            <div class="form-group">
-                                <input type="email" class="form-control" required="required" placeholder="Email Address">
-                            </div>
-                            <button class="btn btn-primary text-uppercase" name="submit" type="submit">Subscribe</button>
-                        </form>
-                        <div class="social">
-                            <ul class="global-list">
-                                <li><a href="#"><span><i class="fa-brands fa-facebook"></i></span></a></li>
-                                <li><a href="#"><span><i class="fa-brands fa-twitter"></i></span></a></li>
-                                <li><a href="#"><span><i class="fa-brands fa-linkedin"></i></span></a></li>
-                                <li><a href="#"><span><i class="fa-brands fa-instagram"></i></span></a></li>
-                                <li><a href="#"><span><i class="fa-brands fa-pinterest"></i></span></a></li>
-                            </ul>
-                        </div>
-                        <div class="form-group tnc">
-                            <input type="checkbox" name="tnc" id="tnc">
-                            <label for="tnc">Don't show this popup again</label>
-                        </div>
-                    </div>
-                </div><!-- /.row -->
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
 <header class="sg-header">
     <div class="sg-topbar">
         <div class="container">
@@ -170,7 +132,7 @@
         </div><!-- /.container -->         
     </div><!-- /.header-middle -->   
 
-    <div class="header-bottom style-1">
+    <div class="header-bottom style-2">
         <div class="container">
             <div class="bottom-content">
                 <div class="sg-categorie-menu categorie-lg align-self-lg-center">
@@ -255,7 +217,7 @@
                       
                         </div><!-- /.categorie-menu-content -->
                     </div><!-- /.categorie-menu -->                                                      
-                </div><!-- /.categorie-menu -->   
+                </div><!-- /.categorie-menu -->
 
                 <div class="right-content">
                     <div class="sg-menu">
@@ -270,8 +232,8 @@
                             </button>                                  
                             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                                 <ul class="navbar-nav">
-                                    <li class="nav-item active"><a href="{{route('/')}}">Home</a></li>
-                                    <li class="nav-item"><a href="shop.html">Shop</a></li>
+                                    <li class="nav-item {{Route::currentRouteName() == '/' ? 'active' : ''}}"><a href="{{route('/')}}">Home</a></li>
+                                    <li class="nav-item {{Route::currentRouteName() == 'shop' ? 'active' : ''}}"><a href="{{route('shop')}}">Shop</a></li>
                                     <li class="nav-item"><a href="gift-voucher.html">gift voucher</a></li>
                                     <li class="nav-item sg-dropdown">
                                         <a href="#">Page</a>
@@ -279,10 +241,9 @@
                                             <li><a href="sign-in.html">Sign In</a></li>
                                             <li><a href="sign-up.html">Sign Up</a></li>
                                         </ul>
-                                    </li>                                    
-                                    <li class="nav-item"><a href="about.html">About Us</a></li>  
-                                    <li class="nav-item"><a href="blog.html">Blog</a></li>      
-                                    <li class="nav-item"><a href="about.html">Contact Us</a></li>        
+                                    </li>
+                                    <li class="nav-item {{Route::currentRouteName() == 'blog' ? 'active' : ''}}"><a href="{{route('blog')}}">Blog</a></li>
+                                    <li class="nav-item {{Route::currentRouteName() == 'about' ? 'active' : ''}}"><a href="{{route('about')}}">About Us</a></li>  
                                 </ul>
                             </div>
                         </nav><!-- /.navbar -->

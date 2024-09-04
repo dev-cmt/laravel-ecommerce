@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Ecommerce\ProductController;
 use App\Http\Controllers\Ecommerce\OrderController;
 use App\Http\Controllers\Ecommerce\CategoryController;
@@ -19,13 +21,14 @@ use App\Http\Controllers\Ecommerce\BrandController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('/');
+Route::get('/', [HomeController::class, 'welcome'])->name('/');
+Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
+Route::get('/shop-details', [HomeController::class, 'shopDetails'])->name('shop-details');
+Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
+Route::get('/blog-details', [HomeController::class, 'blogDetails'])->name('blog-details');
+Route::get('/about', [HomeController::class, 'about'])->name('about');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/app-download', function () {
     $filePath = public_path('app.apk');
@@ -60,6 +63,8 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::post('products/{id}/add-review', [ProductController::class, 'addReview'])->name('products.addReview');
     Route::delete('products/{id}/product-images', [ProductController::class, 'productImagesDestroy'])->name('product-images.destroy');
     Route::delete('products/{id}/product-variant', [ProductController::class, 'productVariantDestroy'])->name('product-variant.destroy');
+    Route::delete('products/{id}/product-specification', [ProductController::class, 'productSpecificationDestroy'])->name('product-specification.destroy');
+    Route::delete('products/{id}/product-detail', [ProductController::class, 'productDetailDestroy'])->name('product-detail.destroy');
 
     
     Route::post('/upload-images', [ProductController::class, 'storeImages'])->name('upload.images');

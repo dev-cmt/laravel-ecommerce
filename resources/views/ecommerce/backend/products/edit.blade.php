@@ -6,7 +6,6 @@
                 border: 2px dashed #d3d3d3;
                 padding: 20px;
                 text-align: center;
-                background-color: #f9f9f9;
                 cursor: pointer;
                 border-radius: 5px;
                 margin-bottom: 20px;
@@ -151,7 +150,7 @@
                                                 <p class="m-0"><strong>Name: </strong> {{ $imageName }} </p>
                                                 <p class="m-0"><strong>Size: </strong> {{ $imageSize }} KB </p>
                                                 <!-- Button to handle deletion -->
-                                                <button type="button" id="delete-image" class="btn-close" data-id="{{ $item->id }}" data-url="{{ route('product-images.destroy', $item->id) }}" aria-label="Close"></button>
+                                                <button type="button" id="delete-image" class="btn-close delete-item" data-id="{{ $item->id }}" data-url="{{ route('product-images.destroy', $item->id) }}" aria-label="Close"></button>
                                             </div>
                                         </div>
                                     @endforeach
@@ -286,7 +285,7 @@
                                                 <td><input type="text" name="variants[{{ $key }}][size]" class="form-control" value="{{$item->size}}"></td>
                                                 <td><input type="number" min="0" name="variants[{{ $key }}][price]" class="form-control" value="{{$item->price}}"></td>
                                                 <td><input type="number" min="0" name="variants[{{ $key }}][quantity]" class="form-control" value="{{$item->quantity}}"></td>
-                                                <td><button type="button" id="delete-variant" class="btn btn-soft-info btn-sm material-shadow-none" data-id="{{ $item->id }}" data-url="{{ route('product-variant.destroy', $item->id) }}">Remove</button></td>
+                                                <td><button type="button" class="delete-item btn btn-soft-info btn-sm material-shadow-none" data-id="{{ $item->id }}" data-url="{{ route('product-variant.destroy', $item->id) }}">Remove</button></td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -308,16 +307,17 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($product->specifications as $item)
+                                            @foreach ($product->specifications as $key => $item)
                                             <tr class="specification-row-edit">
-                                                <td><input type="text" name="specifications[0][specification_name]" value="{{$item->specification_name}}" class="form-control"></td>
-                                                <td><textarea name="specifications[0][specification_value]" rows="1" value="{{$item->specification_value}}" class="form-control"></textarea></td>
-                                                <td><button type="button" class="btn btn-danger btn-sm remove-row">Remove</button></td>
+                                                <input type="hidden" name="specifications[{{ $key }}][id]" value="{{$item->id}}">
+                                                <td><input type="text" name="specifications[{{ $key }}][specification_name]" value="{{$item->specification_name}}" class="form-control"></td>
+                                                <td><textarea name="specifications[{{ $key }}][specification_value]" rows="1" class="form-control">{{$item->specification_value}}</textarea></td>
+                                                <td><button type="button" class="delete-item btn btn-soft-info btn-sm material-shadow-none" data-id="{{ $item->id }}" data-url="{{ route('product-specification.destroy', $item->id) }}">Remove</button></td>
                                             </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <button type="button" id="add-specification" class="btn btn-success">Add Specification</button>
+                                    <button type="button" id="add-specification" class="btn btn-sm btn-primary"><i class="ri-add-line align-middle me-1"></i> Add Specification</button>
                                 </div>
                             </div>
                             
@@ -334,16 +334,17 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($product->details as $item)
+                                            @foreach ($product->details as $key => $item)
                                             <tr class="detail-row-edit">
-                                                <td><input type="text" name="details[0][detail_name]" value="{{$item->detail_name}}" class="form-control"></td>
-                                                <td><textarea name="details[0][detail_value]" rows="1" value="{{$item->detail_value}}" class="form-control"></textarea></td>
-                                                <td><button type="button" class="btn btn-danger btn-sm remove-row">Remove</button></td>
+                                                <input type="hidden" name="details[{{ $key }}][id]" value="{{$item->id}}">
+                                                <td><input type="text" name="details[{{ $key }}][detail_name]" value="{{$item->detail_name}}" class="form-control"></td>
+                                                <td><textarea name="details[{{ $key }}][detail_value]" rows="1" class="form-control">{{$item->detail_value}}</textarea></td>
+                                                <td><button type="button" class="delete-item btn btn-soft-info btn-sm material-shadow-none" data-id="{{ $item->id }}" data-url="{{ route('product-detail.destroy', $item->id) }}">Remove</button></td>
                                             </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <button type="button" id="add-detail" class="btn btn-success">Add Detail</button>
+                                    <button type="button" id="add-detail" class="btn btn-sm btn-primary"><i class="ri-add-line align-middle me-1"></i> Add Detail</button>
                                 </div>
                             </div>
                             
@@ -682,7 +683,7 @@
         </script>
 
         <script>
-            $('#delete-image').on('click', function() {
+            $('.delete-item').on('click', function() {
                 const imageId = $(this).data('id');
                 const deleteUrl = $(this).data('url');
 
@@ -702,6 +703,7 @@
                             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                             success: (response) => {
                                 if (response.success) {
+                                    $(this).closest('tr').remove();
                                     $(`.preview-item:has(.delete-image[data-id="${imageId}"])`).remove();
                                     Swal.fire('Deleted!', 'Your image has been deleted.', 'success');
                                 } else {

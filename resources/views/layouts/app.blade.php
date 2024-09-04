@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable" data-theme="default" data-theme-colors="default">
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="enable" data-theme="material" data-theme-colors="default">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,7 @@
     <title>{{ $title }}</title>
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{asset('public/backend')}}/images/favicon.ico">
+    <link rel="shortcut icon" href="{{asset('public')}}/images/favicon.png">
     
     <!-- nouisliderribute css (product.index)-->
     <link rel="stylesheet" href="{{asset('public/backend')}}/libs/nouislider/nouislider.min.css">

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('category_name');
             $table->text('url_slug')->unique();
             $table->foreignId('parent_cat_id')->nullable()->constrained('categories');
+            $table->string('img_path')->nullable();
             $table->text('description')->nullable();
             $table->enum('status', ['active', 'inactive']);
             $table->timestamps();
