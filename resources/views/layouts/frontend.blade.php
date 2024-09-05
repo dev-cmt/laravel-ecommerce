@@ -6,7 +6,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="keywords" content="ecommerce">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        @props(['title' => config('app.name', 'Ecommerce')])
+        <title>{{ $title }}</title>
 
         <!-- CSS -->
         <link rel="stylesheet" href="{{asset('public/frontend')}}/css/bootstrap.min.css">

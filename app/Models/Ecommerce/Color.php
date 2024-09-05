@@ -6,19 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Ecommerce\Product;
 
-class Brand extends Model
+class Color extends Model
 {
     use HasFactory;
-    
+
     protected static function newFactory()
     {
         return \Database\Factories\BrandFactory::new();
     }
 
     protected $fillable = [
-        'brand_name',
-        'url_slug',
-        'description',
+        'color_name', 
+        'hex_value',
         'status',
         'user_id'
     ];

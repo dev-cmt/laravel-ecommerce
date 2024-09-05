@@ -38,7 +38,11 @@ return new class extends Migration
             $table->unsignedInteger('view_count')->default(0);
             $table->unsignedInteger('wishlist_count')->default(0);
             
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+            
+            // Foreign key
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained('products');
             $table->string('img_path')->nullable();
-            $table->string('color')->nullable();
+            $table->unsignedBigInteger('color_id')->nullable();
             $table->string('size')->nullable();
             $table->decimal('price', 10, 2)->nullable();
             $table->integer('quantity')->nullable();

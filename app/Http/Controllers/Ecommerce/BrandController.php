@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Ecommerce;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use App\Models\Ecommerce\Brand;
 
 class BrandController extends Controller
@@ -27,6 +29,8 @@ class BrandController extends Controller
             'description' => 'nullable|string',
             'status' => 'required|boolean',
         ]);
+        // Add the authenticated user's ID to the validated data
+        $validatedData['user_id'] = Auth::user()->id;
 
         Brand::create($validatedData);
 
@@ -56,6 +60,9 @@ class BrandController extends Controller
             'status' => 'required|boolean',
         ]);
 
+        // Add the authenticated user's ID to the validated data
+        $validatedData['user_id'] = Auth::user()->id;
+        
         $brand->update($validatedData);
 
         return redirect()->route('brands.index')->with('success', 'Brand updated successfully.');

@@ -17,7 +17,11 @@ return new class extends Migration
             $table->text('url_slug')->unique();
             $table->text('description')->nullable();
             $table->enum('status', ['active', 'inactive']);
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+            
+            // Foreign key
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

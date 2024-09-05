@@ -7,9 +7,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Ecommerce\Product;
 use App\Models\Ecommerce\Category;
 use App\Models\Ecommerce\Brand;
+use App\Models\Ecommerce\Color;
 use App\Models\Ecommerce\ProductImage;
 use App\Models\Ecommerce\ProductVariant;
 use App\Models\Ecommerce\ProductSpecification;
@@ -31,7 +33,8 @@ class ProductController extends Controller
         $product = null;
         $categories = Category::all();
         $brands = Brand::all();
-        return view('ecommerce.backend.products.create', compact('product', 'categories', 'brands'));
+        $colors = Color::all();
+        return view('ecommerce.backend.products.create', compact('product', 'categories', 'brands', 'colors'));
     }
 
     public function store(Request $request) 
@@ -71,6 +74,7 @@ class ProductController extends Controller
         $product->meta_title = $request->input('meta_title');
         $product->meta_keywords = $request->input('meta_keywords');
         $product->meta_description = $request->input('meta_description');
+        $product->user_id = Auth::user()->id;
 
         // Save the product
         $product->save();
@@ -100,7 +104,7 @@ class ProductController extends Controller
             $productVariant = [
                 'product_id' => $product->id,
                 'img_path' => ImageHelper::uploadImage($requestImg, 'images/product/variant', $currentImagePath),
-                'color' => $variant['color'] ?? null,
+                'color_id' => $variant['color_id'] ?? null,
                 'size' => $variant['size'] ?? null,
                 'price' => $variant['price'] ?? null,
                 'quantity' => $variant['quantity'] ?? null,
@@ -155,7 +159,8 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $categories = Category::all();
         $brands = Brand::all();
-        return view('ecommerce.backend.products.edit', compact('product', 'categories', 'brands'));
+        $colors = Color::all();
+        return view('ecommerce.backend.products.create', compact('$product', 'categories', 'brands', 'colors'));
     }
 
     public function destroy($id)

@@ -6,10 +6,11 @@ use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Ecommerce\ProductController;
-use App\Http\Controllers\Ecommerce\OrderController;
 use App\Http\Controllers\Ecommerce\CategoryController;
 use App\Http\Controllers\Ecommerce\BrandController;
+use App\Http\Controllers\Ecommerce\ColorController;
+use App\Http\Controllers\Ecommerce\ProductController;
+use App\Http\Controllers\Ecommerce\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -55,6 +56,10 @@ Route::group(['middleware' => ['auth']], function() {
  */
 
 Route::group(['middleware' => ['auth', 'verified']], function() {
+    Route::resource('categories', CategoryController::class);
+    Route::resource('brands', BrandController::class);
+    Route::resource('colors', ColorController::class);
+
     Route::resource('products', ProductController::class);
     Route::post('products/{id}/add-variant', [ProductController::class, 'addVariant'])->name('products.addVariant');
     Route::post('products/{id}/add-image', [ProductController::class, 'addImage'])->name('products.addImage');
@@ -66,20 +71,11 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::delete('products/{id}/product-specification', [ProductController::class, 'productSpecificationDestroy'])->name('product-specification.destroy');
     Route::delete('products/{id}/product-detail', [ProductController::class, 'productDetailDestroy'])->name('product-detail.destroy');
 
-    
-    Route::post('/upload-images', [ProductController::class, 'storeImages'])->name('upload.images');
-
 
     Route::resource('orders', OrderController::class);
-    
     Route::get('/order-index', [OrderController::class, 'orderIndex'])->name('order.index');
     Route::get('/order-details', [OrderController::class, 'orderDetailsView'])->name('order.details');
-
     
-    Route::resource('categories', CategoryController::class);
-    Route::resource('brands', BrandController::class);
 });
-
-
 
 require __DIR__.'/auth.php';

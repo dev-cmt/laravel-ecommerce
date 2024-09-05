@@ -10,6 +10,11 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected static function newFactory()
+    {
+        return \Database\Factories\ProductFactory::new();
+    }
+
     protected $fillable = [
         'product_name',
         'sku_code',
@@ -28,7 +33,11 @@ class Product extends Model
         'status',
         'meta_title',
         'meta_keywords',
-        'meta_description'
+        'meta_description',
+
+        'sales_count',
+        'view_count',
+        'wishlist_count',
     ];
     
 

@@ -266,7 +266,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Image</th>
-                                                <th>Color</th>
+                                                <th>Color<a href="{{ route('colors.create') }}" target="_blank" class="bg-info text-white p-1"><i class="ri-add-line m-0"></i></a></th>
                                                 <th>Size</th>
                                                 <th>Price</th>
                                                 <th>Quantity</th>
@@ -282,7 +282,16 @@
                                                         <img src="{{asset('public/'. $item->img_path )}}" alt="" height="40">
                                                         <input type="file" name="variants[{{ $key }}][img_path]" class="form-control" value="{{$item->img_path}}">
                                                     </td>
-                                                    <td><input type="text" name="variants[{{ $key }}][color]" class="form-control" value="{{$item->color}}"></td>
+                                                    <td>
+                                                        <select name="variants[{{ $key }}][color_id]" class="form-select" style="background:#6c757d">
+                                                            <option value="">No Color</option>
+                                                            @foreach($colors as $color)
+                                                                <option value="{{ $color->id }}" {{ old('brand_id', $item->color_id ?? '') == $color->id ? 'selected' : '' }}>
+                                                                    {{ $color->color_name }} 
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
                                                     <td><input type="text" name="variants[{{ $key }}][size]" class="form-control" value="{{$item->size}}"></td>
                                                     <td><input type="number" min="0" name="variants[{{ $key }}][price]" class="form-control" value="{{$item->price}}"></td>
                                                     <td><input type="number" min="0" name="variants[{{ $key }}][quantity]" class="form-control" value="{{$item->quantity}}"></td>
@@ -403,7 +412,7 @@
                     <div class="card-body">
                         <div>
                             <label for="datepicker-publish-input" class="form-label">Publish Date & Time</label>
-                            <input type="date" name="publish_schedule" class="form-control">
+                            <input type="date" name="publish_schedule" class="form-control" value="{{old('publish_schedule')}}">
                         </div>
                     </div>
                 </div>
@@ -632,19 +641,36 @@
                     addVariant(rowCount);
                 });
 
-                function addVariant(variantCount){
+                function addVariant(variantCount) {
                     $('#variants-table tbody').append(`
                         <tr id="variant-row-${variantCount}">
                             <td><input type="file" name="variants[${variantCount}][img_path]" class="form-control"></td>
-                            <td><input type="text" name="variants[${variantCount}][color]" class="form-control"></td>
+                            <td>
+                                <select name="variants[${variantCount}][color_id]" class="form-select">
+                                    <option value="">No Color</option>
+                                    @foreach($colors as $color)
+                                        <option value="{{ $color->id }}">{{ $color->color_name }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
                             <td><input type="text" name="variants[${variantCount}][size]" class="form-control"></td>
                             <td><input type="number" min="0" name="variants[${variantCount}][price]" class="form-control"></td>
                             <td><input type="number" min="0" name="variants[${variantCount}][quantity]" class="form-control"></td>
                             <td><button type="button" class="btn btn-danger btn-sm remove-row">Remove</button></td>
                         </tr>
                     `);
-                    variantCount++;
+
+                    // Re-attach event handler for dynamically added rows
+                    $('.remove-row').click(function () {
+                        $(this).closest('tr').remove();
+                    });
                 }
+
+                // Initial setup for existing remove buttons
+                $(document).on('click', '.remove-row', function () {
+                    $(this).closest('tr').remove();
+                });
+
 
                 // Add Specification
                 $('#add-specification').click(function () {

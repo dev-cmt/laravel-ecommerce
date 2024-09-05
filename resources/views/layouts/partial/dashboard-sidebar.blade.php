@@ -101,10 +101,13 @@
                     <div class="collapse menu-dropdown" id="sidebarApps">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item ">
-                                <a href="{{route('categories.index')}}" class="nav-link active" data-key="t-chat">Category </a>
+                                <a href="{{route('categories.index')}}" class="nav-link" data-key="t-chat">Category </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{route('brands.index')}}" class="nav-link" data-key="t-chat">Brand </a>
+                                <a href="{{route('brands.index')}}" class="nav-link" data-key="t-chat">Brand</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="{{route('colors.index')}}" class="nav-link" data-key="t-chat">Color</a>
                             </li>
                         </ul>
                     </div>

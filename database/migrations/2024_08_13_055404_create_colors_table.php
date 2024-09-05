@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('colors', function (Blueprint $table) {
             $table->id();
-            $table->string('category_name');
-            $table->text('url_slug')->unique();
-            $table->foreignId('parent_cat_id')->nullable()->constrained('categories');
-            $table->string('img_path')->nullable();
-            $table->text('description')->nullable();
+            $table->string('color_name'); // Name of the color (e.g., "Red", "Blue")
+            $table->string('hex_value', 7); // HEX color code (e.g., "#FF5733")
             $table->enum('status', ['active', 'inactive']);
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('colors');
     }
 };

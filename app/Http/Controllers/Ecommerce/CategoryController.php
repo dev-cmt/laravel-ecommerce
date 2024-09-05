@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Ecommerce;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use App\Models\Ecommerce\Category;
 use Illuminate\Validation\Rule;
 use App\Helpers\ImageHelper;
@@ -39,6 +41,8 @@ class CategoryController extends Controller
         if ($request->hasFile('img_path')) {
             $validatedData['img_path'] = ImageHelper::uploadImage($request->file('img_path'), 'images/category');
         }
+        // Add the authenticated user's ID to the validated data
+        $validatedData['user_id'] = Auth::user()->id;
 
         // Create the category
         Category::create($validatedData);
@@ -80,6 +84,10 @@ class CategoryController extends Controller
         if ($request->hasFile('img_path')) {
             $validatedData['img_path'] = ImageHelper::uploadImage($request->file('img_path'), 'images/category', $category->img_path);
         }
+
+        // Add the authenticated user's ID to the validated data
+        $validatedData['user_id'] = Auth::user()->id;
+
 
         // Update the category with the validated data
         $category->update($validatedData);

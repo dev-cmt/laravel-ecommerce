@@ -5,10 +5,16 @@ namespace App\Models\Ecommerce;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use App\Models\Ecommerce\Product;
 
 class Category extends Model
 {
     use HasFactory;
+
+    protected static function newFactory()
+    {
+        return \Database\Factories\CategoryFactory::new();
+    }
 
     protected $fillable = [
         'category_name',
@@ -16,7 +22,8 @@ class Category extends Model
         'parent_cat_id',
         'img_path',
         'description',
-        'status'
+        'status',
+        'user_id'
     ];
 
     protected static function boot()

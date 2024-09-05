@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class ProductVariant extends Model
 {
     use HasFactory;
+    protected static function newFactory()
+    {
+        return \Database\Factories\ProductVariantFactory::new();
+    }
 
     protected $fillable = [
         'product_id',
