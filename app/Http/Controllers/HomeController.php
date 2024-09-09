@@ -6,6 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
+use Illuminate\Validation\Rule;
+use App\Models\Ecommerce\Product;
+use App\Models\Ecommerce\Category;
+use App\Models\Ecommerce\Brand;
+use App\Models\Ecommerce\Color;
+use App\Models\Ecommerce\ProductImage;
+use App\Models\Ecommerce\ProductVariant;
+use App\Models\Ecommerce\ProductSpecification;
+use App\Models\Ecommerce\ProductDetail;
 
 class HomeController extends Controller
 {
@@ -24,12 +33,13 @@ class HomeController extends Controller
     }
     public function shop(Request $request): View
     {
-        $user = Auth::user();
-        return view('ecommerce.frontend.shop', compact('user'));
+        $product = Product::get();
+        return view('ecommerce.frontend.shop', compact('product'));
     }
-    public function shopDetails(Request $request)
+    public function shopDetails(Request $request, $id)
     {
-        $user = Auth::user();
-        return view('ecommerce.frontend.shop-details', compact('user'));
+        $product = Product::find($id);
+
+        return view('ecommerce.frontend.shop-details', compact('product'));
     }
 }

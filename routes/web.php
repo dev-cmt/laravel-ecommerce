@@ -21,10 +21,9 @@ use App\Http\Controllers\Ecommerce\OrderController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', [HomeController::class, 'welcome'])->name('/');
+Route::get('/', [HomeController::class, 'welcome'])->name('home');
 Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
-Route::get('/shop-details', [HomeController::class, 'shopDetails'])->name('shop-details');
+Route::get('/shop-details/{id}/{url_slug}', [HomeController::class, 'shopDetails'])->name('shop-details');
 Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
 Route::get('/blog-details', [HomeController::class, 'blogDetails'])->name('blog-details');
 Route::get('/about', [HomeController::class, 'about'])->name('about');

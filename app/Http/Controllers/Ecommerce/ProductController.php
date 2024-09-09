@@ -160,7 +160,7 @@ class ProductController extends Controller
         $categories = Category::all();
         $brands = Brand::all();
         $colors = Color::all();
-        return view('ecommerce.backend.products.create', compact('$product', 'categories', 'brands', 'colors'));
+        return view('ecommerce.backend.products.create', compact('product', 'categories', 'brands', 'colors'));
     }
 
     public function destroy($id)

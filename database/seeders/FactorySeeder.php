@@ -23,7 +23,7 @@ class FactorySeeder extends Seeder
         Brand::factory()->count(20)->create();
         Color::factory()->count(20)->create();
 
-        Product::factory(10)->create()->each(function ($product) {
+        Product::factory(20)->create()->each(function ($product) {
             // Seed related product variants, images, details, and specifications
             ProductVariant::factory(3)->create(['product_id' => $product->id]);
             ProductImage::factory(3)->create(['product_id' => $product->id]);
