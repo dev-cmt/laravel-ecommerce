@@ -12,7 +12,7 @@ class Color extends Model
 
     protected static function newFactory()
     {
-        return \Database\Factories\BrandFactory::new();
+        return \Database\Factories\ColorFactory::new();
     }
 
     protected $fillable = [

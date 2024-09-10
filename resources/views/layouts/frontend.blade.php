@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{asset('public/frontend')}}/css/flaticon_shofy.css">
     <link rel="stylesheet" href="{{asset('public/frontend')}}/css/spacing.css">
     <link rel="stylesheet" href="{{asset('public/frontend')}}/css/main.css">
+    <link rel="stylesheet" href="{{asset('public/frontend')}}/css/custom.css">
 
     @stack('style')
 </head>

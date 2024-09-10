@@ -174,5 +174,9 @@
         <!-- end col -->
 
     </div>
+
+
+
+    
 </x-guest-layout>
 

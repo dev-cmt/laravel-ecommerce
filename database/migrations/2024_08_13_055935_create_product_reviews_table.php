@@ -15,9 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained('products');
             $table->foreignId('user_id')->constrained('users');
-            $table->integer('rating')->check(function ($query) {
-                $query->where('rating', '>=', 1)->where('rating', '<=', 5);
-            });
+            $table->integer('rating')->unsigned(); // No check constraint, handle validation in application logic
             $table->text('review')->nullable();
             $table->timestamps();
         });

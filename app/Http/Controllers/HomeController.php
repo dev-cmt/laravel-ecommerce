@@ -15,6 +15,7 @@ use App\Models\Ecommerce\ProductImage;
 use App\Models\Ecommerce\ProductVariant;
 use App\Models\Ecommerce\ProductSpecification;
 use App\Models\Ecommerce\ProductDetail;
+use App\Models\Ecommerce\ProductReview;
 
 class HomeController extends Controller
 {
@@ -38,8 +39,89 @@ class HomeController extends Controller
     }
     public function shopDetails(Request $request, $id)
     {
-        $product = Product::find($id);
+        $data = Product::find($id);
 
-        return view('ecommerce.frontend.shop-details', compact('product'));
+        return view('ecommerce.frontend.shop-details', compact('data'));
+    }
+
+    public function blog(Request $request): View
+    {
+        $data = Product::get();
+        return view('ecommerce.frontend.shop', compact('data'));
+    }
+    public function blogDetails(Request $request): View
+    {
+        $data = Product::get();
+        return view('ecommerce.frontend.shop', compact('data'));
+    }
+    public function compare(Request $request): View
+    {
+        $data = Product::get();
+        return view('ecommerce.frontend.compare', compact('data'));
+    }
+    public function wishlist(Request $request): View
+    {
+        $data = Product::get();
+        return view('ecommerce.frontend.wishlist', compact('data'));
+    }
+    public function cart(Request $request): View
+    {
+        $data = Product::get();
+        return view('ecommerce.frontend.cart', compact('data'));
+    }
+
+    /**------------------------------------------------------------------------------
+     * 
+     * ------------------------------------------------------------------------------
+     */
+    public function storeReview(Request $request)
+    {
+        // $request->validate([
+        //     'rating' => 'required|integer|min:1|max:5',
+        //     'review' => 'nullable|string',
+        // ]);
+
+        ProductReview::create([
+            'product_id' => $request->input('product_id'),
+            'user_id' => 1, // Get the logged-in user's ID
+            'rating' => $request->input('rating'),
+            'review' => $request->input('review'),
+        ]);
+
+        return redirect()->back()->with('success', 'Review submitted successfully!');
+    }
+
+
+
+    public function loadMoreReviews(Request $request)
+    {
+        $productId = $request->get('product_id');
+        $page = $request->get('page', 1);
+        $reviewsPerPage = 3;
+
+        // Get reviews for the current product
+        $reviews = ProductReview::where('product_id', $productId)
+                        ->skip(($page - 1) * $reviewsPerPage)
+                        ->take($reviewsPerPage)
+                        ->get();
+
+        // Determine if there are more reviews to load
+        $hasMore = ProductReview::where('product_id', $productId)->count() > $page * $reviewsPerPage;
+
+        // Prepare reviews to return
+        $reviewsData = $reviews->map(function($review) {
+            return [
+                'user_name' => $review->user->name,
+                'user_image' => asset('public/frontend/img/users/user-2.jpg'),  // Adjust to actual user image path
+                'rating' => $review->rating,
+                'created_at' => $review->created_at->format('d M, Y'),
+                'review' => $review->review,
+            ];
+        });
+
+        return response()->json([
+            'reviews' => $reviewsData,
+            'hasMore' => $hasMore,
+        ]);
     }
 }

@@ -18,14 +18,19 @@ class FactorySeeder extends Seeder
 {
     public function run()
     {
+        // Seed users, categories, and brands
         User::factory()->count(10)->create();
         Category::factory()->count(20)->create();
         Brand::factory()->count(20)->create();
-        Color::factory()->count(20)->create();
 
-        Product::factory(20)->create()->each(function ($product) {
-            // Seed related product variants, images, details, and specifications
-            ProductVariant::factory(3)->create(['product_id' => $product->id]);
+        // Step 1: Insert data into the Color table first
+        $colors = Color::factory()->count(20)->create();
+
+        Product::factory(20)->create()->each(function ($product) use ($colors) {
+            ProductVariant::factory(3)->create([
+                'product_id' => $product->id,
+                'color_id' => $colors->random()->id
+            ]);
             ProductImage::factory(3)->create(['product_id' => $product->id]);
             ProductDetail::factory(3)->create(['product_id' => $product->id]);
             ProductSpecification::factory(3)->create(['product_id' => $product->id]);

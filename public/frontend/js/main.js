@@ -1416,7 +1416,7 @@
 	});
 
 	var slider = new Swiper('.tp-product-details-thumb-slider-active', {
-		slidesPerView: 2,
+		slidesPerView: 1, /* CH-2 */
 		spaceBetween: 13,
 		loop: true,
 		rtl: rtl_setting,
@@ -1434,19 +1434,18 @@
 			prevEl: ".tp-product-details-thumb-slider-5-button-prev",
 		},
 
-
 		breakpoints: {
 			'1200': {
-				slidesPerView: 2,
+				slidesPerView: 1, /* CH-2 */
 			},
 			'992': {
-				slidesPerView: 2,
+				slidesPerView: 1, /* CH-2 */
 			},
 			'768': {
-				slidesPerView: 2,
+				slidesPerView: 1, /* CH-2 */
 			},
 			'576': {
-				slidesPerView: 2,
+				slidesPerView: 1, /* CH-2 */
 			},
 			'0': {
 				slidesPerView: 1,

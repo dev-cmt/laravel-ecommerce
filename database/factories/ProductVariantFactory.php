@@ -17,7 +17,7 @@ class ProductVariantFactory extends Factory
             'product_id' => Product::factory(),
             'img_path' => $this->faker->imageUrl(),
             'color_id' => Color::factory(), // Adjust as needed
-            'size' => $this->faker->word,
+            'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL']),
             'price' => $this->faker->randomFloat(2, 10, 1000),
             'quantity' => $this->faker->numberBetween(1, 100),
         ];
