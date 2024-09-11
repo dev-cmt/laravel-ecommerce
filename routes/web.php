@@ -34,6 +34,9 @@ Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
 
 Route::post('/product/review', [HomeController::class, 'storeReview'])->name('product.review.store');
 Route::get('/load-more-reviews', [HomeController::class, 'loadMoreReviews'])->name('load-more-reviews');
+Route::get('/filter-products', [HomeController::class, 'filterProducts'])->name('filter-products');
+
+
 
 Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 

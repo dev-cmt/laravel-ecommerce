@@ -18563,6 +18563,16 @@ product all slider
 .tp-shop-widget-checkbox-circle {
   position: relative;
 }
+.tp-shop-widget-color{
+    height: 288px;
+    overflow-y: scroll;
+    overflow-y: scroll;
+    overscroll-behavior-y: contain;
+    scrollbar-width: thin;
+    padding-right: 10px;
+}
+
+
 .tp-shop-widget-checkbox-circle-list ul li {
   list-style: none;
   display: -webkit-box;

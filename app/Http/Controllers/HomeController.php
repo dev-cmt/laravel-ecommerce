@@ -34,8 +34,9 @@ class HomeController extends Controller
     }
     public function shop(Request $request): View
     {
-        $product = Product::get();
-        return view('ecommerce.frontend.shop', compact('product'));
+        $products = Product::get();
+
+        return view('ecommerce.frontend.shop', compact('products'));
     }
     public function shopDetails(Request $request, $id)
     {
@@ -124,4 +125,37 @@ class HomeController extends Controller
             'hasMore' => $hasMore,
         ]);
     }
+
+    public function filterProducts(Request $request)
+    {
+        $query = Product::query();
+
+        // // Apply price range filter if provided
+        // if ($request->has('price')) {
+        //     $priceRange = explode(' - ', $request->input('price'));
+        //     $query->whereBetween('price', [$priceRange[0], $priceRange[1]]);
+        // }
+
+        // Apply category filter if provided
+        if ($request->has('categories')) {
+            $categories = $request->input('categories');
+            $query->whereIn('category_id', $categories);
+        }
+
+        // Apply color filter if provided
+        if ($request->has('colors')) {
+            $colors = $request->input('colors');
+            $query->whereHas('variants', function ($q) use ($colors) {
+                $q->whereIn('color_id', $colors);
+            });
+        }
+
+        $products = $query->get();
+
+        // return response()->json($products);
+
+        return view('ecommerce.frontend.partials.product-list', compact('products'));
+    }
+
+
 }

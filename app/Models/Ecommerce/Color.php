@@ -4,7 +4,7 @@ namespace App\Models\Ecommerce;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Ecommerce\Product;
+use App\Models\Ecommerce\ProductVariant;
 
 class Color extends Model
 {
@@ -22,8 +22,8 @@ class Color extends Model
         'user_id'
     ];
 
-    public function products()
+    public function productVariant()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(ProductVariant::class);
     }
 }
