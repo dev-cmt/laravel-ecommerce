@@ -18,6 +18,7 @@ class Brand extends Model
     protected $fillable = [
         'brand_name',
         'url_slug',
+        'img_path',
         'description',
         'status',
         'user_id'

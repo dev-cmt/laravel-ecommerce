@@ -15,7 +15,7 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'product_name' => $this->faker->unique()->word,
+            'product_name' => $this->faker->unique()->words(rand(2, 4), true),
             'sku_code' => $this->faker->unique()->word,
             'url_slug' => Str::slug($this->faker->unique()->word),
             'main_image' => $this->faker->imageUrl(),

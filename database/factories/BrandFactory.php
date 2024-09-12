@@ -18,6 +18,7 @@ class BrandFactory extends Factory
         return [
             'brand_name' => $this->faker->company,
             'url_slug' => $this->faker->unique()->slug,
+            'img_path' => $this->faker->imageUrl(640, 480, 'business', true, 'brand logo'), // Fake logo URL
             'description' => $this->faker->optional()->paragraph,
             'status' => $this->faker->randomElement($statuses),
             'user_id' => $this->faker->randomElement($userIds),

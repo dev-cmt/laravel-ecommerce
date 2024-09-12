@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('brand_name');
             $table->text('url_slug')->unique();
+            $table->string('img_path')->nullable();
             $table->text('description')->nullable();
             $table->enum('status', ['active', 'inactive']);
             $table->unsignedBigInteger('user_id');

@@ -25,12 +25,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
 
-        'unique_patient_id',
-        'gender',
-        'blood_group',
-        'marital_status',
         'phone',
         'profile_images',
+        'is_admin',
         'status',
     ];
 

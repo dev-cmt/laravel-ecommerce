@@ -31,19 +31,19 @@ Route::get('/compare', [HomeController::class, 'compare'])->name('compare');
 Route::get('/wishlist', [HomeController::class, 'wishlist'])->name('wishlist');
 Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
 
-
 Route::post('/product/review', [HomeController::class, 'storeReview'])->name('product.review.store');
 Route::get('/load-more-reviews', [HomeController::class, 'loadMoreReviews'])->name('load-more-reviews');
-Route::get('/filter-products', [HomeController::class, 'filterProducts'])->name('filter-products');
+
+Route::get('/user-profile', [HomeController::class, 'userProfile'])->name('user-profile');
 
 
-
-Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/app-download', function () {
     $filePath = public_path('app.apk');
     return response()->download($filePath, 'app.apk');
 })->name('app.download');
+
+Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile-index', [ProfileController::class, 'profileIndex'])->name('profile.index');

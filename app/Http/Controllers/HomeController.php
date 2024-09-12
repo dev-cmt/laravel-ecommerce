@@ -32,12 +32,61 @@ class HomeController extends Controller
         $user = Auth::user();
         return view('welcome', compact('user'));
     }
-    public function shop(Request $request): View
+    public function userProfile(Request $request): View
     {
-        $products = Product::get();
+        return view('ecommerce.frontend.profile');
+    }
+    
+    public function shop(Request $request)
+    {
+        $query = Product::query();
 
+        // Apply price range filter if provided
+        if ($request->has('price')) {
+            $priceRange = $request->input('price');
+            $priceRange = str_replace('$', '', $priceRange); // Remove dollar signs
+            $priceRange = array_map('trim', explode(' - ', $priceRange)); // Split by ' - '
+
+            if (count($priceRange) == 2 && is_numeric($priceRange[0]) && is_numeric($priceRange[1])) {
+                $query->whereBetween('price', [(float)$priceRange[0], (float)$priceRange[1]]);
+            }
+        }
+
+        // Apply category filter if provided
+        if ($request->has('categories')) {
+            $categories = $request->input('categories');
+            if (is_array($categories) && !empty($categories)) {
+                $query->whereIn('category_id', $categories);
+            }
+        }
+
+        // Apply color filter if provided
+        if ($request->has('colors')) {
+            $colors = $request->input('colors');
+            if (is_array($colors) && !empty($colors)) {
+                $query->whereHas('variants', function ($q) use ($colors) {
+                    $q->whereIn('color_id', $colors);
+                });
+            }
+        }
+
+        // Paginate the results
+        $products = $query->paginate(2); // Adjust pagination if needed
+
+        // Add pagination to the URL with filters applied
+        $products->appends($request->except('page')); // Preserve all query parameters except 'page'
+
+        // Check if the request is an AJAX request
+        if ($request->ajax()) {
+            return view('ecommerce.frontend.partials.product-list', compact('products'))->render();
+        }
+
+        // For non-AJAX requests (initial page load), return the full shop view
         return view('ecommerce.frontend.shop', compact('products'));
     }
+
+
+
     public function shopDetails(Request $request, $id)
     {
         $data = Product::find($id);
@@ -92,8 +141,6 @@ class HomeController extends Controller
         return redirect()->back()->with('success', 'Review submitted successfully!');
     }
 
-
-
     public function loadMoreReviews(Request $request)
     {
         $productId = $request->get('product_id');
@@ -125,37 +172,4 @@ class HomeController extends Controller
             'hasMore' => $hasMore,
         ]);
     }
-
-    public function filterProducts(Request $request)
-    {
-        $query = Product::query();
-
-        // // Apply price range filter if provided
-        // if ($request->has('price')) {
-        //     $priceRange = explode(' - ', $request->input('price'));
-        //     $query->whereBetween('price', [$priceRange[0], $priceRange[1]]);
-        // }
-
-        // Apply category filter if provided
-        if ($request->has('categories')) {
-            $categories = $request->input('categories');
-            $query->whereIn('category_id', $categories);
-        }
-
-        // Apply color filter if provided
-        if ($request->has('colors')) {
-            $colors = $request->input('colors');
-            $query->whereHas('variants', function ($q) use ($colors) {
-                $q->whereIn('color_id', $colors);
-            });
-        }
-
-        $products = $query->get();
-
-        // return response()->json($products);
-
-        return view('ecommerce.frontend.partials.product-list', compact('products'));
-    }
-
-
 }

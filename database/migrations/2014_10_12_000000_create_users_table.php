@@ -21,7 +21,8 @@ return new class extends Migration
             
             $table->string('phone')->nullable();
             $table->string('profile_images')->nullable();
-            $table->tinyInteger('status')->default(true);
+            $table->boolean('is_admin')->default(false);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

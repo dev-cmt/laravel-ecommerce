@@ -25,7 +25,7 @@ class CategoryFactory extends Factory
             'category_name' => $categoryName,
             'url_slug' => Str::slug($categoryName) . '-' . $this->faker->unique()->randomNumber(5),
             'parent_cat_id' => $parentCatId,
-            'img_path' => 'path/to/image.jpg',
+            'img_path' => $this->faker->imageUrl(640, 480, 'nature', true, 'category image'), // Fake category image URL
             'description' => $this->faker->sentence,
             'status' => $this->faker->randomElement(['active', 'inactive']),
             'user_id' => $this->faker->numberBetween(1, 10),

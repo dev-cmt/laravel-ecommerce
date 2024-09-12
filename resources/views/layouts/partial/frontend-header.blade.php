@@ -337,18 +337,34 @@
                                 <div class="tp-header-top-menu-item tp-header-setting">
                                     <span class="tp-header-setting-toggle" id="tp-header-setting-toggle">Setting</span>
                                     <ul>
-                                        <li>
-                                            <a href="profile.html">My Profile</a>
-                                        </li>
-                                        <li>
-                                            <a href="wishlist.html">Wishlist</a>
-                                        </li>
-                                        <li>
-                                            <a href="cart.html">Cart</a>
-                                        </li>
-                                        <li>
-                                            <a href="login.html">Logout</a>
-                                        </li>
+                                        @auth
+                                            <li>
+                                                <a href="{{route('user-profile')}}">My Profile</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('dashboard')}}">Dashboard</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('wishlist')}}">Wishlist</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('cart')}}">Cart</a>
+                                            </li>
+                                            <li>
+                                                <form method="POST" action="{{ route('logout') }}">
+                                                    @csrf
+                                                    <a href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">Logout</a>
+                                                    
+                                                </form>
+                                            </li>
+                                        @else
+                                            <li>
+                                                <a href="{{route('login')}}">Login</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('register')}}">Register</a>
+                                            </li>
+                                        @endauth
                                     </ul>
                                 </div>
                             </div>

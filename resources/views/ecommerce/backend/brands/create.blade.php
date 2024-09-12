@@ -30,6 +30,13 @@
                 <input type="text" name="url_slug" class="form-control" required>
             </div>
             <div class="form-group">
+                <label for="img_path">Brand Images</label>
+                <input type="file" name="img_path" id="img_path" class="form-control @error('img_path') is-invalid @enderror">
+                @error('img_path')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
                 <label for="description">Description</label>
                 <textarea name="description" class="form-control"></textarea>
             </div>
