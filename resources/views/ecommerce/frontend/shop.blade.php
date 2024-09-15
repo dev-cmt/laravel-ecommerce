@@ -92,7 +92,7 @@
                                                 <div class="tp-shop-widget-checkbox-circle">
                                                     <input type="checkbox" class="color-filter" id="color-{{ $color->id }}" data-id="{{ $color->id }}">
                                                     <label for="color-{{ $color->id }}">{{ $color->color_name }}</label>
-                                                    <span data-bg-color="{{ $color->hex_value }}" class="tp-shop-widget-checkbox-circle-self"></span>
+                                                    <span data-bg-color="{{ $color->hex_value }}" class="tp-shop-widget-checkbox-circle-self" style="background-color: {{ $color->hex_value }};"></span>
                                                 </div>
                                                 <span class="tp-shop-widget-checkbox-circle-number">{{ $color->product_count }}</span>
                                             </li>
@@ -102,14 +102,10 @@
                             </div>
                         </div>
 
-                        <div id="applied-filters" class="tp-shop-widget mb-35">
-                            <h3 class="tp-shop-widget-title">Applied Filters</h3>
-                            <ul id="active-filters-list">
-                                <!-- Filters will be dynamically added here -->
-                            </ul>
-                            <button id="clear-filters" class="tp-shop-widget-filter-btn" type="button">Clear All</button>
-                        </div>
-                        
+                        <!-- Applied Filters -->
+                        <div class="tp-shop-widget mb-50" id="applied-filters"></div>
+                        <button id="clear-filters" type="button">Clear Filters</button>
+
                         @push('scripts')
                         <script>
                             $(document).ready(function () {
@@ -145,30 +141,19 @@
                                 // Build the new URL with query parameters
                                 var newUrl = new URL(window.location.href);
 
-                                // Set price range
-                                newUrl.searchParams.set('price', priceRange);
-
                                 // Handle categories
-                                if (selectedCategories.length > 0) {
-                                    // Clear existing categories parameter
-                                    newUrl.searchParams.delete('categories[]');
-                                    selectedCategories.forEach(function (category) {
-                                        newUrl.searchParams.append('categories[]', category);  // Append each selected category
-                                    });
-                                } else {
-                                    newUrl.searchParams.delete('categories[]');  // Remove categories parameter if none are selected
-                                }
+                                newUrl.searchParams.forEach(function (value, key) {
+                                    if (key.startsWith('colors[')) {
+                                        newUrl.searchParams.delete(key);
+                                    }
+                                });
 
-                                // Handle colors
-                                if (selectedColors.length > 0) {
-                                    // Clear all existing color parameters
-                                    newUrl.searchParams.delete('colors');
-                                    selectedColors.forEach(function (color, index) {
-                                        newUrl.searchParams.append(`colors[${index}]`, color);  // Add new colors
-                                    });
-                                } else {
-                                    newUrl.searchParams.delete('colors');  // Remove colors parameter if no colors are selected
-                                }
+                                // Append new colors if any are selected
+                                selectedColors.forEach(function (color, index) {
+                                    newUrl.searchParams.append(`colors[${index}]`, color);
+                                });
+
+
 
                                 // Set the current page
                                 newUrl.searchParams.set('page', page);
@@ -181,6 +166,7 @@
                             function initializeFilters() {
                                 var queryParams = getQueryParams();
 
+                                alert('hi')
                                 // Set price range
                                 if (queryParams.price) {
                                     $("#amount").val(queryParams.price);
@@ -239,6 +225,7 @@
                             // AJAX function to fetch filtered products and update the page
                             function filterProducts(page = 1) {
                                 let query = window.location.search;
+
                                 $.ajax({
                                     url: `{{ route('shop') }}${query}`,  // Use Laravel's route helper to generate the URL
                                     type: 'GET',
@@ -253,6 +240,10 @@
                             }
                         </script>
                         @endpush
+
+
+
+
 
 
 

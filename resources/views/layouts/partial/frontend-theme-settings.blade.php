@@ -1,31 +1,30 @@
 <div class="popup-modal modal fade" tabindex="-1" id="sg-modal-add">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            <div class="modal-body">
+            <div class="d-flex justify-content-end m-1">
+                <button type="button" class="btn-close text-right" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-0">
                 <div class="row">
                     <div class="col-lg-6">
-                        <img src="{{asset('public/frontend')}}/images/product/modal.png" alt="Image" class="img-fluid">
+                        <img src="{{asset('public')}}/images/modal.png" alt="Image" class="img-fluid">
                     </div>
                     <div class="col-lg-6">
-                        <h2>Get <span>25%</span> Discount</h2>
+                        <h2>Get <span class="text-info">25%</span> Discount</h2>
                         <p>Subscribe to the yoori shop newsletter to receive updates on special offers.</p>
                         <form action="#">
-                            <div class="form-group">
-                                <input type="email" class="form-control" required="required" placeholder="Email Address">
+                            <div class="tp-subscribe-input">
+                                <input type="email" placeholder="Enter Your Email">
+                                <button type="submit">Subscribe</button>
                             </div>
-                            <button class="btn btn-primary text-uppercase" name="submit" type="submit">Subscribe</button>
                         </form>
-                        <div class="social">
-                            <ul class="global-list">
-                                <li><a href="#"><span><i class="fa-brands fa-facebook"></i></span></a></li>
-                                <li><a href="#"><span><i class="fa-brands fa-twitter"></i></span></a></li>
-                                <li><a href="#"><span><i class="fa-brands fa-linkedin"></i></span></a></li>
-                                <li><a href="#"><span><i class="fa-brands fa-instagram"></i></span></a></li>
-                                <li><a href="#"><span><i class="fa-brands fa-pinterest"></i></span></a></li>
-                            </ul>
+                        <div class="tp-footer-social text-center my-4">
+                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fa-brands fa-vimeo-v"></i></a>
                         </div>
-                        <div class="form-group tnc">
+                        <div class="form-group text-center">
                             <input type="checkbox" name="tnc" id="tnc">
                             <label for="tnc">Don't show this popup again</label>
                         </div>
@@ -36,6 +35,12 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+{{-- <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var modal = new bootstrap.Modal(document.getElementById('sg-modal-add'));
+        modal.show();
+    });
+</script> --}}
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Check if the modal has been shown before using sessionStorage

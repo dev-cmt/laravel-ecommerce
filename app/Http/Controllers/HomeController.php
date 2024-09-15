@@ -69,12 +69,10 @@ class HomeController extends Controller
                 });
             }
         }
-
-        // Paginate the results
-        $products = $query->paginate(2); // Adjust pagination if needed
-
+        $products = $query->paginate(2);
+        
         // Add pagination to the URL with filters applied
-        $products->appends($request->except('page')); // Preserve all query parameters except 'page'
+        $products->appends($request->except('page'));
 
         // Check if the request is an AJAX request
         if ($request->ajax()) {
