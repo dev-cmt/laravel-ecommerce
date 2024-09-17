@@ -16,6 +16,7 @@ use App\Models\Ecommerce\ProductVariant;
 use App\Models\Ecommerce\ProductSpecification;
 use App\Models\Ecommerce\ProductDetail;
 use App\Models\Ecommerce\ProductReview;
+use App\Models\Ecommerce\Wishlist;
 
 class HomeController extends Controller
 {
@@ -42,13 +43,12 @@ class HomeController extends Controller
         $query = Product::query();
 
         // Apply price range filter if provided
-        if ($request->has('price')) {
-            $priceRange = $request->input('price');
-            $priceRange = str_replace('$', '', $priceRange); // Remove dollar signs
-            $priceRange = array_map('trim', explode(' - ', $priceRange)); // Split by ' - '
+        if ($request->filled(['minPrice', 'maxPrice'])) {
+            $minPrice = (float) $request->input('minPrice');
+            $maxPrice = (float) $request->input('maxPrice');
 
-            if (count($priceRange) == 2 && is_numeric($priceRange[0]) && is_numeric($priceRange[1])) {
-                $query->whereBetween('price', [(float)$priceRange[0], (float)$priceRange[1]]);
+            if (is_numeric($minPrice) && is_numeric($maxPrice)) {
+                $query->whereRaw('price - (price * discount / 100) BETWEEN ? AND ?', [$minPrice, $maxPrice]);
             }
         }
 
@@ -71,8 +71,6 @@ class HomeController extends Controller
         }
         $products = $query->paginate(2);
         
-        // Add pagination to the URL with filters applied
-        $products->appends($request->except('page'));
 
         // Check if the request is an AJAX request
         if ($request->ajax()) {
@@ -112,6 +110,34 @@ class HomeController extends Controller
         $data = Product::get();
         return view('ecommerce.frontend.wishlist', compact('data'));
     }
+    public function wishlistStore(Request $request)
+    {
+        // Extract data without validation
+        $userId = $request->input('user_id');
+        $productId = $request->input('product_id');
+        $productVariantId = $request->input('product_variant_id'); // Nullable field
+
+        // Check if the product is already in the user's wishlist
+        $wishlistExists = Wishlist::where('user_id', $userId)
+                                  ->where('product_id', $productId)
+                                  ->where('product_variant_id', $productVariantId)
+                                  ->exists();
+
+        if ($wishlistExists) {
+            return response()->json(['message' => 'This product is already in your wishlist!'], 409); // Conflict response
+        }
+
+        // Create the wishlist entry
+        Wishlist::create([
+            'user_id' => $userId,
+            'product_id' => $productId,
+            'product_variant_id' => $productVariantId,
+        ]);
+
+        // Return a success response
+        return response()->json(['message' => 'Added to wishlist successfully!'], 200);
+    }
+
     public function cart(Request $request): View
     {
         $data = Product::get();
@@ -119,7 +145,7 @@ class HomeController extends Controller
     }
 
     /**------------------------------------------------------------------------------
-     * 
+     * FUNTION: REVIEW
      * ------------------------------------------------------------------------------
      */
     public function storeReview(Request $request)
@@ -170,4 +196,8 @@ class HomeController extends Controller
             'hasMore' => $hasMore,
         ]);
     }
+    /**------------------------------------------------------------------------------
+     * FUNTION: REVIEW
+     * ------------------------------------------------------------------------------
+     */
 }

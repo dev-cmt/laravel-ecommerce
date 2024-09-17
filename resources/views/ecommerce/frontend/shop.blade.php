@@ -109,56 +109,67 @@
                         @push('scripts')
                         <script>
                             $(document).ready(function () {
-                                // Initialize filters on page load based on URL
                                 initializeFilters();
 
                                 // Trigger filter change on category or color filter change
-                                $(".category-filter, .color-filter, #slider-range").on("change slide", function () {
+                                $(".category-filter, .color-filter").on("change", function () {
                                     updateUrlWithFilters();  // Update the URL with the filters
                                     filterProducts();        // Fetch products based on the updated filters
+                                });
+
+                                // Trigger filter change on price filter change
+                                $("#slider-range").on("slidechange", function () {
+                                    updateUrlWithFilters();
+                                    filterProducts();
                                 });
 
                                 // Bind pagination clicks
                                 bindPaginationLinks();
                             });
 
-                            // Update the URL and filters when the filters change
                             function updateUrlWithFilters(page = 1) {
-                                var priceRange = $("#amount").val();  // Get the price range
-                                var selectedCategories = [];
-                                var selectedColors = [];
+                                // Extract price range from the input
+                                let priceRange = $("#amount").val().replace(/[^0-9\-]/g, '').split('-').map(Number);
+                                let minPrice = priceRange[0] || 0;
+                                let maxPrice = priceRange[1] || 0;
 
-                                // Get selected categories
+                                // Create a new URL object from the current URL
+                                let newUrl = new URL(window.location.href);
+
+                                // Clear existing price range parameters
+                                newUrl.searchParams.set('minPrice', minPrice);
+                                newUrl.searchParams.set('maxPrice', maxPrice);
+
+                                // Collect selected categories
+                                let selectedCategories = [];
                                 $(".category-filter:checked").each(function () {
-                                    selectedCategories.push($(this).attr('data-id'));
+                                    selectedCategories.push($(this).data('id'));
                                 });
 
-                                // Get selected colors
+                                // Collect selected colors
+                                let selectedColors = [];
                                 $(".color-filter:checked").each(function () {
-                                    selectedColors.push($(this).attr('data-id'));
+                                    selectedColors.push($(this).data('id'));
                                 });
 
-                                // Build the new URL with query parameters
-                                var newUrl = new URL(window.location.href);
+                                // Update URL parameters for categories
+                                newUrl.searchParams.delete('categories[]');
+                                selectedCategories.forEach(function (category) {
+                                    newUrl.searchParams.append('categories[]', category);
+                                });
 
-                                // Handle categories
-                                newUrl.searchParams.forEach(function (value, key) {
+                                // Update URL parameters for colors
+                                newUrl.searchParams.forEach(function (_, key) {
                                     if (key.startsWith('colors[')) {
                                         newUrl.searchParams.delete(key);
                                     }
                                 });
-
-                                // Append new colors if any are selected
                                 selectedColors.forEach(function (color, index) {
                                     newUrl.searchParams.append(`colors[${index}]`, color);
                                 });
 
-
-
-                                // Set the current page
+                                // Set the page number and update the URL without reloading
                                 newUrl.searchParams.set('page', page);
-
-                                // Update the URL in the browser without reloading
                                 history.replaceState(null, '', newUrl.toString());
                             }
 
@@ -166,10 +177,9 @@
                             function initializeFilters() {
                                 var queryParams = getQueryParams();
 
-                                alert('hi')
-                                // Set price range
-                                if (queryParams.price) {
-                                    $("#amount").val(queryParams.price);
+                                if (queryParams.minPrice && queryParams.maxPrice) {
+                                    $("#amount").val(`$${queryParams.minPrice} - $${queryParams.maxPrice}`);
+                                    $("#slider-range").slider("values", [parseInt(queryParams.minPrice), parseInt(queryParams.maxPrice)]);
                                 }
 
                                 // Set selected categories
@@ -225,7 +235,6 @@
                             // AJAX function to fetch filtered products and update the page
                             function filterProducts(page = 1) {
                                 let query = window.location.search;
-
                                 $.ajax({
                                     url: `{{ route('shop') }}${query}`,  // Use Laravel's route helper to generate the URL
                                     type: 'GET',
@@ -240,6 +249,9 @@
                             }
                         </script>
                         @endpush
+
+
+
 
 
 

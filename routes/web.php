@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\Ecommerce\CategoryController;
 use App\Http\Controllers\Ecommerce\BrandController;
 use App\Http\Controllers\Ecommerce\ColorController;
@@ -29,6 +30,7 @@ Route::get('/blog-details', [HomeController::class, 'blogDetails'])->name('blog-
 
 Route::get('/compare', [HomeController::class, 'compare'])->name('compare');
 Route::get('/wishlist', [HomeController::class, 'wishlist'])->name('wishlist');
+Route::post('/wishlist-store', [HomeController::class, 'wishlistStore'])->name('wishlist.store')->middleware(['auth', 'verified']);
 Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
 
 Route::post('/product/review', [HomeController::class, 'storeReview'])->name('product.review.store');
@@ -86,5 +88,8 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::get('/order-details', [OrderController::class, 'orderDetailsView'])->name('order.details');
     
 });
+
+Route::get('auth/{provider}', [SocialAuthController::class, 'redirectToProvider'])->name('social.login');
+Route::get('auth/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('social.callback');
 
 require __DIR__.'/auth.php';
