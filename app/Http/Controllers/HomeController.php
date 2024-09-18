@@ -16,7 +16,9 @@ use App\Models\Ecommerce\ProductVariant;
 use App\Models\Ecommerce\ProductSpecification;
 use App\Models\Ecommerce\ProductDetail;
 use App\Models\Ecommerce\ProductReview;
+use App\Models\Ecommerce\Cart;
 use App\Models\Ecommerce\Wishlist;
+use App\Models\Ecommerce\Compare;
 
 class HomeController extends Controller
 {
@@ -100,49 +102,151 @@ class HomeController extends Controller
         $data = Product::get();
         return view('ecommerce.frontend.shop', compact('data'));
     }
-    public function compare(Request $request): View
+    public function cart(Request $request): View
     {
         $data = Product::get();
-        return view('ecommerce.frontend.compare', compact('data'));
+        return view('ecommerce.frontend.cart', compact('data'));
     }
     public function wishlist(Request $request): View
     {
         $data = Product::get();
         return view('ecommerce.frontend.wishlist', compact('data'));
     }
-    public function wishlistStore(Request $request)
-    {
-        // Extract data without validation
-        $userId = $request->input('user_id');
-        $productId = $request->input('product_id');
-        $productVariantId = $request->input('product_variant_id'); // Nullable field
-
-        // Check if the product is already in the user's wishlist
-        $wishlistExists = Wishlist::where('user_id', $userId)
-                                  ->where('product_id', $productId)
-                                  ->where('product_variant_id', $productVariantId)
-                                  ->exists();
-
-        if ($wishlistExists) {
-            return response()->json(['message' => 'This product is already in your wishlist!'], 409); // Conflict response
-        }
-
-        // Create the wishlist entry
-        Wishlist::create([
-            'user_id' => $userId,
-            'product_id' => $productId,
-            'product_variant_id' => $productVariantId,
-        ]);
-
-        // Return a success response
-        return response()->json(['message' => 'Added to wishlist successfully!'], 200);
-    }
-
-    public function cart(Request $request): View
+    public function compare(Request $request): View
     {
         $data = Product::get();
-        return view('ecommerce.frontend.cart', compact('data'));
+        return view('ecommerce.frontend.compare', compact('data'));
     }
+    public function itemActionStore(Request $request)
+    {
+        $action = $request->input('action_name');
+        $userId = Auth::id(); // Get the authenticated user's ID
+        $productId = $request->input('product_id');
+        $productVariantId = $request->input('product_variant_id');
+
+        // If not authenticated, store info in the session
+        if (!Auth::check()) {
+            $this->storeInSession($action, $request);
+            return response()->json(['message' => 'You must be logged in to add items to your wishlist.'], 401);
+        }
+
+        $product = Product::findOrFail($productId);
+
+        switch ($action) {
+            case "cart":
+                return $this->handleCartAction($userId, $productId, $productVariantId);
+            
+            case "wishlist":
+                return $this->handleWishlistAction($userId, $productId, $productVariantId, $product);
+            
+            case "compare":
+                return $this->handleCompareAction($userId, $productId);
+
+            default:
+                return response()->json(['message' => 'Invalid action.'], 400);
+        }
+    }
+
+    private function storeInSession($action, Request $request)
+    {
+        switch ($action) {
+            case "cart":
+                session()->put('cart', [
+                    'product_id' => $request->input('product_id'),
+                    'product_variant_id' => $request->input('product_variant_id'),
+                ]);
+                break;
+
+            case "wishlist":
+                session()->put('wishlist', [
+                    'product_id' => $request->input('product_id'),
+                    'product_variant_id' => $request->input('product_variant_id'),
+                ]);
+                break;
+
+            case "compare":
+                session()->put('compare', [
+                    'product_id' => $request->input('product_id'),
+                ]);
+                break;
+        }
+        session()->put('returnUrl', url()->previous());
+    }
+
+    private function handleCartAction($userId, $productId, $productVariantId)
+    {
+        $cartEntry = Cart::where('user_id', $userId)
+                        ->where('product_id', $productId)
+                        ->where('product_variant_id', $productVariantId)
+                        ->first();
+
+        if ($cartEntry) {
+            $cartEntry->delete();
+            $message = 'Removed from cart successfully!';
+        } else {
+            Cart::create([
+                'user_id' => $userId,
+                'product_id' => $productId,
+                'product_variant_id' => $productVariantId,
+                'quantity' => 1,
+            ]);
+            $message = 'Added to cart successfully!';
+        }
+
+        $userCartCount = Cart::where('user_id', $userId)->count();
+
+        return response()->json(['message' => $message, 'count_cart' => $userCartCount], 200);
+    }
+
+    private function handleWishlistAction($userId, $productId, $productVariantId, $product)
+    {
+        $wishlistEntry = Wishlist::where('user_id', $userId)
+                                ->where('product_id', $productId)
+                                ->where('product_variant_id', $productVariantId)
+                                ->first();
+
+        if ($wishlistEntry) {
+            $wishlistEntry->delete();
+            $product->decrement('wishlist_count');
+            $message = 'Removed from wishlist successfully!';
+        } else {
+            Wishlist::create([
+                'user_id' => $userId,
+                'product_id' => $productId,
+                'product_variant_id' => $productVariantId,
+            ]);
+            $product->increment('wishlist_count');
+            $message = 'Added to wishlist successfully!';
+        }
+
+        $userWishlistCount = Wishlist::where('user_id', $userId)->count();
+
+        return response()->json(['message' => $message, 'count_wishlist' => $userWishlistCount], 200);
+    }
+
+    private function handleCompareAction($userId, $productId)
+    {
+        $compareEntry = Compare::where('user_id', $userId)
+                            ->where('product_id', $productId)
+                            ->first();
+
+        if ($compareEntry) {
+            $compareEntry->delete();
+            $message = 'Removed from compare successfully!';
+        } else {
+            Compare::create([
+                'user_id' => $userId,
+                'product_id' => $productId,
+            ]);
+            $message = 'Added to compare successfully!';
+        }
+
+        return response()->json(['message' => $message], 200);
+    }
+
+
+
+    
 
     /**------------------------------------------------------------------------------
      * FUNTION: REVIEW

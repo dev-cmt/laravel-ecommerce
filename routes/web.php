@@ -28,10 +28,10 @@ Route::get('/shop-details/{id}/{url_slug}', [HomeController::class, 'shopDetails
 Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
 Route::get('/blog-details', [HomeController::class, 'blogDetails'])->name('blog-details');
 
-Route::get('/compare', [HomeController::class, 'compare'])->name('compare');
-Route::get('/wishlist', [HomeController::class, 'wishlist'])->name('wishlist');
-Route::post('/wishlist-store', [HomeController::class, 'wishlistStore'])->name('wishlist.store')->middleware(['auth', 'verified']);
 Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
+Route::get('/wishlist', [HomeController::class, 'wishlist'])->name('wishlist');
+Route::get('/compare', [HomeController::class, 'compare'])->name('compare');
+Route::post('/item-action/store', [HomeController::class, 'itemActionStore'])->name('item-action.store');
 
 Route::post('/product/review', [HomeController::class, 'storeReview'])->name('product.review.store');
 Route::get('/load-more-reviews', [HomeController::class, 'loadMoreReviews'])->name('load-more-reviews');
@@ -91,5 +91,14 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
 
 Route::get('auth/{provider}', [SocialAuthController::class, 'redirectToProvider'])->name('social.login');
 Route::get('auth/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('social.callback');
+
+Route::get('/get-session', function () {
+    // session()->forget('previous_url');
+    // session()->forget('two_step_url');
+    // session()->put('name', 'Motiuir');
+    dd(session()->all());
+    // session()->flush();
+});
+
 
 require __DIR__.'/auth.php';

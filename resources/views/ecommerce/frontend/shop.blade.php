@@ -662,4 +662,47 @@
         </div>
     </div>
 
+
+    @push('scripts')
+    <script>
+        $(document).ready(function () {
+            // Handle Add to Wishlist and Cart
+            $(document).on('click', '.add-item', function () {
+                const button = $(this);
+                const actionName = button.data('action-name');
+                const productId = button.data('product-id');
+                const productVariantId = button.data('product-variant-id');
+
+                $.ajax({
+                    url: '{{ route('item-action.store') }}',
+                    type: 'POST',
+                    data: {
+                        action_name: actionName,
+                        product_id: productId,
+                        product_variant_id: productVariantId,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (response) {
+                        button.toggleClass('bg-dark text-white', response.message.includes('Added'));
+                        $('#wishlist-count').text(response.count_wishlist ?? $('#wishlist-count').text());
+                        $('#cart-count').text(response.count_cart ?? $('#cart-count').text());
+                    },
+                    error: function (xhr) { // Fixed: added comma before error function
+                        if (xhr.status === 401) { // User not authenticated
+                            window.location.href = '{{ route('login') }}';
+                        } else if (xhr.status === 404) {
+                            alert('Product not found.');
+                        } else {
+                            alert('An error occurred. Please try again.');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    @endpush
+
+
+
+
 </x-frontend-layout>

@@ -1726,8 +1726,7 @@
 				$("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
 			}
 		});
-		$("#amount").val("$" + $("#slider-range").slider("values", 0) +
-			" - $" + $("#slider-range").slider("values", 1));
+		$("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
 
 		$("#slider-range-offcanvas").slider({
 			range: true,
@@ -1738,8 +1737,7 @@
 				$("#amount-offcanvas").val("$" + ui.values[0] + " - $" + ui.values[1]);
 			}
 		});
-		$("#amount-offcanvas").val("$" + $("#slider-range-offcanvas").slider("values", 0) +
-			" - $" + $("#slider-range-offcanvas").slider("values", 1));
+		$("#amount-offcanvas").val("$" + $("#slider-range-offcanvas").slider("values", 0) + " - $" + $("#slider-range-offcanvas").slider("values", 1));
 	
 		
 

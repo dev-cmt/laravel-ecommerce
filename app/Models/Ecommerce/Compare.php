@@ -5,7 +5,7 @@ namespace App\Models\Ecommerce;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductComparison extends Model
+class Compare extends Model
 {
     use HasFactory;
 

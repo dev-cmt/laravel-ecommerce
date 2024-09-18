@@ -39,8 +39,9 @@ class SocialAuthController extends Controller
                 'provider' => $provider, // Save the provider (google, facebook, etc.)
                 'provider_id' => $socialUser->getId(),
                 'profile_images' => $socialUser->getAvatar(),
-                'password' => bcrypt(Str::random(16)), // Random password for social login users
-                'status' => true, // Assuming new users are active by default
+                'password' => bcrypt(Str::random(16)),
+                'email_verified_at' => now(),
+                'status' => true,
             ]);
         }
 
