@@ -97,6 +97,14 @@ class HomeController extends Controller
         $data = Product::get();
         return view('ecommerce.frontend.shop', compact('data'));
     }
+    public function coupon(Request $request): View
+    {
+        return view('ecommerce.frontend.coupon');
+    }
+    public function contact(Request $request): View
+    {
+        return view('ecommerce.frontend.contact');
+    }
     public function blogDetails(Request $request): View
     {
         $data = Product::get();
@@ -107,6 +115,11 @@ class HomeController extends Controller
         $data = Product::get();
         return view('ecommerce.frontend.cart', compact('data'));
     }
+    public function checkout(Request $request): View
+    {
+        $data = Cart::where('user_id', Auth::id())->get();
+        return view('ecommerce.frontend.checkout', compact('data'));
+    }
     public function wishlist(Request $request): View
     {
         $data = Product::get();
@@ -114,7 +127,7 @@ class HomeController extends Controller
     }
     public function compare(Request $request): View
     {
-        $data = Product::get();
+        $data = Compare::get();
         return view('ecommerce.frontend.compare', compact('data'));
     }
     public function itemActionStore(Request $request)
@@ -301,7 +314,12 @@ class HomeController extends Controller
         ]);
     }
     /**------------------------------------------------------------------------------
-     * FUNTION: REVIEW
+     * FUNTION: AJAX DATA CALL
      * ------------------------------------------------------------------------------
      */
+    public function getCarts(Request $request)
+    {
+        $data = Cart::where('user_id', Auth::id())->with('product')->get()->toArray();
+        return response()->json($data);
+    }
 }

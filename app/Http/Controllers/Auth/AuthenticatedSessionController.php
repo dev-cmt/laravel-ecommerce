@@ -33,9 +33,10 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         // Check and process any session data after login
-        return $this->sessionCheck() ?? redirect()->intended(RouteServiceProvider::HOME);
+        return $this->sessionCheck() ?? redirect()->intended(RouteServiceProvider::HOME); /**CH ADD - $this->sessionCheck()*/
     }
 
+    // ADD NEW THIS FUNTION
     public function sessionCheck()
     {
         // Check cart in the session

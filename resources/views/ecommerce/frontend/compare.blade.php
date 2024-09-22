@@ -27,181 +27,73 @@
                         <table class="table">
                             <tbody>
                                 <tr>
+                                    <th>Remove</th>
+                                    @foreach ($data as $item)
+                                    <td>
+                                        <div class="tp-compare-remove">
+                                            <button><i class="fal fa-trash-alt"></i></button>
+                                        </div>
+                                    </td>
+                                    @endforeach
+                                </tr>
+                                <tr>
                                     <th>Product</th>
+                                    @foreach ($data as $item)
                                     <td>
                                         <div class="tp-compare-thumb">
                                             <img src="{{asset('public/frontend')}}/img/product/product-1.jpg" alt="">
                                             <h4 class="tp-compare-product-title">
-                                                <a href="product-details.html">Galaxy Tab S6 Lite 10.4-inch Android Tablet
-                                                    128GB.</a>
+                                                <a href="product-details.html">{{$item->product->product_name}}</a>
                                             </h4>
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="tp-compare-thumb">
-                                            <img src="{{asset('public/frontend')}}/img/product/product-2.jpg" alt="">
-                                            <h4 class="tp-compare-product-title">
-                                                <a href="product-details.html">Tracker with IP67 Waterproof Pedometer Smart
-                                                    watch.</a>
-                                            </h4>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="tp-compare-thumb">
-                                            <img src="{{asset('public/frontend')}}/img/product/product-3.jpg" alt="">
-                                            <h4 class="tp-compare-product-title">
-                                                <a href="product-details.html">Cancelling Headphones Wireless Devices
-                                                    Blue.</a>
-                                            </h4>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="tp-compare-thumb">
-                                            <img src="{{asset('public/frontend')}}/img/product/product-4.jpg" alt="">
-                                            <h4 class="tp-compare-product-title">
-                                                <a href="product-details.html">Professional Camera 4K Digital Video
-                                                    Camera.</a>
-                                            </h4>
-                                        </div>
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <th>Description</th>
-                                    <td>
-                                        <div class="tp-compare-desc">
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, distinctio.</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="tp-compare-desc">
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, distinctio.</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="tp-compare-desc">
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, distinctio.</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="tp-compare-desc">
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, distinctio.</p>
-                                        </div>
-                                    </td>
-
+                                    @endforeach
                                 </tr>
                                 <tr>
                                     <th>Price</th>
+                                    @foreach ($data as $item)
                                     <td>
                                         <div class="tp-compare-price">
-                                            <span>$98.00</span>
-                                            <span class="old-price">$128.00</span>
+                                            <span>{{ round($item->product->price - ($item->product->price * $item->product->discount / 100)) }} ৳</span>
+                                            <span class="old-price">{{$item->product->price}}</span>
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="tp-compare-price">
-                                            <span>$12.49</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="tp-compare-price">
-                                            <span>$43.00</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="tp-compare-price">
-                                            <span>$75.00</span>
-                                        </div>
-                                    </td>
-
+                                    @endforeach
                                 </tr>
                                 <tr>
                                     <th>Add to cart</th>
+                                    @foreach ($data as $item)
                                     <td>
                                         <div class="tp-compare-add-to-cart">
                                             <button type="submit" class="tp-btn">Add to Cart</button>
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="tp-compare-add-to-cart">
-                                            <button type="submit" class="tp-btn">Add to Cart</button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="tp-compare-add-to-cart">
-                                            <button type="submit" class="tp-btn">Add to Cart</button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="tp-compare-add-to-cart">
-                                            <button type="submit" class="tp-btn">Add to Cart</button>
-                                        </div>
-                                    </td>
-
+                                    @endforeach
                                 </tr>
                                 <tr>
                                     <th>Rating</th>
+                                    @foreach ($data as $item)
                                     <td>
                                         <div class="tp-compare-rating">
-                                            <span><i class="fas fa-star"></i></span>
-                                            <span><i class="fas fa-star"></i></span>
-                                            <span><i class="fas fa-star"></i></span>
-                                            <span><i class="fas fa-star"></i></span>
-                                            <span><i class="fas fa-star"></i></span>
+                                            @php
+                                                $averageRating = $item->product->reviews->avg('rating');
+                                            @endphp
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <span><i class="fas fa-star{{ $i <= $averageRating ? '' : '-o' }}"></i></span>
+                                            @endfor
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="tp-compare-rating">
-                                            <span><i class="fas fa-star"></i></span>
-                                            <span><i class="fas fa-star"></i></span>
-                                            <span><i class="fas fa-star"></i></span>
-                                            <span><i class="fas fa-star"></i></span>
-                                            <span><i class="fas fa-star"></i></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="tp-compare-rating">
-                                            <span><i class="fas fa-star"></i></span>
-                                            <span><i class="fas fa-star"></i></span>
-                                            <span><i class="fas fa-star"></i></span>
-                                            <span><i class="fas fa-star"></i></span>
-                                            <span><i class="fas fa-star"></i></span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="tp-compare-rating">
-                                            <span><i class="fas fa-star"></i></span>
-                                            <span><i class="fas fa-star"></i></span>
-                                            <span><i class="fas fa-star"></i></span>
-                                            <span><i class="fas fa-star"></i></span>
-                                            <span><i class="fas fa-star"></i></span>
-                                        </div>
-                                    </td>
-
+                                    @endforeach
                                 </tr>
                                 <tr>
-                                    <th>Remove</th>
+                                    <th>Description</th>
+                                    @foreach ($data as $item)
                                     <td>
-                                        <div class="tp-compare-remove">
-                                            <button><i class="fal fa-trash-alt"></i></button>
+                                        <div class="tp-compare-desc">
+                                            <p>{!! $item->product->description !!}</p>
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="tp-compare-remove">
-                                            <button><i class="fal fa-trash-alt"></i></button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="tp-compare-remove">
-                                            <button><i class="fal fa-trash-alt"></i></button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="tp-compare-remove">
-                                            <button><i class="fal fa-trash-alt"></i></button>
-                                        </div>
-                                    </td>
-
+                                    @endforeach
                                 </tr>
                             </tbody>
                         </table>

@@ -56,10 +56,17 @@
     <script src="{{asset('public/frontend')}}/js/wow.js"></script>
     <script src="{{asset('public/frontend')}}/js/isotope-pkgd.js"></script>
     <script src="{{asset('public/frontend')}}/js/imagesloaded-pkgd.js"></script>
-    <script src="{{asset('public/frontend')}}/js/ajax-form.js"></script>
     <script src="{{asset('public/frontend')}}/js/main.js"></script>
     
     @stack('scripts')
+
+    <script>
+        var itemActionStoreUrl = '{{ route('item-action.store') }}';
+        var csrfToken = '{{ csrf_token() }}';
+        var loginUrl = '{{ route('login') }}';
+    </script>
+    <script src="{{ asset('public/frontend/js/ajax.min.js') }}"></script>
+    
 </body>
 </html>
 

@@ -207,35 +207,27 @@
                     <h4>Shopping cart</h4>
                 </div>
                 <div class="cartmini__close">
-                    <button type="button" class="cartmini__close-btn cartmini-close-btn"><i
-                            class="fal fa-times"></i></button>
+                    <button type="button" class="cartmini__close-btn cartmini-close-btn"><i class="fal fa-times"></i></button>
                 </div>
             </div>
-            <div class="cartmini__shipping">
-                <p> Free Shipping for all orders over <span>$50</span></p>
+            {{-- <div class="cartmini__shipping">
+                <p> Free Shipping for all orders over <span>200 ৳</span></p>
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
                         data-width="70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-            </div>
-            <div class="cartmini__widget">
-                <div class="cartmini__widget-item">
-                    <div class="cartmini__thumb">
-                        <a href="product-details.html">
-                            <img src="{{asset('public/frontend')}}/img/product/product-1.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="cartmini__content">
-                        <h5 class="cartmini__title"><a href="product-details.html">Level Bolt Smart Lock</a></h5>
-                        <div class="cartmini__price-wrapper">
-                            <span class="cartmini__price">$46.00</span>
-                            <span class="cartmini__quantity">x2</span>
-                        </div>
-                    </div>
-                    <a href="#" class="cartmini__del"><i class="fa-regular fa-xmark"></i></a>
+            </div> --}}
+            <div class="cartmini__shipping">
+                <p>Free Shipping for all orders over <span>200 ৳</span></p>
+                <div class="progress">
+                    <div id="shipping-progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                        style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
+            <!--Show Cart Item-->
+            <div class="cartmini__widget"></div>
             <!-- for wp -->
+
             <!-- if no item in cart -->
             <div class="cartmini__empty text-center d-none">
                 <img src="{{asset('public/frontend')}}/img/product/cartmini/empty-cart.png" alt="">
@@ -246,11 +238,11 @@
         <div class="cartmini__checkout">
             <div class="cartmini__checkout-title mb-30">
                 <h4>Subtotal:</h4>
-                <span>$113.00</span>
+                <span id="carts-subtotal">৳ 00.00</span>
             </div>
             <div class="cartmini__checkout-btn">
-                <a href="cart.html" class="tp-btn mb-10 w-100"> view cart</a>
-                <a href="checkout.html" class="tp-btn tp-btn-border w-100"> checkout</a>
+                <a href="{{route('cart')}}" class="tp-btn mb-10 w-100"> View Cart</a>
+                <a href="{{route('checkout')}}" class="tp-btn tp-btn-border w-100"> Checkout</a>
             </div>
         </div>
     </div>
@@ -392,7 +384,7 @@
                                     <ul>
                                         <li><a href="{{route('home')}}">Home</a></li>
                                         <li><a href="{{route('shop')}}">Shop</a></li>
-                                        <li><a href="#">Coupons</a></li>
+                                        <li><a href="{{route('coupon')}}">Coupons</a></li>
                                         <li class="has-dropdown">
                                             <a href="blog.html">Blog</a>
                                             <ul class="tp-submenu">
@@ -403,7 +395,7 @@
                                                 <li><a href="blog-details.html">Blog Details</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="#">Contact</a></li>
+                                        <li><a href="{{route('contact')}}">Contact</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -443,7 +435,7 @@
                                         </a>
                                     </div>
                                     <div class="tp-header-action-item">
-                                        <button class="tp-header-action-btn cartmini-open-btn">
+                                        <button class="tp-header-action-btn cartmini-open-btn" id="get-carts-data">
                                             <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M6.48626 20.5H14.8341C17.9004 20.5 20.2528 19.3924 19.5847 14.9348L18.8066 8.89359C18.3947 6.66934 16.976 5.81808 15.7311 5.81808H5.55262C4.28946 5.81808 2.95308 6.73341 2.4771 8.89359L1.69907 14.9348C1.13157 18.889 3.4199 20.5 6.48626 20.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                                 <path d="M6.34902 5.5984C6.34902 3.21232 8.28331 1.27803 10.6694 1.27803V1.27803C11.8184 1.27316 12.922 1.72619 13.7362 2.53695C14.5504 3.3477 15.0081 4.44939 15.0081 5.5984V5.5984" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -472,6 +464,7 @@
     </div>
 </header>
 <!-- header area end -->
+
 <!-- filter offcanvas area start -->
 <div class="tp-filter-offcanvas-area">
     <div class="tp-filter-offcanvas-wrapper">
@@ -504,3 +497,70 @@
     </div>
 </div>
 <!-- filter offcanvas area end -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('get-carts-data').addEventListener('click', function(e) {
+            e.preventDefault();
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '{{ route('get-carts') }}', true);
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    var cartWidget = document.querySelector('.cartmini__widget');
+                    cartWidget.innerHTML = '';
+
+                    var subtotal = response.reduce((total, item) => {
+                        var priceAfterDiscount = Math.round(item.product.price - (item.product.price * item.product.discount / 100));
+                        cartWidget.innerHTML += `
+                            <div class="cartmini__widget-item">
+                                <div class="cartmini__thumb">
+                                    <a href="product-details.html">
+                                        <img src="{{asset('public/frontend')}}/img/product/product-1.jpg" alt="">
+                                    </a>
+                                </div>
+                                <div class="cartmini__content">
+                                    <h5 class="cartmini__title"><a href="product-details.html">${item.product.product_name}</a></h5>
+                                    <div class="cartmini__price-wrapper">
+                                        <span class="cartmini__price">৳ ${priceAfterDiscount}</span>
+                                        <span class="cartmini__quantity">x ${item.quantity}</span>
+                                    </div>
+                                </div>
+                                <a href="#" data-action-name="cart" data-product-id=" ${item.product.id}" class="add-item cartmini__del"><i class="fa-regular fa-xmark"></i></a>
+                            </div>
+                        `;
+                        return total + (priceAfterDiscount * item.quantity);
+                    }, 0);
+
+                    document.getElementById('carts-subtotal').textContent = '৳ ' + subtotal;
+                    
+                    // Check subtotal for free shipping
+                    var shippingThreshold = 200;
+                    var shippingSpan = document.querySelector('.cartmini__shipping span');
+
+                    if (subtotal > shippingThreshold) {
+                        shippingSpan.classList.add('text-success'); // Add class if above threshold
+                    } else {
+                        shippingSpan.classList.remove('text-success'); // Remove class if below threshold
+                    }
+
+                    // Update progress bar
+                    var progressBar = document.getElementById('shipping-progress-bar');
+                    var progress = Math.min((subtotal / 200) * 100, 100);
+                    progressBar.style.width = progress + '%';
+                    progressBar.setAttribute('aria-valuenow', progress);
+                } else {
+                    console.log('Error fetching cart data:', xhr);
+                }
+            };
+
+            xhr.onerror = function() {
+                console.log('Request failed');
+            };
+
+            xhr.send();
+        });
+    });
+</script>

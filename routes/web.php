@@ -27,8 +27,11 @@ Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
 Route::get('/shop-details/{id}/{url_slug}', [HomeController::class, 'shopDetails'])->name('shop-details');
 Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
 Route::get('/blog-details', [HomeController::class, 'blogDetails'])->name('blog-details');
+Route::get('/coupon', [HomeController::class, 'coupon'])->name('coupon');
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
 Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
+Route::get('/checkout', [HomeController::class, 'checkout'])->name('checkout');
 Route::get('/wishlist', [HomeController::class, 'wishlist'])->name('wishlist');
 Route::get('/compare', [HomeController::class, 'compare'])->name('compare');
 Route::post('/item-action/store', [HomeController::class, 'itemActionStore'])->name('item-action.store');
@@ -37,7 +40,6 @@ Route::post('/product/review', [HomeController::class, 'storeReview'])->name('pr
 Route::get('/load-more-reviews', [HomeController::class, 'loadMoreReviews'])->name('load-more-reviews');
 
 Route::get('/user-profile', [HomeController::class, 'userProfile'])->name('user-profile');
-
 
 
 Route::get('/app-download', function () {
@@ -86,6 +88,9 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::resource('orders', OrderController::class);
     Route::get('/order-index', [OrderController::class, 'orderIndex'])->name('order.index');
     Route::get('/order-details', [OrderController::class, 'orderDetailsView'])->name('order.details');
+
+
+    Route::get('/get-carts', [HomeController::class, 'getCarts'])->name('get-carts');
     
 });
 

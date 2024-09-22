@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('provider_id')->nullable();
             
             $table->string('phone')->nullable();
-            $table->string('profile_images')->nullable();
+            $table->text('profile_images')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->boolean('status')->default(true);
             $table->timestamps();

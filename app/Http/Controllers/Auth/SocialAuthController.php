@@ -48,7 +48,14 @@ class SocialAuthController extends Controller
         // Log the user in
         Auth::login($user, true);
 
-        // Redirect to the intended page or dashboard
-        return redirect()->intended('/dashboard');
+        // Redirect to the return URL
+        $returnUrl = session()->get('returnUrl');
+        session()->forget('returnUrl');
+
+        if ($returnUrl) {
+            return redirect()->to($returnUrl);
+        }else{
+            return redirect()->intended('/dashboard');
+        }
     }
 }
