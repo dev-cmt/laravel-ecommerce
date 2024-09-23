@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="d-flex justify-content-end m-1">
-                <button type="button" class="btn-close text-right" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close text-right p-0" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body pt-0">
                 <div class="row">
@@ -14,15 +14,15 @@
                         <p>Subscribe to the yoori shop newsletter to receive updates on special offers.</p>
                         <form action="#">
                             <div class="tp-subscribe-input">
-                                <input type="email" placeholder="Enter Your Email">
-                                <button type="submit">Subscribe</button>
+                                <input type="email" placeholder="Enter Your Email" class="rounded-0">
+                                <button type="submit" class="rounded-0">Subscribe</button>
                             </div>
                         </form>
                         <div class="tp-footer-social text-center my-4">
-                            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                            <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                            <a href="#"><i class="fa-brands fa-vimeo-v"></i></a>
+                            <a href="#" class="rounded-0"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="rounded-0"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#" class="rounded-0"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#" class="rounded-0"><i class="fa-brands fa-vimeo-v"></i></a>
                         </div>
                         <div class="form-group text-center">
                             <input type="checkbox" name="tnc" id="tnc">

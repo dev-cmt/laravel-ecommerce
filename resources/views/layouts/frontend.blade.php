@@ -60,6 +60,7 @@
     
     @stack('scripts')
 
+
     <script>
         var itemActionStoreUrl = '{{ route('item-action.store') }}';
         var csrfToken = '{{ csrf_token() }}';

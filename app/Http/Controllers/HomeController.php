@@ -97,6 +97,11 @@ class HomeController extends Controller
         $data = Product::get();
         return view('ecommerce.frontend.shop', compact('data'));
     }
+    public function blogDetails(Request $request): View
+    {
+        $data = Product::get();
+        return view('ecommerce.frontend.shop', compact('data'));
+    }
     public function coupon(Request $request): View
     {
         return view('ecommerce.frontend.coupon');
@@ -105,15 +110,14 @@ class HomeController extends Controller
     {
         return view('ecommerce.frontend.contact');
     }
-    public function blogDetails(Request $request): View
+    public function about(Request $request): View
     {
-        $data = Product::get();
-        return view('ecommerce.frontend.shop', compact('data'));
+        return view('ecommerce.frontend.about');
     }
     public function cart(Request $request): View
     {
-        $data = Product::get();
-        return view('ecommerce.frontend.cart', compact('data'));
+        $carts = Cart::where('user_id', Auth::id())->with('product')->get();
+        return view('ecommerce.frontend.cart', compact('carts'));
     }
     public function checkout(Request $request): View
     {

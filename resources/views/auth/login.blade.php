@@ -1,5 +1,5 @@
 <x-frontend-layout :title="'Login'">
-    <!-- breadcrumb area start -->
+    {{-- <!-- breadcrumb area start -->
     <section class="breadcrumb__area include-bg text-center pt-95 pb-50">
         <div class="container">
             <div class="row">
@@ -15,10 +15,10 @@
             </div>
         </div>
     </section>
-    <!-- breadcrumb area end -->
+    <!-- breadcrumb area end --> --}}
 
     <!-- login area start -->
-    <section class="tp-login-area pb-140 p-relative z-index-1 fix">
+    <section class="tp-login-area pt-20 pb-140 p-relative z-index-1 fix">
         <div class="tp-login-shape">
             <img class="tp-login-shape-1" src="{{asset('public/frontend')}}/img/login/login-shape-1.png" alt="">
             <img class="tp-login-shape-2" src="{{asset('public/frontend')}}/img/login/login-shape-2.png" alt="">
@@ -61,7 +61,7 @@
                                 <div class="tp-login-input-wrapper">
                                     <div class="tp-login-input-box">
                                         <div class="tp-login-input">
-                                            <input type="email" name="email" value="{{old('email')}}" required autofocus autocomplete="username" class="form-control" id="username" placeholder="Enter username">
+                                            <input type="email" name="email" value="{{old('email')}}" required autofocus autocomplete="username" id="username" placeholder="Enter username">
                                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
                                         </div>
                                         <div class="tp-login-input-title">
@@ -70,7 +70,7 @@
                                     </div>
                                     <div class="tp-login-input-box">
                                         <div class="tp-login-input">
-                                            <input id="tp_password" type="password" placeholder="Min. 6 character">
+                                            <input type="password" name="password" id="tp_password" required autocomplete="current-password" placeholder="Min. 6 character">
                                         </div>
                                         <div class="tp-login-input-eye" id="password-show-toggle">
                                             <span id="open-eye" class="open-eye">
@@ -101,11 +101,13 @@
                                         <label for="remeber">Remember me</label>
                                     </div>
                                     <div class="tp-login-forgot">
-                                        <a href="forgot.html">Forgot Password?</a>
+                                        @if (Route::has('password.request'))
+                                            <a href="{{ route('password.request') }}">Forgot Password?</a>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="tp-login-bottom">
-                                    <a href="profile.html" class="tp-login-btn w-100">Login</a>
+                                    <button type="submit" class="tp-login-btn w-100">Login</button>
                                 </div>
                             </form>
                         </div>

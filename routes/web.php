@@ -29,24 +29,47 @@ Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
 Route::get('/blog-details', [HomeController::class, 'blogDetails'])->name('blog-details');
 Route::get('/coupon', [HomeController::class, 'coupon'])->name('coupon');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
-
-Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
-Route::get('/checkout', [HomeController::class, 'checkout'])->name('checkout');
-Route::get('/wishlist', [HomeController::class, 'wishlist'])->name('wishlist');
-Route::get('/compare', [HomeController::class, 'compare'])->name('compare');
-Route::post('/item-action/store', [HomeController::class, 'itemActionStore'])->name('item-action.store');
+Route::get('/about', [HomeController::class, 'about'])->name('about');
 
 Route::post('/product/review', [HomeController::class, 'storeReview'])->name('product.review.store');
 Route::get('/load-more-reviews', [HomeController::class, 'loadMoreReviews'])->name('load-more-reviews');
 
-Route::get('/user-profile', [HomeController::class, 'userProfile'])->name('user-profile');
+Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy-policy');
+Route::get('/terms-condition', [HomeController::class, 'termsCondition'])->name('terms-condition');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
+    Route::get('/checkout', [HomeController::class, 'checkout'])->name('checkout');
+    Route::get('/wishlist', [HomeController::class, 'wishlist'])->name('wishlist');
+    Route::get('/compare', [HomeController::class, 'compare'])->name('compare');
+    Route::post('/item-action/store', [HomeController::class, 'itemActionStore'])->name('item-action.store');
+
+
+    Route::get('/order-complete.', [HomeController::class, 'orderComplete.'])->name('order-complete');
+    Route::get('/order-history', [HomeController::class, 'orderHistory.'])->name('order-history');
+    Route::get('/order-details.', [HomeController::class, 'orderDetails.'])->name('order-details');
+    Route::get('/order-track', [HomeController::class, 'orderTrack.'])->name('order-track');
+
+    Route::get('/user-profile', [HomeController::class, 'userProfile'])->name('user-profile');
+    Route::get('/get-carts', [HomeController::class, 'getCarts'])->name('get-carts');
+});
 
 Route::get('/app-download', function () {
     $filePath = public_path('app.apk');
     return response()->download($filePath, 'app.apk');
 })->name('app.download');
 
+/**-------------------------------------------------------------------------
+ * KEY : SOCIAL AUTH
+ * -------------------------------------------------------------------------
+ */
+Route::get('auth/{provider}', [SocialAuthController::class, 'redirectToProvider'])->name('social.login');
+Route::get('auth/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('social.callback');
+
+/**-------------------------------------------------------------------------
+ * KEY : DASHBOARD PROFILE
+ * -------------------------------------------------------------------------
+ */
 Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -88,14 +111,7 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::resource('orders', OrderController::class);
     Route::get('/order-index', [OrderController::class, 'orderIndex'])->name('order.index');
     Route::get('/order-details', [OrderController::class, 'orderDetailsView'])->name('order.details');
-
-
-    Route::get('/get-carts', [HomeController::class, 'getCarts'])->name('get-carts');
-    
 });
-
-Route::get('auth/{provider}', [SocialAuthController::class, 'redirectToProvider'])->name('social.login');
-Route::get('auth/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('social.callback');
 
 Route::get('/get-session', function () {
     // session()->forget('previous_url');

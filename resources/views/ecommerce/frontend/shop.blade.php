@@ -178,7 +178,7 @@
                                 var queryParams = getQueryParams();
 
                                 if (queryParams.minPrice && queryParams.maxPrice) {
-                                    $("#amount").val(`$${queryParams.minPrice} - $${queryParams.maxPrice}`);
+                                    $("#amount").val(`৳${queryParams.minPrice} - ৳${queryParams.maxPrice}`);
                                     $("#slider-range").slider("values", [parseInt(queryParams.minPrice), parseInt(queryParams.maxPrice)]);
                                 }
 

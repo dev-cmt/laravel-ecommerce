@@ -35,11 +35,8 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            
-            'gender' => 'required|string|in:Male,Female,Other',
-            'blood_group' => 'required|string|max:3',
-            'marital_status' => 'required|string|in:Single,Married,Married with Kids,Divorced,Widowed,Unwilling to Disclose',
+            'password' => ['required'],
+            // 'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         // Generate avatar
@@ -56,10 +53,8 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             
-            'unique_patient_id' => $this->generateUniquePatientId($request),
-            'gender' => $request->gender,
-            'blood_group' => $request->blood_group,
-            'marital_status' => $request->marital_status,
+            'email_verified_at' => now(),
+            'unique_id' => $this->generateUniqueUserId($request),
             'profile_images' => 'profile_images/' . $imageName,
         ]);
 
@@ -71,7 +66,7 @@ class RegisteredUserController extends Controller
     }
 
 
-    private function generateUniquePatientId($request)
+    private function generateUniqueUserId($request)
     {
         $arrayName =  explode(" ", $request->input('name'));
         if(count($arrayName) > 1){
@@ -79,20 +74,12 @@ class RegisteredUserController extends Controller
         }else{
             $firstNameInitial = strtoupper(substr($arrayName[0], 0, 1));
         }
-        $genderInitial = strtoupper(substr($request->input('gender'), 0, 1));
-        $bloodGroupConnotation = strtoupper(substr($request->input('blood_group'), 0, 1));
-        if(strstr($request->input('blood_group') ,"+")){
-            $bloodGroupConnotation = $bloodGroupConnotation . "P";
-        }else{
-            $bloodGroupConnotation = $bloodGroupConnotation . "N";
-        }
         $getValue = User::count();
         $sevenNo = str_pad( $getValue, 7 - Str::length($getValue), "0", STR_PAD_LEFT);
 
-        $maritalStatusInitial = strtoupper(substr($request->input('marital_status'), 0, 1));
-        $uniquePatientId = $firstNameInitial . $genderInitial . $bloodGroupConnotation . $sevenNo . $maritalStatusInitial;
+        $uniqueUserId = $firstNameInitial . $sevenNo;
 
-        return $uniquePatientId;
+        return $uniqueUserId;
     }
     private function calculateBMI($feet, $inches, $weightKg)
     {

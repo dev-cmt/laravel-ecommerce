@@ -1723,10 +1723,10 @@
 			max: 50000,
 			values: [0, 50000],
 			slide: function (event, ui) {
-				$("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+				$("#amount").val("৳" + ui.values[0] + " - ৳" + ui.values[1]);
 			}
 		});
-		$("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
+		$("#amount").val("৳" + $("#slider-range").slider("values", 0) + " - ৳" + $("#slider-range").slider("values", 1));
 
 		$("#slider-range-offcanvas").slider({
 			range: true,

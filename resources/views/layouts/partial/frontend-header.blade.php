@@ -28,8 +28,7 @@
 <div class="back-to-top-wrapper">
     <button id="back_to_top" type="button" class="back-to-top-btn">
         <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M11 6L6 1L1 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                stroke-linejoin="round" />
+            <path d="M11 6L6 1L1 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"stroke-linejoin="round" />
         </svg>
     </button>
 </div>
@@ -41,10 +40,8 @@
         <div class="offcanvas__close">
             <button class="offcanvas__close-btn offcanvas-close-btn">
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11 1L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                    <path d="M1 1L11 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="round" />
+                    <path d="M11 1L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M1 1L11 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
             </button>
         </div>
@@ -58,12 +55,9 @@
             </div>
             <div class="offcanvas__category pb-40">
                 <button class="tp-offcanvas-category-toggle">
-                    <i class="fa-solid fa-bars"></i>
-                    All Categories
+                    <i class="fa-solid fa-bars"></i> All Categories
                 </button>
-                <div class="tp-category-mobile-menu">
-
-                </div>
+                <div class="tp-category-mobile-menu"></div>
             </div>
             <div class="tp-main-menu-mobile fix mb-40"></div>
 
@@ -210,18 +204,10 @@
                     <button type="button" class="cartmini__close-btn cartmini-close-btn"><i class="fal fa-times"></i></button>
                 </div>
             </div>
-            {{-- <div class="cartmini__shipping">
-                <p> Free Shipping for all orders over <span>200 ৳</span></p>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                        data-width="70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-            </div> --}}
             <div class="cartmini__shipping">
                 <p>Free Shipping for all orders over <span>200 ৳</span></p>
                 <div class="progress">
-                    <div id="shipping-progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                        style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div id="shipping-progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
             <!--Show Cart Item-->
@@ -271,22 +257,14 @@
                                 </a>
                             </div>
                             <div class="tp-header-info-item">
-                                <a href="tel:402-763-282-46">
+                                <a href="tel:02-55048474">
                                     <span>
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                d="M1.359 2.73916C1.59079 2.35465 2.86862 0.958795 3.7792 1.00093C4.05162 1.02426 4.29244 1.1883 4.4881 1.37943H4.48885C4.93737 1.81888 6.22423 3.47735 6.29648 3.8265C6.47483 4.68282 5.45362 5.17645 5.76593 6.03954C6.56213 7.98771 7.93402 9.35948 9.88313 10.1549C10.7455 10.4679 11.2392 9.44752 12.0956 9.62511C12.4448 9.6981 14.1042 10.9841 14.5429 11.4333V11.4333C14.7333 11.6282 14.8989 11.8698 14.9214 12.1422C14.9553 13.1016 13.4728 14.3966 13.1838 14.5621C12.502 15.0505 11.6125 15.0415 10.5281 14.5373C7.50206 13.2784 2.66618 8.53401 1.38384 5.39391C0.893174 4.31561 0.860062 3.42016 1.359 2.73916Z"
-                                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                                stroke-linejoin="round" />
-                                            <path d="M9.84082 1.18318C12.5534 1.48434 14.6952 3.62393 15 6.3358"
-                                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                                stroke-linejoin="round" />
-                                            <path d="M9.84082 3.77927C11.1378 4.03207 12.1511 5.04544 12.4039 6.34239"
-                                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                                stroke-linejoin="round" />
+                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.359 2.73916C1.59079 2.35465 2.86862 0.958795 3.7792 1.00093C4.05162 1.02426 4.29244 1.1883 4.4881 1.37943H4.48885C4.93737 1.81888 6.22423 3.47735 6.29648 3.8265C6.47483 4.68282 5.45362 5.17645 5.76593 6.03954C6.56213 7.98771 7.93402 9.35948 9.88313 10.1549C10.7455 10.4679 11.2392 9.44752 12.0956 9.62511C12.4448 9.6981 14.1042 10.9841 14.5429 11.4333V11.4333C14.7333 11.6282 14.8989 11.8698 14.9214 12.1422C14.9553 13.1016 13.4728 14.3966 13.1838 14.5621C12.502 15.0505 11.6125 15.0415 10.5281 14.5373C7.50206 13.2784 2.66618 8.53401 1.38384 5.39391C0.893174 4.31561 0.860062 3.42016 1.359 2.73916Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M9.84082 1.18318C12.5534 1.48434 14.6952 3.62393 15 6.3358" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M9.84082 3.77927C11.1378 4.03207 12.1511 5.04544 12.4039 6.34239" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
-                                    </span> +(402) 763 282 46
+                                    </span> 02-55048474
                                 </a>
                             </div>
                         </div>
@@ -386,13 +364,10 @@
                                         <li><a href="{{route('shop')}}">Shop</a></li>
                                         <li><a href="{{route('coupon')}}">Coupons</a></li>
                                         <li class="has-dropdown">
-                                            <a href="blog.html">Blog</a>
+                                            <a href="#">Others</a>
                                             <ul class="tp-submenu">
-                                                <li><a href="blog.html">Blog Standard</a></li>
-                                                <li><a href="blog-grid.html">Blog Grid</a></li>
-                                                <li><a href="blog-list.html">Blog List</a></li>
-                                                <li><a href="blog-details-2.html">Blog Details Full Width</a></li>
-                                                <li><a href="blog-details.html">Blog Details</a></li>
+                                                <li><a href="{{route('blog')}}">Blog</a></li>
+                                                <li><a href="{{route('blog-details')}}">About</a></li>
                                             </ul>
                                         </li>
                                         <li><a href="{{route('contact')}}">Contact</a></li>
@@ -514,8 +489,9 @@
 
                     var subtotal = response.reduce((total, item) => {
                         var priceAfterDiscount = Math.round(item.product.price - (item.product.price * item.product.discount / 100));
+                        var productVariantId = item.variants && item.variants.length > 0 ? item.variants[0].id : null; // Fetch variant ID dynamically
                         cartWidget.innerHTML += `
-                            <div class="cartmini__widget-item">
+                            <div class="cartmini__widget-item remove${item.product.id}">
                                 <div class="cartmini__thumb">
                                     <a href="product-details.html">
                                         <img src="{{asset('public/frontend')}}/img/product/product-1.jpg" alt="">
@@ -528,7 +504,9 @@
                                         <span class="cartmini__quantity">x ${item.quantity}</span>
                                     </div>
                                 </div>
-                                <a href="#" data-action-name="cart" data-product-id=" ${item.product.id}" class="add-item cartmini__del"><i class="fa-regular fa-xmark"></i></a>
+                                <a href="#" data-action-name="cart" data-product-id="${item.product.id}" data-product-variant-id="${productVariantId}" class="removed-item cartmini__del">
+                                    <i class="fa-regular fa-xmark"></i>
+                                </a>
                             </div>
                         `;
                         return total + (priceAfterDiscount * item.quantity);
