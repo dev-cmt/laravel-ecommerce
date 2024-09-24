@@ -66,8 +66,473 @@
                     </a>
                 </li>
 
+
+
+
                 <!-- Ecommerce Menu -->
                 <li class="menu-title"><span data-key="t-menu">Ecommerce</span></li>
+
+                <!-- Order Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">Orders</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">All Orders</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Pending Orders</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Completed Orders</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Declined Orders</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+
+                <!-- Manage Country Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">Manage Country</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Country</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Manage Tax</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+
+                <!-- Products Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">Products</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Add New Product</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">All Products</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Deactivated Product</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Product Catalogs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Product Settings</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+
+                <!-- Affiliate Products Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">Affiliate Products</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Add Affiliate Product</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">All Affiliate Products</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+
+                <!-- Bulk Product Upload Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="https://products.geniusocean.com/eCommerce/admin/products/import">
+                        <i class="ri-product-hunt-line"></i> <span data-key="t-widgets">Bulk Product Upload</span>
+                    </a>
+                </li>
+
+                <!-- Product Discussion Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">Product Discussion</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Product Reviews</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Comments</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Reports</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+                
+                <!-- Set Coupons Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="https://products.geniusocean.com/eCommerce/admin/coupon">
+                        <i class="ri-product-hunt-line"></i> <span data-key="t-widgets">Set Coupons</span>
+                    </a>
+                </li>
+                
+                <!-- Customers Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">Customers</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Customers List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Withdraws</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Customer Default Image</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+
+                <!-- Customer Deposits Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">Customer Deposits</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Completed Deposits</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Pending Deposits</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Transactions</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+
+                <!-- Messages Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">Messages</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Tickets</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Disputes</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+
+                <!-- Blog Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">Blog</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Categories</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Posts</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Blog Settings</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+
+                <!-- General Settings Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">General Settings</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Favicon</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Loader</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Shipping Methods</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Packagings</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Pickup Locations</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Website Contents</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Affiliate Program</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Popup Banner</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Breadcrumb Banner</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Error Banner</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Error Banner</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Website Maintenance</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+
+                <!-- Home Page Settings Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">Home Page Settings</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Sliders</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Arrival Section</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Deal of the day</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Partners</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Home Page Customization</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+
+                <!-- Menu Page Settings Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">Menu Page Settings</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">FAQ Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Contact Us Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Other Pages</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Other Page Banner</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Customize Menu Links</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+
+                <!-- Email Settings Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">Email Template</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Email Configurations</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Group Email</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+
+                <!-- Payment Settings Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">Home Page Settings</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Payment Information</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Payment Gateways</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Currencies</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Reward Information</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+
+                <!-- Social Settings Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">Social Settings</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Social Links</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Facebook Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Google Login</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+                
+                <!-- Language Settings Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">Language Settings</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Website Language</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Admin Panel Language</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+
+                <!-- Language Settings Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">Language Settings</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Website Language</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Admin Panel Language</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+                
+                <!-- Font Option Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('home') ? 'active' : '' }}" href="#">
+                        <i class="ri-product-hunt-line"></i> <span data-key="t-widgets">Font Option</span>
+                    </a>
+                </li>
+
+                <!-- SEO Tools Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">SEO Tools</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Popular Products</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Google Analytics</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Website Meta Keywords</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+
+                <!-- Manage Staffs Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('home') ? 'active' : '' }}" href="#">
+                        <i class="ri-product-hunt-line"></i> <span data-key="t-widgets">Manage Staffs</span>
+                    </a>
+                </li>
+
+                <!-- Subscribers Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('home') ? 'active' : '' }}" href="#">
+                        <i class="ri-product-hunt-line"></i> <span data-key="t-widgets">Subscribers</span>
+                    </a>
+                </li>
+
+                <!-- Addon Manager Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('home') ? 'active' : '' }}" href="#">
+                        <i class="ri-product-hunt-line"></i> <span data-key="t-widgets">Addon Manager</span>
+                    </a>
+                </li>
+
+                <!-- Clear Cache Menu -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->routeIs('home') ? 'active' : '' }}" href="#">
+                        <i class="ri-product-hunt-line"></i> <span data-key="t-widgets">Clear Cache</span>
+                    </a>
+                </li>
+
+                <!-- System Activation -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">System Activation</span>
+                    </a>
+                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-chat">Generate Backup</a>
+                            </li>
+                        </ul>
+                    </div>                    
+                </li>
+
+
+                <!-- System Activation -->
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('products.index')}}">
                         <i class="ri-product-hunt-line"></i> <span data-key="t-widgets">Products</span>
@@ -96,26 +561,27 @@
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
-                        <i class=" ri-list-settings-line"></i> <span data-key="t-apps">Product Setting</span>
+                        <i class="ri-list-settings-line"></i> <span data-key="t-apps">Product Setting</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarApps">
+                    <div class="collapse menu-dropdown {{ request()->routeIs('categories.index', 'brands.index', 'colors.index') ? 'show' : '' }}" id="sidebarApps">
                         <ul class="nav nav-sm flex-column">
-                            <li class="nav-item ">
-                                <a href="{{route('categories.index')}}" class="nav-link" data-key="t-chat">Category </a>
+                            <li class="nav-item">
+                                <a href="{{ route('categories.index') }}" class="nav-link {{ request()->routeIs('categories.index') ? 'active' : '' }}" data-key="t-chat">Category</a>
                             </li>
-                            <li class="nav-item ">
-                                <a href="{{route('brands.index')}}" class="nav-link" data-key="t-chat">Brand</a>
+                            <li class="nav-item">
+                                <a href="{{ route('brands.index') }}" class="nav-link {{ request()->routeIs('brands.index') ? 'active' : '' }}" data-key="t-chat">Brand</a>
                             </li>
-                            <li class="nav-item ">
-                                <a href="{{route('colors.index')}}" class="nav-link" data-key="t-chat">Color</a>
+                            <li class="nav-item">
+                                <a href="{{ route('colors.index') }}" class="nav-link {{ request()->routeIs('colors.index') ? 'active' : '' }}" data-key="t-chat">Color</a>
                             </li>
                         </ul>
-                    </div>
+                    </div>                    
                 </li>
+
+                
 
 
                 <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Pages</span></li>
-
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarAuth" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
                         <i class="ri-account-circle-line"></i> <span data-key="t-authentication">Authentication</span>
@@ -138,147 +604,43 @@
                                     </ul>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a href="#sidebarSignUp" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarSignUp" data-key="t-signup"> Sign Up
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarSignUp">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="auth-signup-basic.html" class="nav-link" data-key="t-basic"> Basic
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="auth-signup-cover.html" class="nav-link" data-key="t-cover"> Cover
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
+                        </ul>
+                    </div>
+                </li>
 
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarMultilevel" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarMultilevel">
+                        <i class="ri-share-line"></i> <span data-key="t-multi-level">Multi Level</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarMultilevel">
+                        <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="#sidebarResetPass" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarResetPass" data-key="t-password-reset">
-                                    Password Reset
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarResetPass">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="auth-pass-reset-basic.html" class="nav-link" data-key="t-basic">
-                                                Basic </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="auth-pass-reset-cover.html" class="nav-link" data-key="t-cover">
-                                                Cover </a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <a href="#" class="nav-link" data-key="t-level-1.1"> Level 1.1 </a>
                             </li>
-
                             <li class="nav-item">
-                                <a href="#sidebarchangePass" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarchangePass" data-key="t-password-create">
-                                    Password Create
+                                <a href="#sidebarAccount" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAccount" data-key="t-level-1.2"> Level
+                                    1.2
                                 </a>
-                                <div class="collapse menu-dropdown" id="sidebarchangePass">
+                                <div class="collapse menu-dropdown" id="sidebarAccount">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="auth-pass-change-basic.html" class="nav-link" data-key="t-basic">
-                                                Basic </a>
+                                            <a href="#" class="nav-link" data-key="t-level-2.1"> Level 2.1 </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="auth-pass-change-cover.html" class="nav-link" data-key="t-cover">
-                                                Cover </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="#sidebarLockScreen" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLockScreen" data-key="t-lock-screen">
-                                    Lock Screen
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarLockScreen">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="auth-lockscreen-basic.html" class="nav-link" data-key="t-basic">
-                                                Basic </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="auth-lockscreen-cover.html" class="nav-link" data-key="t-cover">
-                                                Cover </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="#sidebarLogout" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLogout" data-key="t-logout"> Logout
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarLogout">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="auth-logout-basic.html" class="nav-link" data-key="t-basic"> Basic
+                                            <a href="#sidebarCrm" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCrm" data-key="t-level-2.2"> Level 2.2
                                             </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="auth-logout-cover.html" class="nav-link" data-key="t-cover"> Cover
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#sidebarSuccessMsg" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarSuccessMsg" data-key="t-success-message"> Success Message
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarSuccessMsg">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="auth-success-msg-basic.html" class="nav-link" data-key="t-basic">
-                                                Basic </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="auth-success-msg-cover.html" class="nav-link" data-key="t-cover">
-                                                Cover </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#sidebarTwoStep" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarTwoStep" data-key="t-two-step-verification"> Two Step Verification
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarTwoStep">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="auth-twostep-basic.html" class="nav-link" data-key="t-basic"> Basic
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="auth-twostep-cover.html" class="nav-link" data-key="t-cover"> Cover
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#sidebarErrors" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarErrors" data-key="t-errors"> Errors
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarErrors">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="auth-404-basic.html" class="nav-link" data-key="t-404-basic"> 404
-                                                Basic </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="auth-404-cover.html" class="nav-link" data-key="t-404-cover"> 404
-                                                Cover </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="auth-404-alt.html" class="nav-link" data-key="t-404-alt"> 404 Alt
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="auth-500.html" class="nav-link" data-key="t-500"> 500 </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="auth-offline.html" class="nav-link" data-key="t-offline-page"> Offline Page </a>
+                                            <div class="collapse menu-dropdown" id="sidebarCrm">
+                                                <ul class="nav nav-sm flex-column">
+                                                    <li class="nav-item">
+                                                        <a href="{{ route('categories.index') }}" class="nav-link" data-key="t-level-3.1" data-target="colors"> Level 3.1 categories
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a href="#" class="nav-link" data-key="t-level-3.2"> Level 3.2
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </li>
                                     </ul>
                                 </div>
