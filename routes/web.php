@@ -96,6 +96,7 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::resource('brands', BrandController::class);
     Route::resource('colors', ColorController::class);
 
+    //--------------------ProductController
     Route::resource('products', ProductController::class);
     Route::post('products/{id}/add-variant', [ProductController::class, 'addVariant'])->name('products.addVariant');
     Route::post('products/{id}/add-image', [ProductController::class, 'addImage'])->name('products.addImage');
@@ -108,9 +109,15 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::delete('products/{id}/product-detail', [ProductController::class, 'productDetailDestroy'])->name('product-detail.destroy');
 
 
+    //--------------------OrderController
     Route::resource('orders', OrderController::class);
     Route::get('/order-index', [OrderController::class, 'orderIndex'])->name('order.index');
     Route::get('/order-details', [OrderController::class, 'orderDetailsView'])->name('order.details');
+
+
+
+    //--------------------CouponController
+
 });
 
 Route::get('/get-session', function () {
