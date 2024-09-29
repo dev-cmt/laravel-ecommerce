@@ -26,6 +26,8 @@
     <link href="{{asset('public/backend')}}/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{{asset('public/backend')}}/css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- DataTables CSS -->
+    <link href="{{asset('public/backend')}}/css/dataTables.min.css" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="{{asset('public/backend')}}/css/custom.min.css" rel="stylesheet" type="text/css" />
     <link href="{{asset('public/backend')}}/css/toastr.min.css" rel="stylesheet" type="text/css" />
@@ -132,6 +134,35 @@
     <script src="{{asset('public/backend')}}/js/jquery-3.6.0.min.js"></script>
     <script src="{{asset('public/backend')}}/js/toastr.min.js"></script>
 
+    
+    <!-- DataTables JS -->
+    <script src="{{asset('public/backend')}}/js/dataTables.min.js"></script>
+    <!-- DataTables Buttons JS -->
+    <script src="{{asset('public/backend')}}/js/dataTables.buttons.min.js"></script>
+    <script src="{{asset('public/backend')}}/js/dataTables.buttons.html5.min.js"></script>
+    <script src="{{asset('public/backend')}}/js/dataTables.buttons.print.min.js"></script>
+    <!-- FileSaver for PDF export -->
+    <script src="{{asset('public/backend')}}/js/dataTables.pdfmake.min.js"></script>
+    <script src="{{asset('public/backend')}}/js/dataTables.vfs_fonts.js"></script>
+
+    <script>
+        $('#customTable').DataTable({
+            responsive: true,
+            paging: true,
+            searching: true,
+            ordering: true,
+            info: true,
+            lengthMenu: [5, 10, 25, 50],
+            pageLength: 10,
+            language: {
+                "lengthMenu": "Show _MENU_ entries per page",
+                "zeroRecords": "No matching records found",
+                "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                "infoEmpty": "No entries available",
+                "infoFiltered": "(filtered from _MAX_ total entries)"
+            }
+        });
+    </script>
     @stack('scripts')
 </body>
 </html>

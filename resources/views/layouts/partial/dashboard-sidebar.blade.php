@@ -306,7 +306,7 @@
                     <a class="nav-link menu-link" href="#General" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
                         <i class="ri-list-settings-line"></i> <span data-key="t-general">General Settings</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="General">
+                    <div class="collapse menu-dropdown {{ request()->routeIs('shipping.methods.index', 'home') ? 'show' : '' }}" id="General">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-general">Favicon</a>
@@ -315,7 +315,7 @@
                                 <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-general">Loader</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-general">Shipping Methods</a>
+                                <a href="{{route('shipping.methods.index')}}" class="nav-link {{ request()->routeIs('shipping.methods.index') ? 'active' : '' }}" data-key="t-general">Shipping Methods</a>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-general">Packagings</a>

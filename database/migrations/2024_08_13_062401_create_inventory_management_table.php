@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('inventory_management', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained('products');
-            $table->foreignId('product_variant_id')->nullable()->constrained('product_variants');
-            $table->foreignId('warehouse_id')->constrained('warehouses');
-            $table->integer('stock_in');
-            $table->integer('stock_out');
-            $table->integer('stock_balance');
-            $table->timestamp('last_updated');
+            $table->foreignId('product_variant_id')->constrained('product_variants');
+            $table->foreignId('store_id')->constrained('stores');
+            $table->integer('stock_in')->nullable();
+            $table->integer('stock_out')->nullable();
+            $table->integer('stock_balance')->nullable();
+            $table->timestamp('last_updated')->nullable();
             $table->timestamps();
         });
     }

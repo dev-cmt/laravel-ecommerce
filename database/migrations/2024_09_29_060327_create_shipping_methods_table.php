@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('warehouses', function (Blueprint $table) {
+        Schema::create('shipping_methods', function (Blueprint $table) {
             $table->id();
-            $table->string('warehouse_name');
-            $table->string('location');
-            $table->enum('status', ['active', 'inactive']);
+            $table->string('method_name')->unique; // "Free Shipping", "Standard Shipping", "International Shipping", "Express Shipping", "Local Pickup"
+            $table->text('description')->nullable(); //"Delivered within 3-5 business days"
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('warehouses');
+        Schema::dropIfExists('shipping_methods');
     }
 };

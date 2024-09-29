@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mast_nationalities', function (Blueprint $table) {
+        Schema::create('customer_groups', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('name');
+            $table->string('name')->unique(); // Name of the group (e.g., 'VIP', 'Regular')
+            $table->text('description')->nullable();
             $table->timestamps();
-            
-            // Foreign key
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mast_nationalities');
+        Schema::dropIfExists('customer_groups');
     }
 };

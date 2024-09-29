@@ -12,6 +12,7 @@ use App\Http\Controllers\Ecommerce\BrandController;
 use App\Http\Controllers\Ecommerce\ColorController;
 use App\Http\Controllers\Ecommerce\ProductController;
 use App\Http\Controllers\Ecommerce\OrderController;
+use App\Http\Controllers\Ecommerce\ShippingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -115,10 +116,32 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::get('/order-details', [OrderController::class, 'orderDetailsView'])->name('order.details');
 
 
-
     //--------------------CouponController
 
 });
+
+Route::prefix('shipping')->middleware(['auth', 'verified'])->group(function () {
+    // -----------------------------
+    // Shipping Methods Routes
+    // -----------------------------
+    Route::get('methods', [ShippingController::class, 'indexMethods'])->name('shipping.methods.index'); // List all shipping methods
+    Route::get('methods/create', [ShippingController::class, 'createMethod'])->name('shipping.methods.create'); // Show form to create a new shipping method
+    Route::post('methods', [ShippingController::class, 'storeMethod'])->name('shipping.methods.store'); // Store a new shipping method
+    Route::get('methods/{shippingMethod}/edit', [ShippingController::class, 'editMethod'])->name('shipping.methods.edit'); // Show form to edit a shipping method
+    Route::put('methods/{shippingMethod}', [ShippingController::class, 'updateMethod'])->name('shipping.methods.update'); // Update a shipping method
+    Route::delete('methods/{shippingMethod}', [ShippingController::class, 'destroyMethod'])->name('shipping.methods.destroy'); // Delete a shipping method
+
+    // -----------------------------
+    // Shipping Zones Routes
+    // -----------------------------
+    Route::get('zones', [ShippingController::class, 'indexZones'])->name('shipping.zones.index'); // List all shipping zones
+    Route::get('zones/create', [ShippingController::class, 'createZone'])->name('shipping.zones.create'); // Show form to create a new shipping zone
+    Route::post('zones', [ShippingController::class, 'storeZone'])->name('shipping.zones.store'); // Store a new shipping zone
+    Route::get('zones/{shippingZone}/edit', [ShippingController::class, 'editZone'])->name('shipping.zones.edit'); // Show form to edit a shipping zone
+    Route::put('zones/{shippingZone}', [ShippingController::class, 'updateZone'])->name('shipping.zones.update'); // Update a shipping zone
+    Route::delete('zones/{shippingZone}', [ShippingController::class, 'destroyZone'])->name('shipping.zones.destroy'); // Delete a shipping zone
+});
+
 
 Route::get('/get-session', function () {
     // session()->forget('previous_url');

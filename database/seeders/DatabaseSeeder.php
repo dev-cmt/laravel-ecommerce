@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             CreateUserSeeder::class,
             CreateImportSeeder::class,
+            MapSeeder::class,
             FactorySeeder::class,
         ]);
     }

@@ -13,76 +13,67 @@ class CreateImportSeeder extends Seeder
      * Run the database seeds.
      * KEY : MULTIPERMISSION
      */
+    
     public function run(): void
     {
-        $nationalities = [
-            'Afghan',
-            'Albanian',
-            'Algerian',
-            'American',
-            'Andorran',
-            'Angolan',
-            'Antiguans',
-            'Argentinean',
-            'Armenian',
-            'Australian',
-            'Austrian',
-            'Azerbaijani',
-            'Bahamian',
-            'Bahraini',
-            'Bangladeshi',
-            'Barbadian',
-            'Barbudans',
-            'Batswana',
-            'Belarusian',
-            'Belgian',
-            'Belizean',
-            'Beninese',
-            'Bhutanese',
-            'Bolivian',
-            'Bosnian',
-            'Brazilian',
-            'British',
-            'Bruneian',
-            'Bulgarian',
-            'Burkinabe',
-            'Burmese',
-            'Burundian',
-            'Cambodian',
-            'Cameroonian',
-            'Canadian',
-            'Cape Verdean',
-            'Central African',
-            'Chadian',
-            'Chilean',
-            'Chinese',
-            'Colombian',
-            'Comoran',
-            'Congolese',
-            'Costa Rican',
-            'Croatian',
-            'Cuban',
-            'Cypriot',
-            'Czech',
-            'Danish',
-            'Djibouti',
-            'Dominican',
-            'Dutch',
-            'East Timorese',
-            'Ecuadorean',
-            'Egyptian',
-            'Emirian'
-            // Add other nationalities as needed
-        ];
 
-        foreach ($nationalities as $nationality) {
-            DB::table('mast_nationalities')->insert(['name' => $nationality, 'user_id' => 1]);
-        }
+        $stores = [
+            [
+                'store_name' => 'Center Store',
+                'store_code' => 'CS001', // Unique code for the store
+                'manager_id' => 1, // Assuming a manager with ID 1 exists
+                'address' => 'Gulshan',
+                'district' => 'Dhaka',
+                'division' => 'Dhaka',
+                'postal_code' => '1212',
+                'phone' => '0123456789',
+                'email' => 'center.store@example.com',
+                'description' => 'This is the center store.',
+                'status' => true,
+            ],
+            [
+                'store_name' => 'Gulshan Store',
+                'store_code' => 'GS002',
+                'manager_id' => 1,
+                'address' => 'Gulshan',
+                'district' => 'Dhaka',
+                'division' => 'Dhaka',
+                'postal_code' => '1212',
+                'phone' => '0123456789',
+                'email' => 'gulshan.store@example.com',
+                'description' => 'This is the Gulshan store.',
+                'status' => true,
+            ],
+            [
+                'store_name' => 'Shariatpur Store',
+                'store_code' => 'SS003',
+                'manager_id' => 1,
+                'address' => 'Shariatpur',
+                'district' => 'Shariatpur',
+                'division' => 'Barisal',
+                'postal_code' => '1234',
+                'phone' => '0123456789',
+                'email' => 'shariatpur.store@example.com',
+                'description' => 'This is the Shariatpur store.',
+                'status' => true,
+            ],
+        ];
+        
+        DB::table('stores')->insert($stores);
+
         /**
          * 
          * 
          * 
          */
         
+         $store = [
+            'VIP',
+            'Regular'
+        ];
+
+        foreach ($store as $item) {
+            DB::table('customer_groups')->insert(['name' => $item, 'description' => 'Admin Setup']);
+        }
     }
 }

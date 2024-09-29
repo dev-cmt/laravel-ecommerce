@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained('orders');
             $table->foreignId('product_id')->constrained('products');
-            $table->foreignId('product_variant_id')->nullable()->constrained('product_variants');
+            $table->foreignId('product_variant_id')->constrained('product_variants');
+            $table->foreignId('store_id')->constrained('stores');
             $table->integer('quantity');
             $table->text('return_reason')->nullable();
             $table->timestamp('return_date');
