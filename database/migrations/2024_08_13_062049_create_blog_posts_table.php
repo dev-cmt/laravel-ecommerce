@@ -13,12 +13,16 @@ return new class extends Migration
     {
         Schema::create('blog_posts', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('slug')->unique();
-            $table->text('content');
-            $table->foreignId('author_id')->constrained('users');
-            $table->enum('status', ['published', 'draft']);
+            $table->string('title')->index(); // Unique title
+            $table->string('url_slug')->unique(); 
+            $table->text('content')->nullable(); // Optional content, if necessary
+            $table->foreignId('author_id')->constrained('users')->onDelete('cascade'); // Foreign key for author with cascade delete
+            $table->enum('status', ['published', 'draft'])->default('draft'); // Default status set to draft
             $table->timestamps();
+            $table->softDeletes(); // For soft deletion
+        
+            // Add index for author_id for faster lookups by author
+            $table->index('author_id');
         });
     }
 

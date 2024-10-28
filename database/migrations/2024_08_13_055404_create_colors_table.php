@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('colors', function (Blueprint $table) {
             $table->id();
-            $table->string('color_name'); // Name of the color (e.g., "Red", "Blue")
-            $table->string('hex_value', 7); // HEX color code (e.g., "#FF5733")
-            $table->enum('status', ['active', 'inactive']);
-            $table->unsignedBigInteger('user_id');
+            $table->string('color_name')->index(); // Added index for faster lookups by color name
+            $table->string('hex_value', 7)->unique(); // HEX value should be unique
+            $table->enum('status', ['active', 'inactive'])->default('active'); // Default status set to 'active'
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Simplified foreign key definition
             $table->timestamps();
-            
-            // Foreign key
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->softDeletes(); // Add soft deletes
         });
     }
 

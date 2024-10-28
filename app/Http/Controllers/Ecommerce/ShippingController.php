@@ -10,18 +10,18 @@ use App\Models\Ecommerce\ShippingZone;
 class ShippingController extends Controller
 {
     // Shipping Methods
-    public function indexMethods()
+    public function index()
     {
         $methods = ShippingMethod::all();
-        return view('ecommerce.backend.shipping.index_methods', compact('methods'));
+        return view('ecommerce.backend.shipping.index', compact('methods'));
     }
 
-    public function createMethod()
+    public function create()
     {
-        return view('ecommerce.backend.shipping.create_method');
+        return view('ecommerce.backend.shipping.create');
     }
 
-    public function storeMethod(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'method_name' => 'required|unique:shipping_methods',
@@ -29,15 +29,19 @@ class ShippingController extends Controller
         ]);
 
         ShippingMethod::create($request->all());
-        return redirect()->route('shipping.methods.index')->with('success', 'Shipping method created successfully.');
+        return redirect()->route('shipping_methods.index')->with('success', 'Shipping method created successfully.');
     }
 
-    public function editMethod(ShippingMethod $shippingMethod)
+    public function show(ShippingMethod $shippingMethod)
     {
-        return view('ecommerce.backend.shipping.edit_method', compact('shippingMethod'));
+        return view('ecommerce.backend.shipping.edit', compact('shippingMethod'));
+    }
+    public function edit(ShippingMethod $shippingMethod)
+    {
+        return view('ecommerce.backend.shipping.show', compact('shippingMethod'));
     }
 
-    public function updateMethod(Request $request, ShippingMethod $shippingMethod)
+    public function update(Request $request, ShippingMethod $shippingMethod)
     {
         $request->validate([
             'method_name' => 'required|unique:shipping_methods,method_name,' . $shippingMethod->id,
@@ -45,61 +49,12 @@ class ShippingController extends Controller
         ]);
 
         $shippingMethod->update($request->all());
-        return redirect()->route('shipping.methods.index')->with('success', 'Shipping method updated successfully.');
+        return redirect()->route('shipping_methods.index')->with('success', 'Shipping method updated successfully.');
     }
 
-    public function destroyMethod(ShippingMethod $shippingMethod)
+    public function destroy(ShippingMethod $shippingMethod)
     {
         $shippingMethod->delete();
-        return redirect()->route('shipping.methods.index')->with('success', 'Shipping method deleted successfully.');
-    }
-
-    // Shipping Zones
-    public function indexZones()
-    {
-        $zones = ShippingZone::with('shippingMethod')->get();
-        return view('ecommerce.backend.shipping.index_zones', compact('zones'));
-    }
-
-    public function createZone()
-    {
-        $methods = ShippingMethod::all();
-        return view('ecommerce.backend.shipping.create_zone', compact('methods'));
-    }
-
-    public function storeZone(Request $request)
-    {
-        $request->validate([
-            'shipping_method_id' => 'required|exists:shipping_methods,id',
-            'zone_name' => 'required|string',
-            'cost' => 'required|numeric',
-        ]);
-
-        ShippingZone::create($request->all());
-        return redirect()->route('shipping.zones.index')->with('success', 'Shipping zone created successfully.');
-    }
-
-    public function editZone(ShippingZone $shippingZone)
-    {
-        $methods = ShippingMethod::all();
-        return view('ecommerce.backend.shipping.edit_zone', compact('shippingZone', 'methods'));
-    }
-
-    public function updateZone(Request $request, ShippingZone $shippingZone)
-    {
-        $request->validate([
-            'shipping_method_id' => 'required|exists:shipping_methods,id',
-            'zone_name' => 'required|string',
-            'cost' => 'required|numeric',
-        ]);
-
-        $shippingZone->update($request->all());
-        return redirect()->route('shipping.zones.index')->with('success', 'Shipping zone updated successfully.');
-    }
-
-    public function destroyZone(ShippingZone $shippingZone)
-    {
-        $shippingZone->delete();
-        return redirect()->route('shipping.zones.index')->with('success', 'Shipping zone deleted successfully.');
+        return redirect()->route('shipping_methods.index')->with('success', 'Shipping method deleted successfully.');
     }
 }

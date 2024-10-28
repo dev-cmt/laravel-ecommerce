@@ -21,7 +21,7 @@ return new class extends Migration
         
             // Adding a unique constraint if required
             $table->unique(['zone_name', 'shipping_method_id']); // Prevent duplicates of zone names for each method
-        });        
+        });
     }
 
     /**
