@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('gift_cards', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
-            $table->decimal('amount', 10, 2);
-            $table->decimal('balance', 10, 2);
-            $table->date('expiry_date');
-            $table->enum('status', ['active', 'inactive']);
+            $table->decimal('amount', 10, 2); // Preloaded amount
+            $table->decimal('balance', 10, 2); // Current balance
+            $table->date('expiry_date')->nullable(); // Consider making this nullable
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
+        
     }
 
     /**

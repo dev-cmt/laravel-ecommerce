@@ -12,8 +12,7 @@ class ShippingZone extends Model
     protected $fillable = [
         'shipping_method_id',
         'zone_name',
-        'cost',
-        'is_active',
+        'zone_cost',
     ];
 
     public function shippingMethod()

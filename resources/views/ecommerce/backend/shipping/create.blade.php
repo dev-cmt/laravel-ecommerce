@@ -38,7 +38,6 @@
                             <table class="table table-nowrap table-striped mb-0">
                                 <thead class="table-light">
                                     <tr>
-                                        <th scope="col">SL</th>
                                         <th scope="col">Zone Name</th>
                                         <th scope="col">Cost</th>
                                         <th scope="col">Actions</th>

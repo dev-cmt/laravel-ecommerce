@@ -120,14 +120,12 @@ Route::prefix('shipping')->middleware(['auth', 'verified'])->group(function () {
     // -----------------------------
     // Shipping Methods Routes
     // -----------------------------
-    Route::get('methods', [ShippingController::class, 'index'])->name('shipping.methods.index'); // List all shipping methods
-    Route::get('methods/create', [ShippingController::class, 'create'])->name('shipping.methods.create'); // Show form to create a new shipping method
-    Route::post('methods', [ShippingController::class, 'store'])->name('shipping.methods.store'); // Store a new shipping method
-    Route::get('methods/{shippingMethod}/edit', [ShippingController::class, 'edit'])->name('shipping.methods.edit'); // Show form to edit a shipping method
-    Route::put('methods/{shippingMethod}', [ShippingController::class, 'update'])->name('shipping.methods.update'); // Update a shipping method
-    Route::delete('methods/{shippingMethod}', [ShippingController::class, 'destroy'])->name('shipping.methods.destroy'); // Delete a shipping method
+    Route::get('methods', [ShippingController::class, 'index'])->name('shipping-methods.index'); // List all shipping methods
+    Route::post('methods', [ShippingController::class, 'store'])->name('shipping-methods.store'); // Store a new shipping method
+    Route::get('methods/{shippingMethod}/edit', [ShippingController::class, 'edit'])->name('shipping-methods.edit'); // Show form to edit a shipping method
+    Route::delete('methods/{shippingMethod}', [ShippingController::class, 'destroy'])->name('shipping-methods.destroy'); // Delete a shipping method
 
-    Route::post('zones', [ShippingController::class, 'storeZone'])->name('shipping_zones.store');
+    Route::delete('zones/{id}', [ShippingController::class, 'destroyZone'])->name('shipping-zones.destroy');
 });
 
 

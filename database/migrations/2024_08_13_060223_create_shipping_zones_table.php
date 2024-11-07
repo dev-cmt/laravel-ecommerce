@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('shipping_method_id')->constrained('shipping_methods')->onDelete('cascade');
             $table->string('zone_name'); // "Dhaka", "Khulna", "International"
-            $table->decimal('cost', 10, 2); // Cost for the shipping zone
-            $table->boolean('is_active')->default(true); // Field to activate/deactivate zones
+            $table->decimal('zone_cost', 10, 2); // Cost for the shipping zone
             $table->timestamps();
         
             // Adding a unique constraint if required

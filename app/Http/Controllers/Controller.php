@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Ecommerce\Category;
 use App\Models\Ecommerce\Brand;
 use App\Models\Ecommerce\Color;
+use App\Models\Division;
+use App\Models\District;
+use App\Models\Union;
+use App\Models\Upazila;
 
 class Controller extends BaseController
 {
@@ -22,11 +26,22 @@ class Controller extends BaseController
             $query->whereHas('product');
         }])->get();
 
+        
+        $divisions = Division::orderBy('name', 'asc')->get();
+        $districts = District::orderBy('name', 'asc')->get();
+        $upazilas = Upazila::orderBy('name', 'asc')->get();
+        $unions = Union::orderBy('name', 'asc')->get();
+
+
         // Share the data with all views
         view()->share([
             'categories' => $categories,
             'brands' => $brands,
-            'colors' => $colors
+            'colors' => $colors,
+            'divisions' => $divisions,
+            'districts' => $districts,
+            'upazilas' => $upazilas,
+            'unions' => $unions,
         ]);
     }
 }

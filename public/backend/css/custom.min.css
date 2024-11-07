@@ -1,2 +1,6 @@
 
 /*# sourceMappingURL=custom.min.css.map */
+/**/
+.custom-datatable td{
+    text-align: left !important;
+}

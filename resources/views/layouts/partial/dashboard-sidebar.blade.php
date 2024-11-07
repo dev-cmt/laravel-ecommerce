@@ -73,11 +73,6 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('products.create')}}">
-                        <i class="ri-file-add-line"></i> <span data-key="t-widgets">Create Product</span>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route('orders.index')}}">
                         <i class="ri-shopping-cart-2-line"></i> <span data-key="t-widgets">Orders</span>
                     </a>
@@ -132,7 +127,7 @@
 
                 <!-- Manage Country Menu -->
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#manageCountry" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                    <a class="nav-link menu-link" href="#manageCountry" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="manageCountry">
                         <i class="ri-global-line"></i><span data-key="t-country">Manage Country</span>
                     </a>
                     <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="manageCountry">
@@ -149,16 +144,16 @@
 
                 <!-- Products Menu -->
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#Products" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                    <a class="nav-link menu-link" href="#Products" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="Products">
                         <i class="ri-product-hunt-line"></i> <span data-key="t-products">Products</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ request()->routeIs('home') ? 'show' : '' }}" id="Products">
+                    <div class="collapse menu-dropdown {{ request()->routeIs('products.create', 'products.index') ? 'show' : '' }}" id="Products">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-products">Add New Product</a>
+                                <a href="{{route('products.create')}}" class="nav-link {{ request()->routeIs('products.create') ? 'active' : '' }}" data-key="t-products">Add New Product</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-products">All Products</a>
+                                <a href="{{route('products.index')}}" class="nav-link {{ request()->routeIs('products.index') ? 'active' : '' }}" data-key="t-products">All Products</a>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-products">Deactivated Product</a>
@@ -172,6 +167,7 @@
                         </ul>
                     </div>                    
                 </li>
+
 
                 <!-- Affiliate Products Menu -->
                 <li class="nav-item">
@@ -306,7 +302,7 @@
                     <a class="nav-link menu-link" href="#General" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
                         <i class="ri-list-settings-line"></i> <span data-key="t-general">General Settings</span>
                     </a>
-                    <div class="collapse menu-dropdown {{ request()->routeIs('shipping.methods.index', 'home') ? 'show' : '' }}" id="General">
+                    <div class="collapse menu-dropdown {{ request()->routeIs('shipping-methods.index', 'home') ? 'show' : '' }}" id="General">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-general">Favicon</a>
@@ -315,7 +311,7 @@
                                 <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-general">Loader</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('shipping.methods.index')}}" class="nav-link {{ request()->routeIs('shipping.methods.index') ? 'active' : '' }}" data-key="t-general">Shipping Methods</a>
+                                <a href="{{route('shipping-methods.index')}}" class="nav-link {{ request()->routeIs('shipping-methods.index') ? 'active' : '' }}" data-key="t-general">Shipping Methods</a>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" data-key="t-general">Packagings</a>

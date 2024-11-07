@@ -23,38 +23,63 @@ class ShippingController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'method_name' => 'required|unique:shipping_methods',
-            'description' => 'nullable|string',
-        ]);
+        // Validate incoming data
+        // $request->validate([
+        //     'method_name' => 'required|string|max:255',
+        //     'cost' => 'required|numeric',
+        //     'description' => 'nullable|string',
+        //     'zone_name.*' => 'required|string|max:255',
+        //     'zone_cost.*' => 'required|numeric',
+        // ]);
 
-        ShippingMethod::create($request->all());
-        return redirect()->route('shipping_methods.index')->with('success', 'Shipping method created successfully.');
+        // Ensure 'is_active' is a boolean value, default to false if not set
+        $isActive = $request->has('is_active') ? true : false;
+
+        // Create or update the shipping method
+        $shippingMethod = ShippingMethod::updateOrCreate(
+            ['id' => $request->id],
+            $request->only(['method_name', 'cost', 'description']) + ['is_active' => $isActive]
+        );
+
+        // Create or update shipping zones
+        if ($request->has('zone_name')) {
+            foreach ($request->zone_name as $index => $zoneName) {
+                ShippingZone::updateOrCreate(
+                    ['shipping_method_id' => $shippingMethod->id, 'zone_name' => $zoneName],
+                    ['zone_cost' => $request->zone_cost[$index]]
+                );
+            }
+        }
+
+        return response()->json(['success' => 'Shipping method created/updated successfully']);
     }
 
-    public function show(ShippingMethod $shippingMethod)
+
+    public function edit($id)
     {
-        return view('ecommerce.backend.shipping.edit', compact('shippingMethod'));
-    }
-    public function edit(ShippingMethod $shippingMethod)
-    {
-        return view('ecommerce.backend.shipping.show', compact('shippingMethod'));
+        $method = ShippingMethod::with('shippingZones')->findOrFail($id); // Fetch method with zones
+        return response()->json($method); // Return as JSON
     }
 
-    public function update(Request $request, ShippingMethod $shippingMethod)
+    // Remove the specified shipping method from storage
+    public function destroy($id)
     {
-        $request->validate([
-            'method_name' => 'required|unique:shipping_methods,method_name,' . $shippingMethod->id,
-            'description' => 'nullable|string',
-        ]);
+        $shippingMethod = ShippingMethod::findOrFail($id);
+        $shippingMethod->zones()->delete(); // Remove related zones
+        $shippingMethod->delete(); // Delete the shipping method
 
-        $shippingMethod->update($request->all());
-        return redirect()->route('shipping_methods.index')->with('success', 'Shipping method updated successfully.');
+        return redirect()->route('shipping.methods.index')->with('success', 'Shipping method deleted successfully.');
     }
 
-    public function destroy(ShippingMethod $shippingMethod)
+    public function destroyZone($id)
     {
-        $shippingMethod->delete();
-        return redirect()->route('shipping_methods.index')->with('success', 'Shipping method deleted successfully.');
+        // Find the zone by ID (use appropriate model)
+        $zone = ShippingZone::findOrFail($id);
+
+        // Delete the zone
+        $zone->delete();
+
+        // Return a response, maybe a success message
+        return response()->json(['message' => 'Zone deleted successfully.']);
     }
 }

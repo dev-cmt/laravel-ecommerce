@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('method_name')->unique; // "Free Shipping", "Standard Shipping", "International Shipping", "Express Shipping", "Local Pickup"
             $table->text('description')->nullable(); //"Delivered within 3-5 business days"
+            $table->decimal('cost', 10, 2)->nullable(); // Cost for the shipping
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
