@@ -70,18 +70,19 @@
                     <form action="{{ route('shipping-methods.store') }}" method="POST" enctype="multipart/form-data" id="shippingMethodForm">
                         @csrf
                         <input type="hidden" name="id" id="methodId">
-                        <div class="row">
+                        <img id="loader-gif" src="{{asset('public/images')}}/loader-ripple-200px-200px.gif" style="margin:auto; display:flex" alt="">
+                        <div class="row loader-data">
                             <div class="col-md-6 mb-3">
                                 <label for="method_name" class="form-label">Method Name</label>
                                 <input type="text" name="method_name" id="methodName" class="form-control" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="cost" class="form-label">Cost</label>
-                                <input type="number" name="cost" id="cost" class="form-control" placeholder="Enter cost" required />
+                                <input type="number" name="cost" id="cost" class="form-control" placeholder="Enter cost" />
                             </div>
                             <div class="col-md-12 mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <textarea name="description" class="form-control" rows="1"></textarea>
+                                <label for="duration" class="form-label">Duration</label>
+                                <textarea name="description" id="duration " class="form-control" rows="1" placeholder="(1-3) Days"></textarea>
                             </div>
                             <div class="col-md-6 mb-3" id="zone-check">
                                 <div class="form-check">
@@ -143,11 +144,15 @@
             // open modal
             $('#open_modal').click(function() {
                 $('#staticBackdrop').modal('show');
+                $('#loader-gif').hide();
             });
 
             $('.edit-modal').click(function() {
                 // Show the modal
                 $('#staticBackdrop').modal('show');
+                
+                $('#loader-gif').show();
+                $('.loader-data').hide();
                 
                 // Get the method ID from the data-id attribute
                 var methodId = $(this).data('id');
@@ -161,7 +166,7 @@
                         $('#methodId').val(response.id);
                         $('#methodName').val(response.method_name);
                         $('#cost').val(response.cost);
-                        $('#description').val(response.description);
+                        $('#duration ').val(response.description);
 
                         // Set the "Is Active?" checkbox
                         if (response.is_active) {
@@ -204,6 +209,9 @@
                             $('#zone-check').show();
                             $('#zoneTableContainer').hide(); // Hide the zones table
                         }
+                        
+                        $('#loader-gif').hide();
+                        $('.loader-data').show();
                     }
                 });
             });
@@ -211,26 +219,40 @@
             // Updated delete-zone click handler
             $('#zoneTableBody').on('click', '.delete-zone', function() {
                 var zoneId = $(this).data('zone-id'); // Get the zone ID
-                
-                // Confirm the deletion
-                if (confirm('Are you sure you want to delete this zone?')) {
-                    $.ajax({
-                        url: "{{ route('shipping-zones.destroy', ':id') }}".replace(':id', zoneId), // Use the route helper to generate the URL
-                        type: 'DELETE',
-                        data: {
-                            _token: '{{ csrf_token() }}' // Include CSRF token for security
-                        },
-                        success: function(response) {
-                            // On success, remove the row from the table
-                            $(this).parents('tr').remove();
-                            alert(response.message); // Show success message
-                        },
-                        error: function(xhr) {
-                            alert('Error deleting zone: ' + xhr.responseText);
-                        }
-                    });
-                }
+                var $row = $(this).closest('tr'); // Cache the row element to remove later
+
+                // SweetAlert confirmation
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Perform the AJAX request if confirmed
+                        $.ajax({
+                            url: "{{ route('shipping-zones.destroy', ':id') }}".replace(':id', zoneId), // Generate the correct URL
+                            type: 'DELETE',
+                            data: {
+                                _token: '{{ csrf_token() }}' // Include CSRF token for security
+                            },
+                            success: function(response) {
+                                // On success, remove the row from the table
+                                $row.remove();
+                                Swal.fire('Deleted!', response.message, 'success'); // Show success message using SweetAlert
+                            },
+                            error: function(xhr) {
+                                Swal.fire('Error!', 'There was a problem deleting the zone: ' + xhr.responseText, 'error'); // Show error message
+                            }
+                        });
+                    }
+                });
             });
+
+
 
             // Clear form inputs when modal is closed
             $('#staticBackdrop').on('hidden.bs.modal', function () {

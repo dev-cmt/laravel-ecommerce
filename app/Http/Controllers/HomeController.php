@@ -19,6 +19,7 @@ use App\Models\Ecommerce\ProductReview;
 use App\Models\Ecommerce\Cart;
 use App\Models\Ecommerce\Wishlist;
 use App\Models\Ecommerce\Compare;
+use App\Models\Ecommerce\ShippingMethod;
 
 class HomeController extends Controller
 {
@@ -116,8 +117,9 @@ class HomeController extends Controller
     }
     public function cart(Request $request): View
     {
+        $shipping = ShippingMethod::with('shippingZones')->get();
         $carts = Cart::where('user_id', Auth::id())->with('product')->get();
-        return view('ecommerce.frontend.cart', compact('carts'));
+        return view('ecommerce.frontend.cart', compact('carts', 'shipping'));
     }
     public function checkout(Request $request): View
     {

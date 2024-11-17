@@ -113,6 +113,15 @@
                             <h4 class="tp-cart-checkout-shipping-title">Shipping</h4>
 
                             <div class="tp-cart-checkout-shipping-option-wrapper">
+                                @foreach ($shipping as $item)
+                                <div class="tp-cart-checkout-shipping-option">
+                                    <input id="shipping{{$item->id}}" type="radio" name="shipping">
+                                    <label for="shipping{{$item->id}}">{{$item->method_name}}: <span>৳{{$item->cost}}</span></label>
+                                </div>
+                                @endforeach
+                            </div>
+
+                            {{-- <div class="tp-cart-checkout-shipping-option-wrapper">
                                 <div class="tp-cart-checkout-shipping-option">
                                     <input id="flat_rate" type="radio" name="shipping">
                                     <label for="flat_rate">Flat rate: <span>$20.00</span></label>
@@ -125,7 +134,7 @@
                                     <input id="free_shipping" type="radio" name="shipping">
                                     <label for="free_shipping">Free shipping</label>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="tp-cart-checkout-total d-flex align-items-center justify-content-between">
                             <span>Total</span>
