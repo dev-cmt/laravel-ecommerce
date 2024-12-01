@@ -21,9 +21,57 @@
     <section class="tp-checkout-area pb-120" data-bg-color="#EFF1F5">
         <div class="container">
             <div class="row">
+                <div class="col-xl-7 col-lg-7">
+                    <div class="tp-checkout-verify">
+                        <div class="tp-checkout-verify-item">
+                            <p class="tp-checkout-verify-reveal">Returning customer? <button type="button"
+                                    class="tp-checkout-login-form-reveal-btn">Click here to login</button></p>
+
+                            <div id="tpReturnCustomerLoginForm" class="tp-return-customer">
+                                <form action="#">
+
+                                    <div class="tp-return-customer-input">
+                                        <label>Email</label>
+                                        <input type="text" placeholder="Your Email">
+                                    </div>
+                                    <div class="tp-return-customer-input">
+                                        <label>Password</label>
+                                        <input type="password" placeholder="Password">
+                                    </div>
+
+                                    <div
+                                        class="tp-return-customer-suggetions d-sm-flex align-items-center justify-content-between mb-20">
+                                        <div class="tp-return-customer-remeber">
+                                            <input id="remeber" type="checkbox">
+                                            <label for="remeber">Remember me</label>
+                                        </div>
+                                        <div class="tp-return-customer-forgot">
+                                            <a href="forgot.html">Forgot Password?</a>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="tp-return-customer-btn tp-checkout-btn">Login</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="tp-checkout-verify-item">
+                            <p class="tp-checkout-verify-reveal">Have a coupon? <button type="button"
+                                    class="tp-checkout-coupon-form-reveal-btn">Click here to enter your code</button></p>
+
+                            <div id="tpCheckoutCouponForm" class="tp-return-customer">
+                                <form action="#">
+                                    <div class="tp-return-customer-input">
+                                        <label>Coupon Code :</label>
+                                        <input type="text" placeholder="Coupon">
+                                    </div>
+                                    <button type="submit" class="tp-return-customer-btn tp-checkout-btn">Apply</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-lg-7">
                     <div class="tp-checkout-bill-area">
-                        <h3 class="tp-checkout-bill-title">Delivery Information</h3>
+                        <h3 class="tp-checkout-bill-title">Billing Details</h3>
 
                         <div class="tp-checkout-bill-form">
                             <form action="#">
@@ -31,23 +79,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="tp-checkout-input">
-                                                <label>Full name <span>*</span></label>
-                                                <input type="text" placeholder="First Name">
-                                            </div>
-                                            <div class="tp-checkout-input">
-                                                <label>Phone Number <span>*</span></label>
-                                                <input type="text" placeholder="First Name">
-                                            </div>
-                                            <div class="tp-checkout-input">
-                                                <label>Email Address <span>*</span></label>
-                                                <input type="text" placeholder="First Name">
-                                            </div>
-                                            <div class="tp-checkout-input">
-                                                <label>Building / House No / Floor / Street <span>*</span></label>
-                                                <input type="text" placeholder="First Name">
-                                            </div>
-                                            <div class="tp-checkout-input">
-                                                <label>Colony / Suburb / Locality / Landmark <span>*</span></label>
+                                                <label>First Name <span>*</span></label>
                                                 <input type="text" placeholder="First Name">
                                             </div>
                                         </div>

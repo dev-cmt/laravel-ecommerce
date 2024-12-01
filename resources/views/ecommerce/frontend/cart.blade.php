@@ -80,7 +80,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="tp-cart-bottom">
+                    <div class="tp-cart-bottom mr-30">
                         <div class="row align-items-end">
                             <div class="col-xl-6 col-md-8">
                                 <div class="tp-cart-coupon">
@@ -96,7 +96,7 @@
                                 </div>
                             </div>
                             <div class="col-xl-6 col-md-4">
-                                <div class="tp-cart-update text-md-end">
+                                <div class="tp-cart-update text-md-end pr-4">
                                     <button type="button" class="tp-cart-update-btn">Update Cart</button>
                                 </div>
                             </div>
@@ -110,7 +110,7 @@
                             <span class="tp-cart-checkout-top-price">$742</span>
                         </div>
                         <div class="tp-cart-checkout-shipping">
-                            <h4 class="tp-cart-checkout-shipping-title">Shipping</h4>
+                            <h4 class="tp-cart-checkout-shipping-title mt-3">Shipping</h4>
 
                             <div class="tp-cart-checkout-shipping-option-wrapper">
                                 @foreach ($shipping as $item)
@@ -121,20 +121,6 @@
                                 @endforeach
                             </div>
 
-                            {{-- <div class="tp-cart-checkout-shipping-option-wrapper">
-                                <div class="tp-cart-checkout-shipping-option">
-                                    <input id="flat_rate" type="radio" name="shipping">
-                                    <label for="flat_rate">Flat rate: <span>$20.00</span></label>
-                                </div>
-                                <div class="tp-cart-checkout-shipping-option">
-                                    <input id="local_pickup" type="radio" name="shipping">
-                                    <label for="local_pickup">Local pickup: <span> $25.00</span></label>
-                                </div>
-                                <div class="tp-cart-checkout-shipping-option">
-                                    <input id="free_shipping" type="radio" name="shipping">
-                                    <label for="free_shipping">Free shipping</label>
-                                </div>
-                            </div> --}}
                         </div>
                         <div class="tp-cart-checkout-total d-flex align-items-center justify-content-between">
                             <span>Total</span>
