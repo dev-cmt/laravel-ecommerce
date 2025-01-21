@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\SocialAuthController;
@@ -23,6 +24,10 @@ use App\Http\Controllers\Ecommerce\ShippingController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// In routes/web.php or api.php
+Route::get('/get-districts', [LocationController::class, 'getRegion'])->name('get.districts');
+Route::get('/get-areas', [LocationController::class, 'getAreas'])->name('get.areas');
+
 Route::get('/', [HomeController::class, 'welcome'])->name('home');
 Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
 Route::get('/shop-details/{id}/{url_slug}', [HomeController::class, 'shopDetails'])->name('shop-details');
@@ -38,12 +43,16 @@ Route::get('/load-more-reviews', [HomeController::class, 'loadMoreReviews'])->na
 Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy-policy');
 Route::get('/terms-condition', [HomeController::class, 'termsCondition'])->name('terms-condition');
 
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
+    Route::post('/cart/apply-coupon', [HomeController::class, 'applyCoupon'])->name('cart.applyCoupon');
     Route::get('/checkout', [HomeController::class, 'checkout'])->name('checkout');
     Route::get('/wishlist', [HomeController::class, 'wishlist'])->name('wishlist');
     Route::get('/compare', [HomeController::class, 'compare'])->name('compare');
     Route::post('/item-action/store', [HomeController::class, 'itemActionStore'])->name('item-action.store');
+    Route::delete('/item-action/remove', [HomeController::class, 'itemActionRemove'])->name('item-action.remove');
 
 
     Route::get('/order-complete.', [HomeController::class, 'orderComplete.'])->name('order-complete');

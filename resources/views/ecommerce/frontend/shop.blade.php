@@ -329,13 +329,13 @@
 
                             <div class="tp-shop-widget-content ">
                                 <div class="tp-shop-widget-brand-list d-flex align-items-center justify-content-between flex-wrap">
-                                        @for ($i = 0; $i < 6; $i++)
-                                            <div class="tp-shop-widget-brand-item">
-                                                <a href="#">
-                                                    <img src="{{asset('public/frontend')}}/img/product/shop/brand/logo_01.png" alt="">
-                                                </a>
-                                            </div>
-                                        @endfor
+                                    @for ($i = 0; $i < 6; $i++)
+                                        <div class="tp-shop-widget-brand-item">
+                                            <a href="#">
+                                                <img src="{{asset('public/frontend')}}/img/product/shop/brand/logo_01.png" alt="">
+                                            </a>
+                                        </div>
+                                    @endfor
                                 </div>
                             </div>
                         </div>
@@ -356,39 +356,27 @@
                                                         aria-controls="grid-tab-pane" aria-selected="true">
                                                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                                             xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M16.3327 6.01341V2.98675C16.3327 2.04675 15.906 1.66675 14.846 1.66675H12.1527C11.0927 1.66675 10.666 2.04675 10.666 2.98675V6.00675C10.666 6.95341 11.0927 7.32675 12.1527 7.32675H14.846C15.906 7.33341 16.3327 6.95341 16.3327 6.01341Z"
+                                                            <path d="M16.3327 6.01341V2.98675C16.3327 2.04675 15.906 1.66675 14.846 1.66675H12.1527C11.0927 1.66675 10.666 2.04675 10.666 2.98675V6.00675C10.666 6.95341 11.0927 7.32675 12.1527 7.32675H14.846C15.906 7.33341 16.3327 6.95341 16.3327 6.01341Z"
                                                                 stroke="currentColor" stroke-width="1.5"
                                                                 stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path
-                                                                d="M16.3327 15.18V12.4867C16.3327 11.4267 15.906 11 14.846 11H12.1527C11.0927 11 10.666 11.4267 10.666 12.4867V15.18C10.666 16.24 11.0927 16.6667 12.1527 16.6667H14.846C15.906 16.6667 16.3327 16.24 16.3327 15.18Z"
+                                                            <path d="M16.3327 15.18V12.4867C16.3327 11.4267 15.906 11 14.846 11H12.1527C11.0927 11 10.666 11.4267 10.666 12.4867V15.18C10.666 16.24 11.0927 16.6667 12.1527 16.6667H14.846C15.906 16.6667 16.3327 16.24 16.3327 15.18Z"
                                                                 stroke="currentColor" stroke-width="1.5"
                                                                 stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path
-                                                                d="M7.33268 6.01341V2.98675C7.33268 2.04675 6.90602 1.66675 5.84602 1.66675H3.15268C2.09268 1.66675 1.66602 2.04675 1.66602 2.98675V6.00675C1.66602 6.95341 2.09268 7.32675 3.15268 7.32675H5.84602C6.90602 7.33341 7.33268 6.95341 7.33268 6.01341Z"
+                                                            <path d="M7.33268 6.01341V2.98675C7.33268 2.04675 6.90602 1.66675 5.84602 1.66675H3.15268C2.09268 1.66675 1.66602 2.04675 1.66602 2.98675V6.00675C1.66602 6.95341 2.09268 7.32675 3.15268 7.32675H5.84602C6.90602 7.33341 7.33268 6.95341 7.33268 6.01341Z"
                                                                 stroke="currentColor" stroke-width="1.5"
                                                                 stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path
-                                                                d="M7.33268 15.18V12.4867C7.33268 11.4267 6.90602 11 5.84602 11H3.15268C2.09268 11 1.66602 11.4267 1.66602 12.4867V15.18C1.66602 16.24 2.09268 16.6667 3.15268 16.6667H5.84602C6.90602 16.6667 7.33268 16.24 7.33268 15.18Z"
+                                                            <path d="M7.33268 15.18V12.4867C7.33268 11.4267 6.90602 11 5.84602 11H3.15268C2.09268 11 1.66602 11.4267 1.66602 12.4867V15.18C1.66602 16.24 2.09268 16.6667 3.15268 16.6667H5.84602C6.90602 16.6667 7.33268 16.24 7.33268 15.18Z"
                                                                 stroke="currentColor" stroke-width="1.5"
                                                                 stroke-linecap="round" stroke-linejoin="round" />
                                                         </svg>
                                                     </button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
-                                                    <button class="nav-link" id="list-tab" data-bs-toggle="tab"
-                                                        data-bs-target="#list-tab-pane" type="button" role="tab"
-                                                        aria-controls="list-tab-pane" aria-selected="false">
-                                                        <svg width="16" height="15" viewBox="0 0 16 15" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M15 7.11108H1" stroke="currentColor"
-                                                                stroke-width="2" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                            <path d="M15 1H1" stroke="currentColor" stroke-width="2"
-                                                                stroke-linecap="round" stroke-linejoin="round" />
-                                                            <path d="M15 13.2222H1" stroke="currentColor"
-                                                                stroke-width="2" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
+                                                    <button class="nav-link" id="list-tab" data-bs-toggle="tab" data-bs-target="#list-tab-pane" type="button" role="tab" aria-controls="list-tab-pane" aria-selected="false">
+                                                        <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M15 7.11108H1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                            <path d="M15 1H1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                            <path d="M15 13.2222H1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                                         </svg>
                                                     </button>
                                                 </li>
@@ -421,8 +409,7 @@
                                                         <path d="M3.8 3.45001H1" stroke="currentColor"
                                                             stroke-width="1.5" stroke-miterlimit="10"
                                                             stroke-linecap="round" stroke-linejoin="round" />
-                                                        <path
-                                                            d="M6.5999 5.9C7.953 5.9 9.0499 4.8031 9.0499 3.45C9.0499 2.0969 7.953 1 6.5999 1C5.2468 1 4.1499 2.0969 4.1499 3.45C4.1499 4.8031 5.2468 5.9 6.5999 5.9Z"
+                                                        <path d="M6.5999 5.9C7.953 5.9 9.0499 4.8031 9.0499 3.45C9.0499 2.0969 7.953 1 6.5999 1C5.2468 1 4.1499 2.0969 4.1499 3.45C4.1499 4.8031 5.2468 5.9 6.5999 5.9Z"
                                                             stroke="currentColor" stroke-width="1.5"
                                                             stroke-miterlimit="10" stroke-linecap="round"
                                                             stroke-linejoin="round" />
@@ -432,14 +419,12 @@
                                                         <path d="M5.2 11.15H1" stroke="currentColor" stroke-width="1.5"
                                                             stroke-miterlimit="10" stroke-linecap="round"
                                                             stroke-linejoin="round" />
-                                                        <path
-                                                            d="M9.4002 13.6C10.7533 13.6 11.8502 12.5031 11.8502 11.15C11.8502 9.79691 10.7533 8.70001 9.4002 8.70001C8.0471 8.70001 6.9502 9.79691 6.9502 11.15C6.9502 12.5031 8.0471 13.6 9.4002 13.6Z"
+                                                        <path d="M9.4002 13.6C10.7533 13.6 11.8502 12.5031 11.8502 11.15C11.8502 9.79691 10.7533 8.70001 9.4002 8.70001C8.0471 8.70001 6.9502 9.79691 6.9502 11.15C6.9502 12.5031 8.0471 13.6 9.4002 13.6Z"
                                                             stroke="currentColor" stroke-width="1.5"
                                                             stroke-miterlimit="10" stroke-linecap="round"
                                                             stroke-linejoin="round" />
                                                     </svg>
-                                                </span>
-                                                Filter
+                                                </span> Filter
                                             </button>
                                         </div>
                                     </div>

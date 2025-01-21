@@ -26,7 +26,7 @@ class FactorySeeder extends Seeder
         // Step 1: Insert data into the Color table first
         $colors = Color::factory()->count(20)->create();
 
-        Product::factory(20)->create()->each(function ($product) use ($colors) {
+        Product::factory(50)->create()->each(function ($product) use ($colors) {
             ProductVariant::factory(3)->create([
                 'product_id' => $product->id,
                 'color_id' => $colors->random()->id

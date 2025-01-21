@@ -63,6 +63,7 @@
 
     <script>
         var itemActionStoreUrl = '{{ route('item-action.store') }}';
+        var itemActionRemoveUrl = '{{ route('item-action.remove') }}';
         var csrfToken = '{{ csrf_token() }}';
         var loginUrl = '{{ route('login') }}';
     </script>

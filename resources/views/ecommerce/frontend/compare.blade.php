@@ -29,10 +29,8 @@
                                 <tr>
                                     <th>Remove</th>
                                     @foreach ($data as $item)
-                                    <td>
-                                        <div class="tp-compare-remove">
-                                            <button><i class="fal fa-trash-alt"></i></button>
-                                        </div>
+                                    <td class="tp-compare-remove">
+                                        <button class="remove-item" data-action-name="compare" data-id="{{ $item->id }}"><i class="fal fa-trash-alt"></i></button>
                                     </td>
                                     @endforeach
                                 </tr>
@@ -40,7 +38,7 @@
                                     <th>Product</th>
                                     @foreach ($data as $item)
                                     <td>
-                                        <div class="tp-compare-thumb">
+                                        <div class="tp-compare-thumb m-auto">
                                             <img src="{{asset('public/frontend')}}/img/product/product-1.jpg" alt="">
                                             <h4 class="tp-compare-product-title">
                                                 <a href="product-details.html">{{$item->product->product_name}}</a>
@@ -63,10 +61,25 @@
                                 <tr>
                                     <th>Add to cart</th>
                                     @foreach ($data as $item)
-                                    <td>
-                                        <div class="tp-compare-add-to-cart">
-                                            <button type="submit" class="tp-btn">Add to Cart</button>
-                                        </div>
+                                    <td class="tp-compare-add-to-cart">
+                                        @php
+                                            // Check if the product is already in the cart
+                                            $isInCart = DB::table('carts')
+                                                ->where('product_id', $item->product_id)
+                                                ->where('user_id', Auth::id())
+                                                ->exists();
+                                        @endphp
+                                        {{-- <button type="submit" class="tp-btn">Add to Cart</button> --}}
+                                      
+                                        <button type="button"
+                                            class="add-item tp-btn {{ $isInCart ? 'bg-dark text-white' : '' }}"
+                                            data-action-name="cart"
+                                            data-quantity="1"
+                                            data-product-id="{{ $item->product_id }}"
+                                            data-product-variant-id="{{ $item->product_variant_id ?? null }}">
+                                            {{ $isInCart ? 'Remove From Cart' : 'Add To Cart' }}
+                                        </button>
+                                        
                                     </td>
                                     @endforeach
                                 </tr>
@@ -103,4 +116,15 @@
         </div>
     </section>
     <!-- compare area end -->
+
+    @push('scripts')
+    <script>
+        document.addEventListener('click', e => {
+            if (e.target.closest('.remove-item')) {
+                e.preventDefault();
+                location.reload();
+            }
+        });
+    </script>
+    @endpush
 </x-frontend-layout>

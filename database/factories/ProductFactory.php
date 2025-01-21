@@ -18,7 +18,7 @@ class ProductFactory extends Factory
             'product_name' => $this->faker->unique()->words(rand(2, 4), true),
             'sku_code' => $this->faker->unique()->word,
             'url_slug' => Str::slug($this->faker->unique()->word),
-            'main_image' => $this->faker->imageUrl(),
+            'main_image' => 'https://picsum.photos/640/480?random=' . $this->faker->unique()->numberBetween(1, 1000) . '&category=fashion',
             'category_id' => Category::factory(), // Adjust as needed
             'brand_id' => $this->faker->numberBetween(1, 10), // Adjust as needed
             'description' => $this->faker->paragraph,

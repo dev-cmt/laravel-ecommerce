@@ -61,9 +61,7 @@ class CreateImportSeeder extends Seeder
         
         DB::table('stores')->insert($stores);
 
-        /**
-         * 
-         * 
+        /**----------------------------------------
          * 
          */
         
@@ -75,5 +73,13 @@ class CreateImportSeeder extends Seeder
         foreach ($store as $item) {
             DB::table('customer_groups')->insert(['name' => $item, 'description' => 'Admin Setup']);
         }
+        /**------------------------------------------
+         * 
+         */
+        DB::table('shipping_methods')->insert([
+            'method_name' => 'Standard Shipping', 
+            'description' => '3-5 days',
+            'cost' => '150'
+        ]);
     }
 }

@@ -491,7 +491,7 @@
                         var priceAfterDiscount = Math.round(item.product.price - (item.product.price * item.product.discount / 100));
                         var productVariantId = item.variants && item.variants.length > 0 ? item.variants[0].id : null; // Fetch variant ID dynamically
                         cartWidget.innerHTML += `
-                            <div class="cartmini__widget-item remove${item.product.id}">
+                            <div class="cartmini__widget-item remove${item.id}">
                                 <div class="cartmini__thumb">
                                     <a href="product-details.html">
                                         <img src="{{asset('public/frontend')}}/img/product/product-1.jpg" alt="">
@@ -504,7 +504,7 @@
                                         <span class="cartmini__quantity">x ${item.quantity}</span>
                                     </div>
                                 </div>
-                                <a href="#" data-action-name="cart" data-product-id="${item.product.id}" data-product-variant-id="${productVariantId}" class="removed-item cartmini__del">
+                                <a href="#" data-action-name="cart" data-id="${item.id}" class="remove-item cartmini__del">
                                     <i class="fa-regular fa-xmark"></i>
                                 </a>
                             </div>

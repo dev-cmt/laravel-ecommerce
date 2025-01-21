@@ -1,4 +1,4 @@
-<x-frontend-layout :title="'Checkout'">
+<x-frontend-layout :titles="'Checkout'">
     <!-- breadcrumb area start -->
     <section class="breadcrumb__area include-bg pt-95 pb-50" data-bg-color="#EFF1F5">
         <div class="container">
@@ -29,108 +29,56 @@
                             <form action="#">
                                 <div class="tp-checkout-bill-inner">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-xl-6">
                                             <div class="tp-checkout-input">
-                                                <label>Full name <span>*</span></label>
-                                                <input type="text" placeholder="First Name">
+                                                <label>Full Name <span>*</span></label>
+                                                <input type="text" placeholder="Enter your first and last name">
                                             </div>
                                             <div class="tp-checkout-input">
                                                 <label>Phone Number <span>*</span></label>
-                                                <input type="text" placeholder="First Name">
-                                            </div>
-                                            <div class="tp-checkout-input">
-                                                <label>Email Address <span>*</span></label>
-                                                <input type="text" placeholder="First Name">
+                                                <input type="text" placeholder="Please enter your phone number">
                                             </div>
                                             <div class="tp-checkout-input">
                                                 <label>Building / House No / Floor / Street <span>*</span></label>
-                                                <input type="text" placeholder="First Name">
+                                                <input type="text" placeholder="Please enter">
                                             </div>
                                             <div class="tp-checkout-input">
                                                 <label>Colony / Suburb / Locality / Landmark <span>*</span></label>
-                                                <input type="text" placeholder="First Name">
+                                                <input type="text" placeholder="Please enter">
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-xl-6">
                                             <div class="tp-checkout-input">
-                                                <label>Last Name <span>*</span></label>
-                                                <input type="text" placeholder="Last Name">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="tp-checkout-input">
-                                                <label>Company name (optional)</label>
-                                                <input type="text" placeholder="Example LTD.">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="tp-checkout-input">
-                                                <label>Country / Region </label>
-                                                <input type="text" placeholder="United States (US)">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="tp-checkout-input">
-                                                <label>Street address</label>
-                                                <input type="text" placeholder="House number and street name">
-                                            </div>
-
-                                            <div class="tp-checkout-input">
-                                                <input type="text" placeholder="Apartment, suite, unit, etc. (optional)">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="tp-checkout-input">
-                                                <label>Town / City</label>
-                                                <input type="text" placeholder="">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="tp-checkout-input">
-                                                <label>State / County</label>
-                                                <select>
-                                                    <option>New York US</option>
-                                                    <option>Berlin Germany</option>
-                                                    <option>Paris France</option>
-                                                    <option>Tokiyo Japan</option>
+                                                <label>Region <span>*</span></label>
+                                                <select name="region_id" id="region">
+                                                    <option value="">Please choose your region</option>
+                                                    @foreach ($divisions as $region)
+                                                        <option value="{{ $region->id }}">{{ $region->name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
                                             <div class="tp-checkout-input">
-                                                <label>Postcode ZIP</label>
-                                                <input type="text" placeholder="">
+                                                <label>City <span>*</span></label>
+                                                <select name="city_id" id="city" disabled>
+                                                    <option value="">Please choose your city</option>
+                                                </select>
                                             </div>
-                                        </div>
-                                        <div class="col-md-12">
                                             <div class="tp-checkout-input">
-                                                <label>Phone <span>*</span></label>
-                                                <input type="text" placeholder="">
+                                                <label>Area <span>*</span></label>
+                                                <select name="area_id" id="area" disabled>
+                                                    <option value="">Please choose your area</option>
+                                                </select>
                                             </div>
-                                        </div>
-                                        <div class="col-md-12">
                                             <div class="tp-checkout-input">
-                                                <label>Email address <span>*</span></label>
-                                                <input type="email" placeholder="">
+                                                <label>Address <span>*</span></label>
+                                                <input type="text" name="address" placeholder="For Example: House# 123, Street# 123, ABC Road">
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <div class="tp-checkout-option-wrapper">
-                                                <div class="tp-checkout-option">
-                                                    <input id="create_free_account" type="checkbox">
-                                                    <label for="create_free_account">Create an account?</label>
-                                                </div>
-                                                <div class="tp-checkout-option">
-                                                    <input id="ship_to_diff_address" type="checkbox">
-                                                    <label for="ship_to_diff_address">Ship to a different address?</label>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                         <div class="col-md-12">
                                             <div class="tp-checkout-input">
                                                 <label>Order notes (optional)</label>
-                                                <textarea
-                                                    placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                                                <textarea placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -139,6 +87,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-5">
                     <!-- checkout place order -->
                     <div class="tp-checkout-place white-bg">
@@ -146,68 +95,45 @@
 
                         <div class="tp-order-info-list">
                             <ul>
-
                                 <!-- header -->
                                 <li class="tp-order-info-list-header">
                                     <h4>Product</h4>
-                                    <h4>Total</h4>
+                                    <h4>Amount</h4>
                                 </li>
 
                                 <!-- item list -->
+                                @foreach ($cartItems as $item)
                                 <li class="tp-order-info-list-desc">
-                                    <p>Xiaomi Redmi Note 9 Global V. <span> x 2</span></p>
-                                    <span>$274:00</span>
+                                    <p>{{ $item['name'] }} <span> x {{ $item['qty'] }}</span></p>
+                                    <span>৳ {{ number_format($item['price'] * $item['qty'], 2) }}</span>
                                 </li>
-                                <li class="tp-order-info-list-desc">
-                                    <p>Office Chair Multifun <span> x 1</span></p>
-                                    <span>$74:00</span>
-                                </li>
-                                <li class="tp-order-info-list-desc">
-                                    <p>Apple Watch Series 6 Stainless <span> x 3</span></p>
-                                    <span>$362:00</span>
-                                </li>
-                                <li class="tp-order-info-list-desc">
-                                    <p>Body Works Mens Collection <span> x 1</span></p>
-                                    <span>$145:00</span>
-                                </li>
+                                @endforeach
 
                                 <!-- subtotal -->
                                 <li class="tp-order-info-list-subtotal">
                                     <span>Subtotal</span>
-                                    <span>$507.00</span>
+                                    <span>৳ {{ number_format($subtotal, 2) }}</span>
                                 </li>
 
                                 <!-- shipping -->
+                                @if ($shippingMethod)
                                 <li class="tp-order-info-list-shipping">
-                                    <span>Shipping</span>
-                                    <div class="tp-order-info-list-shipping-item d-flex flex-column align-items-end">
-                                        <span>
-                                            <input id="flat_rate" type="radio" name="shipping">
-                                            <label for="flat_rate">Flat rate: <span>$20.00</span></label>
-                                        </span>
-                                        <span>
-                                            <input id="local_pickup" type="radio" name="shipping">
-                                            <label for="local_pickup">Local pickup: <span>$25.00</span></label>
-                                        </span>
-                                        <span>
-                                            <input id="free_shipping" type="radio" name="shipping">
-                                            <label for="free_shipping">Free shipping</label>
-                                        </span>
-                                    </div>
+                                    {{ $shippingMethod->method_name }}: <span>৳ {{ number_format($shippingMethod->cost, 2) }}</span>
                                 </li>
+                                @endif
 
                                 <!-- total -->
                                 <li class="tp-order-info-list-total">
                                     <span>Total</span>
-                                    <span>$1,476.00</span>
+                                    <span id="order-total">৳ {{ number_format($total, 2) }}</span>
                                 </li>
                             </ul>
                         </div>
+                        
                         <div class="tp-checkout-payment">
                             <div class="tp-checkout-payment-item">
                                 <input type="radio" id="back_transfer" name="payment">
-                                <label for="back_transfer" data-bs-toggle="direct-bank-transfer">Direct Bank
-                                    Transfer</label>
+                                <label for="back_transfer" data-bs-toggle="direct-bank-transfer">Direct Bank Transfer</label>
                                 <div class="tp-checkout-payment-desc direct-bank-transfer">
                                     <p>Make your payment directly into our bank account. Please use your Order ID as the
                                         payment reference. Your order will not be shipped until the funds have cleared in
@@ -227,9 +153,7 @@
                                 <input type="radio" id="cod" name="payment">
                                 <label for="cod">Cash on Delivery</label>
                                 <div class="tp-checkout-payment-desc cash-on-delivery">
-                                    <p>Make your payment directly into our bank account. Please use your Order ID as the
-                                        payment reference. Your order will not be shipped until the funds have cleared in
-                                        our account.</p>
+                                    <p>Pay for your order when it is delivered to your address.</p>
                                 </div>
                             </div>
                             <div class="tp-checkout-payment-item paypal-payment">
@@ -241,7 +165,7 @@
                         <div class="tp-checkout-agree">
                             <div class="tp-checkout-option">
                                 <input id="read_all" type="checkbox">
-                                <label for="read_all">I have read and agree to the website.</label>
+                                <label for="read_all">I have read and agree to the website's Terms and Conditions.</label>
                             </div>
                         </div>
                         <div class="tp-checkout-btn-wrapper">
@@ -252,6 +176,92 @@
             </div>
         </div>
     </section>
-    <!-- checkout area end -->
-    
+    <style>
+        .tp-checkout-input .nice-select.open .list{
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .tp-checkout-input .disabled {
+            background-color: #f2f2f2 !important;
+        }
+    </style>
+    @push('scripts')
+    <script type="text/javascript">
+        $('#region').change(function() {
+            var region_id = $(this).val();
+            var option = '';
+
+            $.ajax({
+                url: "{{ route('get.districts') }}",
+                method: "GET",
+                data: { 'division_id': region_id },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.length) {
+                        option = "<option selected disabled>Please choose your city</option>"; // Default text
+                        
+                        $.each(response, function(index, district) {
+                            $.each(district.upazila, function(index, upazila) {
+                                // Concatenate district and upazila names as option text
+                                option += "<option value='" + upazila.id + "'>" + district.name + " - " + upazila.name + "</option>";
+                            });
+                        });
+
+                        $('#city').html(option); 
+                        $('#city').prop('disabled', false);
+                        $('#city').niceSelect('update');
+                    } else {
+                        // If no data is returned, show no cities message
+                        option = "<option disabled>No cities available</option>";
+                        $('#city').html(option);  // Update the dropdown
+                        
+                        // Reinitialize nice-select
+                        $('#city').niceSelect('update');  // Update the nice-select plugin to handle changes
+                    }
+                },
+                error: function() {
+                    alert("Error fetching cities.");
+                    option = "<option disabled>Error loading cities</option>";
+                    $('#city').html(option);  // Show error message if AJAX fails
+                    $('#city').niceSelect('update');  // Reinitialize
+                }
+            });
+        });
+
+        // City (District) change event to fetch areas (Unions)
+        $('#city').change(function() {
+            var city_id = $(this).val();
+            var option = '';
+
+            $.ajax({
+                    url: "{{ route('get.areas') }}",  // Adjust URL for getting areas
+                    method: "GET",
+                    data: { 'upazila_id': city_id },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.length) {
+                            option = "<option selected disabled>Please choose your city</option>";
+                            $.each(response, function(index, area) {
+                                option += "<option value='" + area.id + "'>" + area.name + "</option>";
+                            });
+                            $('#area').html(option);  // Update the areas dropdown
+                            $('#area').prop('disabled', false);
+                            $('#area').niceSelect('update');  // Reinitialize
+                        } else {
+                            option = "<option disabled>No areas available</option>";
+                            $('#area').html(option);  // Show message if no areas
+                            $('#area').niceSelect('update');  // Reinitialize
+                        }
+                    },
+                    error: function() {
+                        alert("Error fetching areas.");
+                        option = "<option disabled>Error loading areas</option>";
+                        $('#area').html(option);  // Show error message if AJAX fails
+                        $('#area').niceSelect('update');  // Reinitialize
+                    }
+                });
+        });
+
+    </script>
+    @endpush
 </x-frontend-layout>

@@ -27,10 +27,10 @@ class District extends Model
     }
 
     /**
-     * Get the unions for the district.
+     * Get the upazila for the district.
      */
-    public function unions()
+    public function upazila()
     {
-        return $this->hasMany(Union::class);
+        return $this->hasMany(Upazila::class);
     }
 }

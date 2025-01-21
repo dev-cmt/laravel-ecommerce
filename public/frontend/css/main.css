@@ -19181,7 +19181,7 @@ product all slider
   border-bottom: 1px solid #E0E2E3;
 }
 .tp-cart-checkout-top span {
-  font-size: 20px;
+  font-size: 15px;
   color: var(--tp-common-black);
   font-weight: 500;
 }
@@ -19244,7 +19244,9 @@ product all slider
   opacity: 0;
 }
 .tp-cart-checkout-total {
-  margin-bottom: 25px;
+  border-top: 1px solid #E0E2E3;
+  padding-top: 15px;
+  margin-bottom: 15px;
 }
 .tp-cart-checkout-total span {
   font-weight: 500;
@@ -19527,7 +19529,7 @@ product all slider
   border-color: var(--tp-common-black);
 }
 .tp-checkout-input textarea {
-  height: 200px;
+  height: 120px;
   resize: none;
 }
 .tp-checkout-input .nice-select {
