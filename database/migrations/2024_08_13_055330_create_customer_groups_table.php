@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique(); // Name of the group (e.g., 'VIP', 'Regular')
             $table->text('description')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

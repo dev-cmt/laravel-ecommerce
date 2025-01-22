@@ -16,12 +16,10 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained('orders');
             $table->foreignId('product_id')->constrained('products');
             $table->foreignId('product_variant_id')->nullable()->constrained('product_variants');
-            $table->string('product_name');
-            $table->string('color')->nullable();
-            $table->string('size')->nullable();
-            $table->decimal('price', 10, 2);
-            $table->integer('quantity');
-            $table->decimal('total_amount', 10, 2);
+            $table->string('product_name')->nullable();
+            $table->decimal('price', 10, 2)->nullable();
+            $table->integer('quantity')->nullable();
+            $table->decimal('total_amount', 10, 2)->nullable();
             $table->timestamps();
         });
     }

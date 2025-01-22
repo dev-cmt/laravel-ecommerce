@@ -160,8 +160,7 @@ class HomeController extends Controller
         $shippingMethod = ShippingMethod::find($shippingId);
 
         return view(
-            "ecommerce.frontend.checkout",
-            compact("cartItems", "shippingMethod", "subtotal", "total")
+            "ecommerce.frontend.checkout", compact("cartItems", "shippingMethod", "subtotal", "total")
         );
     }
     public function wishlist(Request $request): View
@@ -419,6 +418,7 @@ class HomeController extends Controller
      */
     public function getCarts(Request $request)
     {
+        // Useing => frontend-header(.blade.php)
         $data = Cart::where("user_id", Auth::id())
             ->with("product")
             ->get()

@@ -10,9 +10,9 @@ use App\Models\Ecommerce\Category;
 use App\Models\Ecommerce\Brand;
 use App\Models\Ecommerce\Color;
 use App\Models\Division;
-use App\Models\District;
-use App\Models\Union;
-use App\Models\Upazila;
+// use App\Models\District;
+// use App\Models\Union;
+// use App\Models\Upazila;
 
 class Controller extends BaseController
 {
@@ -28,9 +28,9 @@ class Controller extends BaseController
 
         
         $divisions = Division::orderBy('name', 'asc')->get();
-        $districts = District::orderBy('name', 'asc')->get();
-        $upazilas = Upazila::orderBy('name', 'asc')->get();
-        $unions = Union::orderBy('name', 'asc')->get();
+        // $districts = District::orderBy('name', 'asc')->get();
+        // $upazilas = Upazila::orderBy('name', 'asc')->get();
+        // $unions = Union::orderBy('name', 'asc')->get();
 
 
         // Share the data with all views
@@ -39,9 +39,9 @@ class Controller extends BaseController
             'brands' => $brands,
             'colors' => $colors,
             'divisions' => $divisions,
-            'districts' => $districts,
-            'upazilas' => $upazilas,
-            'unions' => $unions,
+            // 'districts' => $districts,
+            // 'upazilas' => $upazilas,
+            // 'unions' => $unions,
         ]);
     }
 }

@@ -54,11 +54,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/item-action/store', [HomeController::class, 'itemActionStore'])->name('item-action.store');
     Route::delete('/item-action/remove', [HomeController::class, 'itemActionRemove'])->name('item-action.remove');
 
-
-    Route::get('/order-complete.', [HomeController::class, 'orderComplete.'])->name('order-complete');
-    Route::get('/order-history', [HomeController::class, 'orderHistory.'])->name('order-history');
-    Route::get('/order-details.', [HomeController::class, 'orderDetails.'])->name('order-details');
-    Route::get('/order-track', [HomeController::class, 'orderTrack.'])->name('order-track');
+    Route::POST('/order/store.', [OrderController::class, 'orderStore'])->name('order.store');
+    Route::get('/order-payment', [OrderController::class, 'orderPayment'])->name('order-payment');
+    Route::get('/order-payment/store', [OrderController::class, 'orderPaymentStore'])->name('order-payment.store');
 
     Route::get('/user-profile', [HomeController::class, 'userProfile'])->name('user-profile');
     Route::get('/get-carts', [HomeController::class, 'getCarts'])->name('get-carts');
@@ -87,8 +85,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile-settings', [ProfileController::class, 'profileSettings'])->name('profile.settings');
     Route::post('/profile-update/image', [ProfileController::class, 'updateImage'])->name('profile.updateImage');
     Route::post('/profile-update', [ProfileController::class, 'profileUpdate'])->name('profile.update');
+    Route::delete('/profile-destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/order-complete.', [OrderController::class, 'orderComplete.'])->name('order-complete');
+    Route::get('/order-history', [OrderController::class, 'orderHistory.'])->name('order-history');
+    Route::get('/order-details.', [OrderController::class, 'orderDetails.'])->name('order-details');
+    Route::get('/order-track', [OrderController::class, 'orderTrack.'])->name('order-track');
 });
 
 Route::group(['middleware' => ['auth']], function() {

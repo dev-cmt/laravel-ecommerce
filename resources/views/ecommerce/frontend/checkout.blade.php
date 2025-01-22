@@ -20,70 +20,120 @@
     <!-- checkout area start -->
     <section class="tp-checkout-area pb-120" data-bg-color="#EFF1F5">
         <div class="container">
-            <div class="row">
+            <form class="row" action="{{ route('order.store') }}" method="POST">
+                @csrf
                 <div class="col-lg-7">
                     <div class="tp-checkout-bill-area">
                         <h3 class="tp-checkout-bill-title">Delivery Information</h3>
 
-                        <div class="tp-checkout-bill-form">
-                            <form action="#">
-                                <div class="tp-checkout-bill-inner">
-                                    <div class="row">
-                                        <div class="col-xl-6">
-                                            <div class="tp-checkout-input">
-                                                <label>Full Name <span>*</span></label>
-                                                <input type="text" placeholder="Enter your first and last name">
-                                            </div>
-                                            <div class="tp-checkout-input">
-                                                <label>Phone Number <span>*</span></label>
-                                                <input type="text" placeholder="Please enter your phone number">
-                                            </div>
-                                            <div class="tp-checkout-input">
-                                                <label>Building / House No / Floor / Street <span>*</span></label>
-                                                <input type="text" placeholder="Please enter">
-                                            </div>
-                                            <div class="tp-checkout-input">
-                                                <label>Colony / Suburb / Locality / Landmark <span>*</span></label>
-                                                <input type="text" placeholder="Please enter">
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6">
-                                            <div class="tp-checkout-input">
-                                                <label>Region <span>*</span></label>
-                                                <select name="region_id" id="region">
-                                                    <option value="">Please choose your region</option>
-                                                    @foreach ($divisions as $region)
-                                                        <option value="{{ $region->id }}">{{ $region->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="tp-checkout-input">
-                                                <label>City <span>*</span></label>
-                                                <select name="city_id" id="city" disabled>
-                                                    <option value="">Please choose your city</option>
-                                                </select>
-                                            </div>
-                                            <div class="tp-checkout-input">
-                                                <label>Area <span>*</span></label>
-                                                <select name="area_id" id="area" disabled>
-                                                    <option value="">Please choose your area</option>
-                                                </select>
-                                            </div>
-                                            <div class="tp-checkout-input">
-                                                <label>Address <span>*</span></label>
-                                                <input type="text" name="address" placeholder="For Example: House# 123, Street# 123, ABC Road">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <div class="tp-checkout-input">
-                                                <label>Order notes (optional)</label>
-                                                <textarea placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="tp-checkout-input">
+                                    <label>Full Name <span>*</span></label>
+                                    <input type="text" name="full_name" value="{{ old('full_name') }}" placeholder="Enter your full name">
+                                    @error('full_name') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
-                            </form>
+                                <div class="tp-checkout-input">
+                                    <label>Phone Number <span>*</span></label>
+                                    <input type="text" name="phone_number" value="{{ old('phone_number') }}" placeholder="Enter your number">
+                                    @error('phone_number') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="tp-checkout-input">
+                                    <label>Building / House No / Floor / Street <span>*</span></label>
+                                    <input type="text" name="building" value="{{ old('building') }}" placeholder="Please enter">
+                                    @error('building') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="tp-checkout-input">
+                                    <label>Colony / Suburb / Locality / Landmark</label>
+                                    <input type="text" name="colony" value="{{ old('colony') }}" placeholder="Please enter">
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="tp-checkout-input">
+                                    <label>Region <span>*</span></label>
+                                    <select name="region_name" id="region">
+                                        <option value="">Choose your region</option>
+                                        @foreach ($divisions as $region)
+                                            <option value="{{ $region->name }}" data-id="{{ $region->id }}" {{ old('region_name') == $region->name ? 'selected' : '' }}>
+                                                {{ $region->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('region_name') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="tp-checkout-input">
+                                    <label>City <span>*</span></label>
+                                    <select name="city_name" id="city" disabled>
+                                        <option value="">Choose your city</option>
+                                    </select>
+                                    @error('city_name') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="tp-checkout-input">
+                                    <label>Area <span>*</span></label>
+                                    <select name="area_name" id="area" disabled>
+                                        <option value="">Choose your area</option>
+                                    </select>
+                                    @error('area_name') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="tp-checkout-input">
+                                    <label>Address <span>*</span></label>
+                                    <input type="text" name="address" value="{{ old('address') }}" placeholder="House#123, Street#123, AB Road">
+                                    @error('address') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="tp-checkout-input mb-0">
+                                    <label>Order notes (optional)</label>
+                                    <textarea name="order_notes" placeholder="Notes about your order, e.g. special notes for delivery.">{{ old('order_notes') }}</textarea>
+                                </div>
+                            </div>                                
+
+                            <div class="col-md-12 text-center">
+                                <div class="tp-checkout-input mb-0">
+                                    <label><em>Select a label for effective delivery <span>*</span></em></label>
+                                </div>
+                                <div class="d-flex justify-content-center mx-4">
+                                    <!-- HOME Option -->
+                                    <div class="delivery-option" data-for="delivery_home">
+                                        <input type="radio" id="delivery_home" name="delivery_label" value="Home" hidden {{ old('delivery_label') == 'Home' ? 'checked' : '' }}>
+                                        <label for="delivery_home"><i class="fa fa-home" aria-hidden="true"></i> HOME</label>
+                                    </div>
+                                    
+                                    <!-- OFFICE Option -->
+                                    <div class="delivery-option" data-for="delivery_office">
+                                        <input type="radio" id="delivery_office" name="delivery_label" value="Office" hidden {{ old('delivery_label') == 'Office' ? 'checked' : '' }}>
+                                        <label for="delivery_office"><i class="fa fa-briefcase" aria-hidden="true"></i> OFFICE</label>
+                                    </div>
+                                    <style>
+                                        .delivery-option {
+                                            border-radius: 5px;
+                                            border: 2px solid var(--tp-theme-primary);
+                                            background: var(--tp-theme-primary);
+                                            color: var(--tp-common-white);;
+                                            padding: 5px 20px;
+                                            margin: 10px;
+                                            font-weight: 600;
+                                            cursor: pointer;
+                                            text-align: center;
+                                        }
+                                    
+                                        .delivery-option.active {
+                                            color: #00ffb8;
+                                            border: 2px solid #00ffb8;
+                                        }
+                                    </style>
+                                    
+                                    <script>
+                                        document.querySelectorAll('.delivery-option').forEach(opt => {
+                                            opt.addEventListener('click', function () {
+                                                document.querySelectorAll('.delivery-option').forEach(o => o.classList.remove('active'));
+                                                this.classList.add('active');
+                                                document.getElementById(this.dataset.for).checked = true;
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -103,11 +153,17 @@
 
                                 <!-- item list -->
                                 @foreach ($cartItems as $item)
-                                <li class="tp-order-info-list-desc">
-                                    <p>{{ $item['name'] }} <span> x {{ $item['qty'] }}</span></p>
-                                    <span>৳ {{ number_format($item['price'] * $item['qty'], 2) }}</span>
-                                </li>
+                                    <li class="tp-order-info-list-desc">
+                                        <p>{{ $item['name'] }} <span> x {{ $item['qty'] }}</span></p>
+                                        <span>৳ {{ number_format($item['price'] * $item['qty'], 2) }}</span>
+                                    </li>
+                                    <input type="hidden" name="product_id[]" value="{{ $item['product_id'] }}">
+                                    <input type="hidden" name="product_variant_id[]" value="{{ $item['product_variant_id'] ?? '' }}">
+                                    <input type="hidden" name="product_name[]" value="{{ $item['name'] }}">
+                                    <input type="hidden" name="price[]" value="{{ $item['price'] }}">
+                                    <input type="hidden" name="quantity[]" value="{{ $item['qty'] }}">
                                 @endforeach
+
 
                                 <!-- subtotal -->
                                 <li class="tp-order-info-list-subtotal">
@@ -129,39 +185,6 @@
                                 </li>
                             </ul>
                         </div>
-                        
-                        <div class="tp-checkout-payment">
-                            <div class="tp-checkout-payment-item">
-                                <input type="radio" id="back_transfer" name="payment">
-                                <label for="back_transfer" data-bs-toggle="direct-bank-transfer">Direct Bank Transfer</label>
-                                <div class="tp-checkout-payment-desc direct-bank-transfer">
-                                    <p>Make your payment directly into our bank account. Please use your Order ID as the
-                                        payment reference. Your order will not be shipped until the funds have cleared in
-                                        our account.</p>
-                                </div>
-                            </div>
-                            <div class="tp-checkout-payment-item">
-                                <input type="radio" id="cheque_payment" name="payment">
-                                <label for="cheque_payment">Cheque Payment</label>
-                                <div class="tp-checkout-payment-desc cheque-payment">
-                                    <p>Make your payment directly into our bank account. Please use your Order ID as the
-                                        payment reference. Your order will not be shipped until the funds have cleared in
-                                        our account.</p>
-                                </div>
-                            </div>
-                            <div class="tp-checkout-payment-item">
-                                <input type="radio" id="cod" name="payment">
-                                <label for="cod">Cash on Delivery</label>
-                                <div class="tp-checkout-payment-desc cash-on-delivery">
-                                    <p>Pay for your order when it is delivered to your address.</p>
-                                </div>
-                            </div>
-                            <div class="tp-checkout-payment-item paypal-payment">
-                                <input type="radio" id="paypal" name="payment">
-                                <label for="paypal">PayPal <img src="{{asset('public/frontend')}}/img/icon/payment-option.png" alt=""> <a
-                                        href="#">What is PayPal?</a></label>
-                            </div>
-                        </div>
                         <div class="tp-checkout-agree">
                             <div class="tp-checkout-option">
                                 <input id="read_all" type="checkbox">
@@ -169,11 +192,12 @@
                             </div>
                         </div>
                         <div class="tp-checkout-btn-wrapper">
-                            <a href="#" class="tp-checkout-btn w-100">Place Order</a>
+                            <button type="submit" class="tp-checkout-btn w-100">Place Order</button>
                         </div>
+
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </section>
     <style>
@@ -185,10 +209,12 @@
             background-color: #f2f2f2 !important;
         }
     </style>
+
     @push('scripts')
     <script type="text/javascript">
         $('#region').change(function() {
-            var region_id = $(this).val();
+            var region_name = $(this).val();
+            var region_id = $('#region option:selected').data('id');
             var option = '';
 
             $.ajax({
@@ -203,7 +229,7 @@
                         $.each(response, function(index, district) {
                             $.each(district.upazila, function(index, upazila) {
                                 // Concatenate district and upazila names as option text
-                                option += "<option value='" + upazila.id + "'>" + district.name + " - " + upazila.name + "</option>";
+                                option += "<option value='" + district.name + " - " + upazila.name + "' data-id='" + upazila.id + "'>" + district.name + " - " + upazila.name + "</option>";
                             });
                         });
 
@@ -230,7 +256,8 @@
 
         // City (District) change event to fetch areas (Unions)
         $('#city').change(function() {
-            var city_id = $(this).val();
+            var city_name = $(this).val();
+            var city_id = $('#city option:selected').data('id');
             var option = '';
 
             $.ajax({
@@ -242,7 +269,7 @@
                         if (response.length) {
                             option = "<option selected disabled>Please choose your city</option>";
                             $.each(response, function(index, area) {
-                                option += "<option value='" + area.id + "'>" + area.name + "</option>";
+                                option += "<option value='" + area.name + "'>" + area.name + "</option>";
                             });
                             $('#area').html(option);  // Update the areas dropdown
                             $('#area').prop('disabled', false);
@@ -261,7 +288,6 @@
                     }
                 });
         });
-
     </script>
     @endpush
 </x-frontend-layout>

@@ -14,11 +14,9 @@ class OrderItem extends Model
         'product_id',
         'product_variant_id',
         'product_name',
-        'color',
-        'size',
         'price',
         'quantity',
-        'total_amount'
+        'total_amount',
     ];
 
     public function order()

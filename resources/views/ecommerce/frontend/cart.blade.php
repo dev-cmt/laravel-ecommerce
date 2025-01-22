@@ -38,7 +38,7 @@
                                     @php
                                         $price = round($item->product->price - ($item->product->price * $item->product->discount / 100));
                                     @endphp
-                                    <tr class="remove{{ $item->id }}" data-price="{{ $price }}" >
+                                    <tr class="remove{{ $item->id }}" data-price="{{ $price }}">
                                         <td class="tp-cart-img">
                                             <a href="product-details.html">
                                                 <img src="{{asset('public/frontend')}}/img/product/cart/product-cart-2.jpg" alt="">
@@ -58,6 +58,8 @@
                                         <td class="tp-cart-subtotal"><span>৳ {{ $price }}</span></td>
                                         <td class="tp-cart-action">
                                             <button class="tp-cart-action-btn remove-item" data-action-name="cart" data-id="{{ $item->id }}">✖ Remove</button>
+                                            <input type="hidden" class="product-id" value="{{$item->product_id}}">
+                                            <input type="hidden" class="product-variant-id" value="{{$item->product_variant_id}}">
                                         </td>
                                     </tr>
                                 @endforeach
@@ -196,13 +198,15 @@
 
             $("#proceed-btn").click(function (e) {
                 e.preventDefault();
-                let cartData = $(".tp-cart-list tbody tr").map(function () {
-                    let id = $(this).data("id");
+                    let cartData = $(".tp-cart-list tbody tr").map(function () {
+                    let product_id = $(this).find(".product-id").val();
+                    let product_variant_id = $(this).find(".product-variant-id").val();
                     let name = $(this).find(".tp-cart-title a").text();
                     let price = parseFloat($(this).data("price"));
                     let qty = parseInt($(this).find(".tp-cart-input").val()) || 1;
                     let subtotal = price * qty;
-                    return { id, name, price, qty, subtotal };
+
+                    return { product_id, product_variant_id, name, price, qty, subtotal };
                 }).get();
 
                 let shippingId = $("input[name='shipping']:checked").val();

@@ -31,7 +31,7 @@ class LocationController extends Controller
     }
 
     /**-------------------------------------------------------------------------
-     * 
+     * NOT USE
      * -------------------------------------------------------------------------
      */
     public function getDistricts(Request $request)

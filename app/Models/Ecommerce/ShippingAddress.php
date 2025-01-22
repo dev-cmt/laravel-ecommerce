@@ -11,10 +11,15 @@ class ShippingAddress extends Model
 
     protected $fillable = [
         'user_id',
-        'full_address',
-        'state',
-        'city',
-        'zip_code'
+        'full_name',
+        'phone_number',
+        'building',
+        'colony',
+        'region_name',
+        'city_name',
+        'area_name',
+        'address',
+        'delivery_label',
     ];
 
     public function user()

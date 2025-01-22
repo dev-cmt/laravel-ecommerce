@@ -54,7 +54,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             
             'email_verified_at' => now(),
-            'unique_id' => $this->generateUniqueUserId($request),
+            'identity_code' => $this->generateUniqueUserId($request),
             'profile_images' => 'profile_images/' . $imageName,
         ]);
 
