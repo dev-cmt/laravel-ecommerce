@@ -180,10 +180,25 @@ class HomeController extends Controller
      * GOLOBAL ACTION => ADD ITEM
      * ------------------------------------------------------------------------------
      */
+    // public function itemActionStore(Request $request)
+    // {
+    //     $action = $request->input("action_name");
+    //     $productId = $request->input("product_id");
+    //     $quantity = $request->input("quantity");
+    //     $productVariantId = $request->input("product_variant_id");
+
+    //     // If not authenticated, store info in the session
+    //     if (!Auth::check()) {
+    //         $this->storeInSession($action, $request);
+    //         return response()->json(
+    //             ["message" => "You must be logged in to add items."],401
+    //         );
+    //     }
+
+    // }
     public function itemActionStore(Request $request)
     {
         $action = $request->input("action_name");
-        $userId = Auth::id();
         $productId = $request->input("product_id");
         $quantity = $request->input("quantity");
         $productVariantId = $request->input("product_variant_id");
@@ -196,6 +211,7 @@ class HomeController extends Controller
             );
         }
 
+        $userId = Auth::id();
         $product = Product::findOrFail($productId);
 
         switch ($action) {
@@ -336,6 +352,11 @@ class HomeController extends Controller
 
     public function itemActionRemove(Request $request)
     {
+        if (!Auth::check()) {
+            return response()->json(
+                ["message" => "You must be logged in to add items."],401
+            );
+        }
         switch ($request->action_name) {
             case "cart":
                 $item = Cart::find($request->id);

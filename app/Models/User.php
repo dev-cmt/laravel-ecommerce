@@ -8,8 +8,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles; // KEY :: MULTIPERMISSION
-use App\Models\Master\MastNationality;
-use App\Models\Information\GeneralProfile;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -34,17 +32,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_admin',
         'status',
     ];
-
-
-    public function mastNationality()
-    {
-        return $this->belongsTo(MastNationality::class);
-    }
-
-    public function generalProfile()
-    {
-        return $this->hasOne(GeneralProfile::class, 'patient_id');
-    }
 
 
 

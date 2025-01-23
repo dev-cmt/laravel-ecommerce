@@ -1,15 +1,4 @@
-/*-----------------------------------------------------------------------------------
-
-    Template Name: Shofy - Multipurpose eCommerce HTML Template
-    Author: Theme_Pure
-    Support: basictheme400@gmail.com
-    Description: Shofy - Multipurpose eCommerce HTML Template
-    Version: 1.0
-
------------------------------------------------------------------------------------
-
-/************ TABLE OF CONTENTS ***************
-
+/*-----------------------
 	-----------------
     01. THEME CSS
 	-----------------
@@ -14017,6 +14006,8 @@ div.tp-author-info-avater img {
   -o-transform: translateX(0);
   transform: translateX(0);
 }
+
+
 .cartmini__wrapper {
   position: relative;
   min-height: 100%;

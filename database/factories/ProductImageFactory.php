@@ -14,7 +14,7 @@ class ProductImageFactory extends Factory
     {
         return [
             'product_id' => Product::factory(),
-            'image_path' => $this->faker->imageUrl(),
+            'image_path' => 'https://picsum.photos/640/480?random=' . $this->faker->unique()->numberBetween(1, 1000) . '&category=fashion',
         ];
     }
 }

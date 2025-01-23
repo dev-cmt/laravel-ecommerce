@@ -44,6 +44,8 @@ Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('p
 Route::get('/terms-condition', [HomeController::class, 'termsCondition'])->name('terms-condition');
 
 
+Route::post('/item-action/store', [HomeController::class, 'itemActionStore'])->name('item-action.store');
+Route::delete('/item-action/remove', [HomeController::class, 'itemActionRemove'])->name('item-action.remove');
 
 Route::middleware('auth')->group(function () {
     Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
@@ -51,12 +53,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout', [HomeController::class, 'checkout'])->name('checkout');
     Route::get('/wishlist', [HomeController::class, 'wishlist'])->name('wishlist');
     Route::get('/compare', [HomeController::class, 'compare'])->name('compare');
-    Route::post('/item-action/store', [HomeController::class, 'itemActionStore'])->name('item-action.store');
-    Route::delete('/item-action/remove', [HomeController::class, 'itemActionRemove'])->name('item-action.remove');
 
     Route::POST('/order/store.', [OrderController::class, 'orderStore'])->name('order.store');
-    Route::get('/order-payment', [OrderController::class, 'orderPayment'])->name('order-payment');
-    Route::get('/order-payment/store', [OrderController::class, 'orderPaymentStore'])->name('order-payment.store');
+    Route::get('/order-payment/{order}', [OrderController::class, 'orderPayment'])->name('order-payment');
+    Route::POST('/order-payment/store', [OrderController::class, 'orderPaymentStore'])->name('order-payment.store');
+    Route::POST('/default-address/store', [OrderController::class, 'defaultShippingAddress'])->name('default-shipping-address');
 
     Route::get('/user-profile', [HomeController::class, 'userProfile'])->name('user-profile');
     Route::get('/get-carts', [HomeController::class, 'getCarts'])->name('get-carts');
@@ -120,7 +121,6 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::delete('products/{id}/product-variant', [ProductController::class, 'productVariantDestroy'])->name('product-variant.destroy');
     Route::delete('products/{id}/product-specification', [ProductController::class, 'productSpecificationDestroy'])->name('product-specification.destroy');
     Route::delete('products/{id}/product-detail', [ProductController::class, 'productDetailDestroy'])->name('product-detail.destroy');
-
 
     //--------------------OrderController
     Route::resource('orders', OrderController::class);

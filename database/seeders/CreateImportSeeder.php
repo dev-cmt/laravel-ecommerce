@@ -107,7 +107,7 @@ class CreateImportSeeder extends Seeder
                 'merchant_id' => 'stripe_merchant_id_here',
                 'secret_key' => 'stripe_secret_key_here',
                 'payment_url' => 'https://api.stripe.com/v1/charges',
-                'image_path' => 'images/payment_gateways/card_logo.png', // Adjust path as needed
+                'image_path' => 'images/payment/card_logo.png', // Adjust path as needed
                 'is_active' => true,
                 'currency' => 'USD',
                 'priority' => 1,
@@ -121,10 +121,24 @@ class CreateImportSeeder extends Seeder
                 'merchant_id' => 'bkash_merchant_id_here',
                 'secret_key' => 'bkash_secret_key_here',
                 'payment_url' => 'https://api.bkash.com/payment',
-                'image_path' => 'images/payment_gateways/bkash_logo.png',
+                'image_path' => 'images/payment/bkash_logo.png',
                 'is_active' => true,
                 'currency' => 'BDT',
                 'priority' => 2,
+            ],
+            // Nagad (Another Bangladesh-based payment)
+            [
+                'name' => 'Nagad',
+                'gateway_type' => 'Online',
+                'description' => 'Mobile payment gateway for Bangladesh (Nagad)',
+                'api_key' => 'nagad_api_key_here',
+                'merchant_id' => 'nagad_merchant_id_here',
+                'secret_key' => 'nagad_secret_key_here',
+                'payment_url' => 'https://api.nagad.com/payment',
+                'image_path' => 'images/payment/nagad_logo.png',
+                'is_active' => true,
+                'currency' => 'BDT',
+                'priority' => 3,
             ],
             // Rocket (Another Bangladesh-based payment)
             [
@@ -135,24 +149,24 @@ class CreateImportSeeder extends Seeder
                 'merchant_id' => 'rocket_merchant_id_here',
                 'secret_key' => 'rocket_secret_key_here',
                 'payment_url' => 'https://api.rocket.com/payment',
-                'image_path' => 'images/payment_gateways/rocket_logo.png',
+                'image_path' => 'images/payment/rocket_logo.png',
                 'is_active' => true,
                 'currency' => 'BDT',
-                'priority' => 3,
+                'priority' => 4,
             ],
             // Cash on Delivery (Manual Payment)
             [
-                'name' => 'Cash on Delivery',
+                'name' => 'Cash',
                 'gateway_type' => 'Manual',
                 'description' => 'Payment will be made upon delivery.',
                 'api_key' => null,
                 'merchant_id' => null,
                 'secret_key' => null,
                 'payment_url' => null,
-                'image_path' => 'images/payment_gateways/cod_logo.png',
+                'image_path' => 'images/payment/cash_delivery_logo.png',
                 'is_active' => true,
                 'currency' => 'BDT',
-                'priority' => 4,
+                'priority' => 5,
             ],
             // Installment (Manual Payment)
             [
@@ -163,10 +177,10 @@ class CreateImportSeeder extends Seeder
                 'merchant_id' => null,
                 'secret_key' => null,
                 'payment_url' => null,
-                'image_path' => 'images/payment_gateways/installment_logo.png',
+                'image_path' => 'images/payment/installment_logo.png',
                 'is_active' => true,
                 'currency' => 'BDT',
-                'priority' => 5,
+                'priority' => 6,
             ],
             // Wallet (Manual Payment)
             [
@@ -177,10 +191,10 @@ class CreateImportSeeder extends Seeder
                 'merchant_id' => null,
                 'secret_key' => null,
                 'payment_url' => null,
-                'image_path' => 'images/payment_gateways/wallet_logo.png',
+                'image_path' => 'images/payment/wallet_logo.png',
                 'is_active' => true,
                 'currency' => 'BDT',
-                'priority' => 6,
+                'priority' => 7,
             ]
         ]);
 

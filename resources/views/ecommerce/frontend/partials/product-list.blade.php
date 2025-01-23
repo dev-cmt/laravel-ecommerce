@@ -16,7 +16,7 @@
                                     <!-- product action -->
                                     <div class="tp-product-action-2 tp-product-action-blackStyle">
                                         <div class="tp-product-action-item-2 d-flex flex-column">
-                                            <button type="button" class="add-item tp-product-action-btn-2 tp-product-add-cart-btn {{ isset($item->cart) && $item->cart->product_id === $item->id && $item->cart->user_id === Auth::id() ? 'bg-dark text-white' : '' }}"
+                                            <button type="button" class="add-item tp-product-action-btn-2 tp-product-add-cart-btn {{ DB::table('carts')->where('product_id', $item->id)->where('user_id', Auth::id())->exists() ? 'bg-dark text-white' : '' }}"
                                                     data-action-name="cart"
                                                     data-product-id="{{ $item->id }}"
                                                     data-product-variant-id="{{ count($item->variants) ? $item->variants->first()->id : null }}"

@@ -82,6 +82,7 @@ class AuthenticatedSessionController extends Controller
         if ($returnUrl) {
             return redirect()->to($returnUrl);
         }
+        
 
         return null;
     }

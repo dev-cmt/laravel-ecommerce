@@ -32,9 +32,12 @@
                         <div class="tp-product-details-thumb-slider p-relative">
                             <div class="tp-product-details-thumb-slider-active swiper-container">
                                 <div class="swiper-wrapper">
+                                    {{-- <img src="{{$item->main_image}}" style="height: 300px" alt=""> --}}
+                                        {{-- <img src="{{asset('public/'. $item->main_image)}}" style="height: 300px" alt=""> --}}
                                     @foreach ($data->images as $item)
                                     <div class="tp-prouct-details-thumb-item w-img swiper-slide">
-                                        <img src="{{asset('public/' . $item->image_path)}}" alt="">
+                                        {{-- <img src="{{asset('public/' . $item->image_path)}}" alt=""> --}}
+                                        <img src="{{$item->image_path}}" alt="">
                                     </div>
                                     @endforeach
 
