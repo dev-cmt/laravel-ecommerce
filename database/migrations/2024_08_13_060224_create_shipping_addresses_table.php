@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('area_name')->nullable();
             $table->string('address')->nullable();
             $table->enum('delivery_label', ['Home', 'Office']);
+            $table->boolean('is_delete')->default(false); // 1 -> Delete
             $table->timestamps();
         });
     }

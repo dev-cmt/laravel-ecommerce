@@ -20,6 +20,7 @@ use App\Models\Ecommerce\Cart;
 use App\Models\Ecommerce\Wishlist;
 use App\Models\Ecommerce\Compare;
 use App\Models\Ecommerce\ShippingMethod;
+use App\Models\Ecommerce\ShippingAddress;
 
 class HomeController extends Controller
 {
@@ -158,9 +159,10 @@ class HomeController extends Controller
 
         $cartItems = json_decode(base64_decode($cartData), true);
         $shippingMethod = ShippingMethod::find($shippingId);
+        $shippingAddresses = ShippingAddress::where('user_id', Auth::user()->id)->where('is_delete', false)->get();
 
         return view(
-            "ecommerce.frontend.checkout", compact("cartItems", "shippingMethod", "subtotal", "total")
+            "ecommerce.frontend.checkout", compact("cartItems", "shippingMethod", "shippingAddresses", "subtotal", "total")
         );
     }
     public function wishlist(Request $request): View

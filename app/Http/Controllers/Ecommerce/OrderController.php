@@ -76,6 +76,11 @@ class OrderController extends Controller
             'delivery_label' => $validatedData['delivery_label'],
         ]);
 
+        $user = User::find(Auth::user()->id);
+        $user->shipping_address_id = $shippingAddress->id;
+        $user->save();
+
+
         // Generate a unique order number
         $orderNumber = 'ORD-' . Str::upper(Str::random(8));
 
@@ -131,6 +136,51 @@ class OrderController extends Controller
             $user->save();
         }
         return redirect()->back()->with('success', 'Default Shipping Address updated successfully!');
+    }
+
+    public function shippingAddressStore(Request $request)
+    {
+        // Validate the form input
+        $validatedData = $request->validate([
+            'full_name' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:255',
+            'building' => 'required|string|max:255',
+            'colony' => 'nullable|string|max:255',
+            'region_name' => 'required|string|max:255',
+            'city_name' => 'required|string|max:255',
+            'area_name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'delivery_label' => 'required|in:Home,Office',
+        ]);
+
+        // Store the shipping address
+        $data = ShippingAddress::create([
+            'user_id' => Auth::id(),
+            'full_name' => $validatedData['full_name'],
+            'phone_number' => $validatedData['phone_number'],
+            'building' => $validatedData['building'],
+            'colony' => $validatedData['colony'], // Optional
+            'region_name' => $validatedData['region_name'],
+            'city_name' => $validatedData['city_name'],
+            'area_name' => $validatedData['area_name'],
+            'address' => $validatedData['address'],
+            'delivery_label' => $validatedData['delivery_label'],
+        ]);
+
+        $user = User::find(Auth::user()->id);
+        $user->shipping_address_id = $data->id;
+        $user->save();
+
+        // Redirect or return response
+        return redirect()->back()->with('success', 'Shipping address saved successfully!');
+    }
+
+    public function shippingAddressDelete(Request $request)
+    {
+        $data = ShippingAddress::find($request->id);
+        $data->is_delete = true;
+        $data->save();
+        return response()->json(['success' => true, 'message' => 'Address successfully deleted!']);
     }
 
 }

@@ -211,8 +211,8 @@
                                         <div class="mb-3">
                                             <label class="form-label" for="product-price-input">Price</label>
                                             <div class="input-group has-validation mb-3">
-                                                <span class="input-group-text" id="product-price-addon">$</span>
-                                                <input type="number" name="price" min="0" class="form-control" id="product-price-input" value="{{ old('price', $product->price ?? null) }}" placeholder="Enter price" aria-label="Price" aria-describedby="product-price-addon" required>
+                                                <span class="input-group-text" id="product-price-addon">৳ </span>
+                                                <input type="number" name="price" min="0" class="form-control" id="product-price-input" value="{{(int) old('price', $product->price ?? null) }}" placeholder="Enter price" aria-label="Price" aria-describedby="product-price-addon" required>
                                                 <div class="invalid-feedback">Please Enter a product price.</div>
                                             </div>
 
@@ -223,7 +223,7 @@
                                             <label class="form-label" for="product-discount-input">Discount</label>
                                             <div class="input-group mb-3">
                                                 <span class="input-group-text" id="product-discount-addon">%</span>
-                                                <input type="number" name="discount" min="0" max="100" class="form-control" value="{{ old('discount', $product->discount ?? null) }}" id="product-discount-input" placeholder="Enter discount" aria-label="discount" aria-describedby="product-discount-addon">
+                                                <input type="number" name="discount" min="0" max="100" class="form-control" value="{{ (int) old('discount', $product->discount ?? null) }}" id="product-discount-input" placeholder="Enter discount" aria-label="discount" aria-describedby="product-discount-addon">
                                             </div>
                                         </div>
                                     </div>
@@ -293,7 +293,7 @@
                                                         </select>
                                                     </td>
                                                     <td><input type="text" name="variants[{{ $key }}][size]" class="form-control" value="{{$item->size}}"></td>
-                                                    <td><input type="number" min="0" name="variants[{{ $key }}][price]" class="form-control" value="{{$item->price}}"></td>
+                                                    <td><input type="number" min="0" name="variants[{{ $key }}][price]" class="form-control" value="{{(int) $item->price}}"></td>
                                                     <td><input type="number" min="0" name="variants[{{ $key }}][quantity]" class="form-control" value="{{$item->quantity}}"></td>
                                                     <td><button type="button" class="delete-item btn btn-soft-info btn-sm material-shadow-none" data-id="{{ $item->id }}" data-url="{{ route('product-variant.destroy', $item->id) }}">Remove</button></td>
                                                 </tr>

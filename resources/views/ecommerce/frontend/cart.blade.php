@@ -78,7 +78,7 @@
                             <div class="tp-cart-checkout-shipping-option-wrapper">
                                 @foreach ($shipping as $item)
                                 <div class="tp-cart-checkout-shipping-option">
-                                    <input id="shipping{{$item->id}}" type="radio" name="shipping" value="{{$item->id}}">
+                                    <input id="shipping{{$item->id}}" type="radio" name="shipping" value="{{$item->id}}" {{ count($shipping) == 1 || $item->id == 1 ? 'checked' : '' }}>
                                     <label for="shipping{{$item->id}}">{{$item->method_name}} <strong>{{$item->description}}</strong>: <span>৳{{$item->cost}}</span></label>
                                 </div>
                                 @endforeach

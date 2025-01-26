@@ -19520,7 +19520,7 @@ product all slider
   border-color: var(--tp-common-black);
 }
 .tp-checkout-input textarea {
-  height: 120px;
+  height: 92px;
   resize: none;
 }
 .tp-checkout-input .nice-select {

@@ -20,6 +20,7 @@ class ShippingAddress extends Model
         'area_name',
         'address',
         'delivery_label',
+        'is_delete',
     ];
 
     public function user()

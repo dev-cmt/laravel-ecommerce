@@ -58,6 +58,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/order-payment/{order}', [OrderController::class, 'orderPayment'])->name('order-payment');
     Route::POST('/order-payment/store', [OrderController::class, 'orderPaymentStore'])->name('order-payment.store');
     Route::POST('/default-address/store', [OrderController::class, 'defaultShippingAddress'])->name('default-shipping-address');
+    Route::POST('/shipping-address/store', [OrderController::class, 'shippingAddressStore'])->name('shipping-address.store');
+    Route::get('/shipping-address/delete', [OrderController::class, 'shippingAddressDelete'])->name('shipping-address.delete');
+
 
     Route::get('/user-profile', [HomeController::class, 'userProfile'])->name('user-profile');
     Route::get('/get-carts', [HomeController::class, 'getCarts'])->name('get-carts');
