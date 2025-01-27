@@ -108,7 +108,7 @@ class CreateImportSeeder extends Seeder
                 'secret_key' => 'stripe_secret_key_here',
                 'payment_url' => 'https://api.stripe.com/v1/charges',
                 'image_path' => 'images/payment/card_logo.png', // Adjust path as needed
-                'is_active' => true,
+                'is_active' => false,
                 'currency' => 'USD',
                 'priority' => 1,
             ],
@@ -178,7 +178,7 @@ class CreateImportSeeder extends Seeder
                 'secret_key' => null,
                 'payment_url' => null,
                 'image_path' => 'images/payment/installment_logo.png',
-                'is_active' => true,
+                'is_active' => false,
                 'currency' => 'BDT',
                 'priority' => 6,
             ],
@@ -192,13 +192,11 @@ class CreateImportSeeder extends Seeder
                 'secret_key' => null,
                 'payment_url' => null,
                 'image_path' => 'images/payment/wallet_logo.png',
-                'is_active' => true,
+                'is_active' => false,
                 'currency' => 'BDT',
                 'priority' => 7,
             ]
         ]);
-
-
 
     }
 }

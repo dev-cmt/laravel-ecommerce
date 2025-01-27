@@ -212,15 +212,15 @@
                                     <span>SKU: </span>
                                     <p>{{$data->sku_code}}</p>
                                 </div>
-                                <div class="tp-product-details-query-item d-flex align-items-center">
+                                <div class="tp-product-details-query-item d-flex align-items-center {{$data->category ? '' : 'd-none'}}">
                                     <span>Category: </span>
                                     <p>{{$data->category->category_name}}</p>
                                 </div>
-                                <div class="tp-product-details-query-item d-flex align-items-center">
+                                <div class="tp-product-details-query-item d-flex align-items-center {{$data->brand ? '' : 'd-none'}}">
                                     <span>Brand: </span>
-                                    <p>{{$data->brand->brand_name}}</p>
+                                    <p>{{$data->brand->brand_name ?? ''}}</p>
                                 </div>
-                                <div class="tp-product-details-query-item d-flex align-items-center">
+                                <div class="tp-product-details-query-item d-flex align-items-center {{$data->tags ? '' : 'd-none'}}">
                                     <span>Tag: </span>
                                     <p>{{ implode(', ', json_decode($data->tags ?? '[]', true)) }}</p>
                                 </div>

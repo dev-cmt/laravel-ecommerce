@@ -61,6 +61,7 @@
                         </div>
 
                         <!-- Categories -->
+                        @if (count($categories) > 0)
                         <div class="tp-shop-widget mb-50">
                             <h3 class="tp-shop-widget-title">Categories</h3>
                             <div class="tp-shop-widget-color">
@@ -80,8 +81,10 @@
                                 </div>
                             </div>
                         </div>
-
+                        @endif
+                        
                         <!-- Color -->
+                        @if (count($colors) > 0)
                         <div class="tp-shop-widget mb-50">
                             <h3 class="tp-shop-widget-title">Filter by Color</h3>
                             <div class="tp-shop-widget-color">
@@ -101,6 +104,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
 
                         <!-- Applied Filters -->
                         <div class="tp-shop-widget mb-50" id="applied-filters"></div>

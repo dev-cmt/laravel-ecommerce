@@ -21,6 +21,8 @@ use App\Models\Ecommerce\Wishlist;
 use App\Models\Ecommerce\Compare;
 use App\Models\Ecommerce\ShippingMethod;
 use App\Models\Ecommerce\ShippingAddress;
+use App\Models\Ecommerce\Order;
+use App\Models\Ecommerce\OrderItem;
 
 class HomeController extends Controller
 {
@@ -43,7 +45,8 @@ class HomeController extends Controller
     }
     public function userProfile(Request $request): View
     {
-        return view("ecommerce.frontend.profile");
+        $order = Order::where('user_id', Auth::id())->get();
+        return view("ecommerce.frontend.profile", compact("order"));
     }
 
     public function shop(Request $request)

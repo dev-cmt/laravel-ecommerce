@@ -49,7 +49,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="mb-3">
-                            <label class="form-label" for="product_name">Product Title</label>
+                            <label class="form-label" for="product_name">Product Title <span class="text-danger">*</span></label>
                             <input type="text" name="product_name" id="product_name" class="form-control @error('product_name') is-invalid @enderror" placeholder="Enter product title" value="{{ old('product_name', $product->product_name ?? null) }}" required>
                             @error('product_name')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -209,11 +209,10 @@
                                     </div>
                                     <div class="col-lg-3 col-sm-6">
                                         <div class="mb-3">
-                                            <label class="form-label" for="product-price-input">Price</label>
+                                            <label class="form-label" for="product-price-input">Price <span class="text-danger">*</span></label>
                                             <div class="input-group has-validation mb-3">
                                                 <span class="input-group-text" id="product-price-addon">৳ </span>
-                                                <input type="number" name="price" min="0" class="form-control" id="product-price-input" value="{{(int) old('price', $product->price ?? null) }}" placeholder="Enter price" aria-label="Price" aria-describedby="product-price-addon" required>
-                                                <div class="invalid-feedback">Please Enter a product price.</div>
+                                                <input type="number" name="price" min="0" class="form-control" id="product-price-input" value="{{(int) old('price', $product->price ?? null) }}" placeholder="Enter price" required>
                                             </div>
 
                                         </div>
@@ -370,10 +369,6 @@
                     <!-- end card body -->
                 </div>
                 <!-- end card -->
-
-                <div class="text-end mb-3">
-                    <button type="submit" id="product-submit" class="btn btn-success w-sm">Submit</button>
-                </div>
             </div>
             <!-- end col -->
 
@@ -386,17 +381,17 @@
                         <div class="mb-3">
                             <label for="choices-publish-status-input" class="form-label">Status</label>
                             <select name="status" class="form-select" id="choices-publish-status-input" data-choices data-choices-search-false>
-                                <option value="Published" {{ old('status', $product->status ?? null) == 'Published' ? 'selected' : '' }}>Published</option>
-                                <option value="Scheduled" {{ old('status', $product->status ?? null) == 'Scheduled' ? 'selected' : '' }}>Scheduled</option>
-                                <option value="Draft" {{ old('status', $product->status ?? null) == 'Draft' ? 'selected' : '' }}>Draft</option>
+                                <option value="1" {{ old('status', $product->status ?? null) == '1' ? 'selected' : '' }}>Active</option>
+                                <option value="0" {{ old('status', $product->status ?? null) == '0' ? 'selected' : '' }}>Inactive</option>
                             </select>
                         </div>                        
 
                         <div class="mb-3">
                             <label for="choices-publish-visibility-input" class="form-label">Visibility</label>
                             <select name="visibility" class="form-select" id="choices-publish-visibility-input" data-choices data-choices-search-false>
-                                <option value="Public" {{ old('visibility', $product->visibility ?? null) == 'Public' ? 'selected' : '' }}>Public</option>
-                                <option value="Hidden" {{ old('visibility', $product->visibility ?? null) == 'Hidden' ? 'selected' : '' }}>Hidden</option>
+                                <option value="Published" {{ old('visibility', $product->visibility ?? null) == 'Published' ? 'selected' : '' }}>Published</option>
+                                <option value="Scheduled" {{ old('visibility', $product->visibility ?? null) == 'Scheduled' ? 'selected' : '' }}>Scheduled</option>
+                                <option value="Draft" {{ old('visibility', $product->visibility ?? null) == 'Draft' ? 'selected' : '' }}>Draft</option>
                             </select>
                         </div>                        
                     </div>
@@ -424,8 +419,8 @@
                     </div>
                     <div class="card-body">
                         <p class="text-muted mb-2">
-                            <a href="{{ route('categories.create') }}" class="float-end text-decoration-underline">Add New</a>
-                            Select product category
+                            <a href="{{ route('categories.create') }}" target="_blank" class="float-end text-decoration-underline">Add New</a>
+                            Select product category <span class="text-danger">*</span>
                         </p>
                         <select name="category_id" id="category_id" class="form-select @error('category_id') is-invalid @enderror" required>
                             <option value="">Select Category</option>
@@ -447,7 +442,7 @@
                     </div>
                     <div class="card-body">
                         <p class="text-muted mb-2">
-                            <a href="{{ route('brands.create') }}" class="float-end text-decoration-underline">Add New</a>
+                            <a href="{{ route('brands.create') }}" target="_blank" class="float-end text-decoration-underline">Add New</a>
                             Select product brand
                         </p>
                         <select name="brand_id" id="brand_id" class="form-select @error('brand_id') is-invalid @enderror">
@@ -493,6 +488,11 @@
                 </div>
                 <!-- end card -->
 
+                
+                <div class="d-flex justify-content-between mb-3">
+                    <a href="{{route('products.index')}}" class="btn btn-light w-sm">Back</a>
+                    <button type="submit" id="product-submit" class="btn btn-success w-sm">Submit</button>
+                </div>
             </div>
             <!-- end col -->
 

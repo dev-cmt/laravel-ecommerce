@@ -10,8 +10,8 @@
                             <div class="tp-product-item-2 mb-40">
                                 <div class="tp-product-thumb-2 p-relative z-index-1 fix w-img">
                                     <a href="{{ route('shop-details', ['id' => $item->id, 'url_slug' => $item->url_slug]) }}">
-                                        <img src="{{$item->main_image}}" style="height: 300px" alt="">
-                                        {{-- <img src="{{asset('public/'. $item->main_image)}}" style="height: 300px" alt=""> --}}
+                                        {{-- <img src="{{$item->main_image}}" style="height: 300px" alt=""> --}}
+                                        <img src="{{asset('public/'. $item->main_image)}}" style="height: 300px" alt="">
                                     </a>
                                     <!-- product action -->
                                     <div class="tp-product-action-2 tp-product-action-blackStyle">

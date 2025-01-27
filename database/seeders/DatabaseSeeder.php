@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             CreateUserSeeder::class,
             CreateImportSeeder::class,
             MapSeeder::class,
-            FactorySeeder::class,
+            // FactorySeeder::class,
         ]);
     }
 }

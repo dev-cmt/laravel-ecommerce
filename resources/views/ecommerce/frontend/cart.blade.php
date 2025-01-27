@@ -1,11 +1,11 @@
 <x-frontend-layout :title="'Cart'">
     <!-- breadcrumb area start -->
-    <section class="breadcrumb__area include-bg pt-95 pb-50">
+    <section class="breadcrumb__area include-bg pt-25 pb-20">
         <div class="container">
             <div class="row">
                 <div class="col-xxl-12">
                     <div class="breadcrumb__content p-relative z-index-1">
-                        <h3 class="breadcrumb__title">Shopping Cart</h3>
+                        {{-- <h3 class="breadcrumb__title">Shopping Cart</h3> --}}
                         <div class="breadcrumb__list">
                             <span><a href="{{route('home')}}">Home</a></span>
                             <span>Shopping Cart</span>
@@ -34,36 +34,45 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($carts as $item)
-                                    @php
-                                        $price = round($item->product->price - ($item->product->price * $item->product->discount / 100));
-                                    @endphp
-                                    <tr class="remove{{ $item->id }}" data-price="{{ $price }}">
-                                        <td class="tp-cart-img">
-                                            <a href="product-details.html">
-                                                <img src="{{asset('public/frontend')}}/img/product/cart/product-cart-2.jpg" alt="">
-                                            </a>
-                                        </td>
-                                        <td class="tp-cart-title">
-                                            <a href="product-details.html">{{$item->product->product_name}}</a>
-                                        </td>
-                                        <td class="tp-cart-price"><span>৳ {{ $price }}</span></td>
-                                        <td class="tp-cart-quantity">
-                                            <div class="tp-product-quantity mt-10 mb-10">
-                                                <button class="tp-cart-minus">-</button>
-                                                <input class="tp-cart-input" type="text" value="1">
-                                                <button class="tp-cart-plus">+</button>
-                                            </div>
-                                        </td>
-                                        <td class="tp-cart-subtotal"><span>৳ {{ $price }}</span></td>
-                                        <td class="tp-cart-action">
-                                            <button class="tp-cart-action-btn remove-item" data-action-name="cart" data-id="{{ $item->id }}">✖ Remove</button>
-                                            <input type="hidden" class="product-id" value="{{$item->product_id}}">
-                                            <input type="hidden" class="product-variant-id" value="{{$item->product_variant_id}}">
+                                @if (count($carts) > 0)
+                                    @foreach ($carts as $item)
+                                        @php
+                                            $price = round($item->product->price - ($item->product->price * $item->product->discount / 100));
+                                        @endphp
+                                        <tr class="remove{{ $item->id }}" data-price="{{ $price }}">
+                                            <td class="tp-cart-img">
+                                                <a href="product-details.html">
+                                                    <img src="{{asset('public/frontend')}}/img/product/cart/product-cart-2.jpg" alt="">
+                                                </a>
+                                            </td>
+                                            <td class="tp-cart-title">
+                                                <a href="product-details.html">{{$item->product->product_name}}</a>
+                                            </td>
+                                            <td class="tp-cart-price"><span>৳ {{ $price }}</span></td>
+                                            <td class="tp-cart-quantity">
+                                                <div class="tp-product-quantity mt-10 mb-10">
+                                                    <button class="tp-cart-minus">-</button>
+                                                    <input class="tp-cart-input" type="text" value="1">
+                                                    <button class="tp-cart-plus">+</button>
+                                                </div>
+                                            </td>
+                                            <td class="tp-cart-subtotal"><span>৳ {{ $price }}</span></td>
+                                            <td class="tp-cart-action">
+                                                <button class="tp-cart-action-btn remove-item" data-action-name="cart" data-id="{{ $item->id }}">✖ Remove</button>
+                                                <input type="hidden" class="product-id" value="{{$item->product_id}}">
+                                                <input type="hidden" class="product-variant-id" value="{{$item->product_variant_id}}">
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="6" class="text-center">
+                                            <h6>No data available!!!</h6>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @endif
                             </tbody>
+                            
                         </table>
                     </div>
                 </div>

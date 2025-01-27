@@ -1,13 +1,13 @@
 <x-frontend-layout :titles="'Checkout'">
     <!-- breadcrumb area start -->
-    <section class="breadcrumb__area include-bg pt-95 pb-50" data-bg-color="#EFF1F5">
+    <section class="breadcrumb__area include-bg pt-25 pb-20" data-bg-color="#EFF1F5">
         <div class="container">
             <div class="row">
                 <div class="col-xxl-12">
                     <div class="breadcrumb__content p-relative z-index-1">
-                        <h3 class="breadcrumb__title">Checkout</h3>
+                        {{-- <h3 class="breadcrumb__title">Checkout</h3> --}}
                         <div class="breadcrumb__list">
-                            <span><a href="#">Home</a></span>
+                            <span><a href="{{route('home')}}">Home</a></span>
                             <span>Checkout</span>
                         </div>
                     </div>
@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-md-8">
                     @php
-                        $row = DB::table('shipping_addresses')->find(Auth::user()->shipping_address_id);
+                        $row = DB::table('shipping_addresses')->where('is_delete', false)->find(Auth::user()->shipping_address_id);
                     @endphp
                     @if (!empty($row))
                     <div class="wrapper">
@@ -33,7 +33,7 @@
                             <button type="button" class="fs-6 text-success" data-bs-toggle="modal" data-bs-target="#shippingaddressModal"><i class="fa fa-plus" aria-hidden="true"></i> Add New Address</button>
                         </div>
                         
-                        <div class="tp-checkout-bill-area d-flex justify-content-between">
+                        <div class="tp-checkout-bill-area d-flex justify-content-between p-4">
                             <div>
                                 <span>{{$row->full_name}}</span> - <span>{{$row->phone_number}}</span>
                                 <p>
@@ -50,9 +50,8 @@
 
                 <form action="{{ route('order.store') }}" method="POST">
                     @csrf
-                {{-- </div>
-                <div class="col-lg-8"> --}}
                     @if (count($shippingAddresses) == 0)
+                    <!-- Shipping Address From -->
                     <div class="tp-checkout-bill-area">
                         <h3 class="tp-checkout-bill-title">Delivery Information</h3>
 
@@ -169,6 +168,8 @@
                             </div>
                         </div>
                     </div>
+                    @else
+                        <input type="hidden" name="shipping_address_id" value="{{$row ? $row->id : ''}}">
                     @endif
 
                     <!-- checkout place order -->
@@ -207,19 +208,21 @@
                         <h3 class="tp-checkout-place-title">Your Order</h3>
 
                         <div class="tp-order-info-list">
+                            <input type="hidden" name="coupon_id" value=""> {{--Optional--}}
+                            <input type="hidden" name="discount_amount" value=""> {{--Optional--}}
+                            <input type="hidden" name="total_amount" value="{{ intval($subtotal) ?? null }}">
+                            <input type="hidden" name="shipping_amount" value="{{ intval($shippingMethod->cost) ?? null }}">
                             <ul>
                                 <!-- subtotal -->
                                 <li class="tp-order-info-list-subtotal">
                                     <span>Subtotal</span>
-                                    <span>৳ {{ number_format($subtotal, 2) }}</span>
+                                    <span>৳ {{ number_format($subtotal, 2) ?? null }}</span>
                                 </li>
 
                                 <!-- shipping -->
-                                @if ($shippingMethod)
                                 <li class="tp-order-info-list-shipping">
-                                    {{ $shippingMethod->method_name }}: <span>৳ {{ number_format($shippingMethod->cost, 2) }}</span>
+                                    {{ $shippingMethod->method_name ?? null }}: <span>৳ {{ number_format($shippingMethod->cost, 2) ?? null }}</span>
                                 </li>
-                                @endif
 
                                 <!-- total -->
                                 <li class="tp-order-info-list-total">
@@ -261,29 +264,39 @@
                                     <span>{{ $address->full_name }}</span> 
                                     <span>{{ $address->phone_number }}</span>
                                     <p>
-                                        <span class="badge bg-secondary">{{ $address->delivery_label }}</span>  
+                                        <span class="{{ $address->delivery_label == "Home" ? 'badge bg-info' : 'badge bg-warning'}} ">{{ $address->delivery_label }}</span>  
                                         <span>{{ $address->area_name }}, {{ $address->city_name }}, {{ $address->region_name }}</span>
                                     </p>
                                     <div class="d-flex justify-content-between">
                                         <!-- Radio button to select this address as default -->
                                         <span><input type="radio" name="shipping_address_id" value="{{ $address->id }}" {{ Auth::user()->shipping_address_id == $address->id ? 'checked' : '' }} /> Set as Default</span>
-                                        <button type="button" class="text-end delete-shipping-address btn btn-danger btn-sm" data-id="{{ $address->id }}">
-                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                        </button>
+                                        @if (Auth::user()->shipping_address_id == $address->id)
+                                        <div>
+                                            <span class="badge bg-success">Default</span> 
+                                        </div>
+                                        @else
+                                            <button type="button" class="text-end delete-shipping-address btn btn-danger btn-sm" data-id="{{ $address->id }}">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        @endif
                                     </div>
                                 </div>
                             @endforeach
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <!-- Submit button inside the form -->
-                            <button type="submit" class="btn btn-primary">Save</button>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="fs-6 text-success" data-bs-toggle="modal" data-bs-target="#shippingaddressModal"><i class="fa fa-plus" aria-hidden="true"></i> Add New Address</button>
+                            <div>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
                         </div>
                     </form> <!-- Closing the form tag -->
                 </div>
             </div>
             
         </div>
+
+
         <!-- Modal Store New Shipping Address -->
         <div class="modal fade" id="shippingaddressModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -356,13 +369,6 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Notes and Label -->
-                                <div class="col-md-6">
-                                    <div class="tp-checkout-input mb-1">
-                                        <label>Order notes (optional)</label>
-                                        <textarea name="order_notes" placeholder="Notes about your order, e.g. special notes for delivery.">{{ old('order_notes') }}</textarea>
-                                    </div>
-                                </div>
                                 <div class="col-md-6 m-auto">
                                     <div class="tp-checkout-input text-center mb-1">
                                         <label><em>Select a label for effective delivery <span>*</span></em></label>
@@ -584,16 +590,12 @@
                         success: function (response) {
                             if (response.success) {
                                 Swal.fire(
-                                    'Deleted!',
-                                    response.message,
-                                    'success'
+                                    'Deleted!', response.message, 'success'
                                 );
                                 $(`.remove-address${addressId}`).hide();
                             } else {
                                 Swal.fire(
-                                    'Failed!',
-                                    response.message || 'Unable to delete the address.',
-                                    'error'
+                                    'Failed!', response.message || 'Unable to delete the address.', 'error'
                                 );
                             }
                         },

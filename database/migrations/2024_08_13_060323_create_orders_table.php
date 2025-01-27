@@ -18,11 +18,11 @@ return new class extends Migration
             $table->foreignId('shipping_address_id')->nullable()->constrained('shipping_addresses');
             $table->foreignId('coupon_id')->nullable()->constrained('coupons');
             $table->decimal('total_amount', 10, 2)->nullable(); // Total value of the items in the order
-            $table->decimal('discount_amount', 10, 2)->nullable(); // Discount applied (total_amount * discount_amount%)
+            $table->decimal('discount_amount', 10, 2)->nullable(); // Coupon Discount applied (total_amount * discount_amount%)
             $table->decimal('gross_amount', 10, 2)->nullable(); // Total after discount (total_amount - discount_amount)
             $table->decimal('shipping_amount', 10, 2)->nullable(); // Shipping cost
             $table->decimal('net_amount', 10, 2)->nullable(); // Final amount to pay (gross_amount + shipping_amount)
-            $table->text('order_notes')->nullable(); // Any additional notes for the order
+            $table->text('order_notes')->nullable();
             $table->enum('status', ['Placed', 'Processing', 'Shipped', 'Delivered', 'Cancelled'])->default('Placed'); // Order status
             $table->enum('payment_status', ['Pending', 'Paid', 'Failed', 'Refunded'])->default('Pending'); // Payment status
             $table->foreignId('payment_gateway_id')->nullable()->constrained('payment_gateways'); //'Card', 'bKash', 'Nagad', 'Rocket', 'Cash on Delivery', 'Installment', 'Wallet'

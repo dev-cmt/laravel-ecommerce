@@ -11,6 +11,7 @@ use App\Models\Ecommerce\Order;
 use App\Models\Ecommerce\OrderItem;
 use App\Models\Ecommerce\ShippingAddress;
 use App\Models\Ecommerce\PaymentGateway;
+use App\Models\Ecommerce\Cart;
 use App\Models\User;
 
 class OrderController extends Controller
@@ -48,55 +49,70 @@ class OrderController extends Controller
      */
     public function orderStore(Request $request)
     {
-        // Validate the incoming data
-        $validatedData = $request->validate([
-            'full_name' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:20',
-            'building' => 'required|string|max:255',
-            'colony' => 'nullable|string|max:255',
-            'region_name' => 'required|string|max:255',
-            'city_name' => 'required|string|max:255',
-            'area_name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'order_notes' => 'nullable|string',
-            'delivery_label' => 'required|in:Home,Office',
-        ]);
+        if ($request->shipping_address_id == null) {
+            // Validate the incoming data
+            $validatedData = $request->validate([
+                'full_name' => 'required|string|max:255',
+                'phone_number' => 'required|string|max:20',
+                'building' => 'required|string|max:255',
+                'colony' => 'nullable|string|max:255',
+                'region_name' => 'required|string|max:255',
+                'city_name' => 'required|string|max:255',
+                'area_name' => 'required|string|max:255',
+                'address' => 'required|string|max:255',
+                'order_notes' => 'nullable|string',
+                'delivery_label' => 'required|in:Home,Office',
+            ]);
 
-        // Create the shipping address
-        $shippingAddress = ShippingAddress::create([
-            'user_id' => Auth::id(),
-            'full_name' => $validatedData['full_name'],
-            'phone_number' => $validatedData['phone_number'],
-            'building' => $validatedData['building'],
-            'colony' => $validatedData['colony'],
-            'region_name' => $validatedData['region_name'],
-            'city_name' => $validatedData['city_name'],
-            'area_name' => $validatedData['area_name'],
-            'address' => $validatedData['address'],
-            'delivery_label' => $validatedData['delivery_label'],
-        ]);
+            // Create the shipping address
+            $shippingAddress = ShippingAddress::create([
+                'user_id' => Auth::id(),
+                'full_name' => $validatedData['full_name'],
+                'phone_number' => $validatedData['phone_number'],
+                'building' => $validatedData['building'],
+                'colony' => $validatedData['colony'],
+                'region_name' => $validatedData['region_name'],
+                'city_name' => $validatedData['city_name'],
+                'area_name' => $validatedData['area_name'],
+                'address' => $validatedData['address'],
+                'delivery_label' => $validatedData['delivery_label'],
+            ]);
 
-        $user = User::find(Auth::user()->id);
-        $user->shipping_address_id = $shippingAddress->id;
-        $user->save();
+            $user = User::find(Auth::id());
+            $user->shipping_address_id = $shippingAddress->id;
+            $user->save();
 
+            $shippingAddress = $shippingAddress->id;
+        }else{
+            $shippingAddress = $request->shipping_address_id;
+        }
 
         // Generate a unique order number
         $orderNumber = 'ORD-' . Str::upper(Str::random(8));
 
+        // Get the input values from the request, ensuring they're numeric and default to 0 if not set
+        $total_amount = floatval($request->input('total_amount', 0)); // Default to 0 if not provided
+        $discount_amount = floatval($request->input('discount_amount', 0)); // Default to 0 if not provided
+        $shipping_amount = floatval($request->input('shipping_amount', 0)); // Default to 0 if not provided
+
+        // Perform calculations
+        $gross_amount = $total_amount - $discount_amount; // (total_amount - discount_amount)
+        $net_amount = $gross_amount + $shipping_amount; // (gross_amount + shipping_amount)
+
         // Create the order
         $order = Order::create([
             'user_id' => Auth::id(),
-            'shipping_address_id' => $shippingAddress->id,
+            'shipping_address_id' => $shippingAddress,
+            'coupon_id' => $request->input('coupon_id'),
             'order_number' => $orderNumber,
-            'total_amount' => $request->input('total_amount'),
-            'discount_amount' => $request->input('discount_amount'),
-            'gross_amount' => $request->input('gross_amount'),
-            'shipping_amount' => $request->input('shipping_amount'),
-            'net_amount' => $request->input('net_amount'),
-            'order_notes' => $validatedData['order_notes'],
-            'status' => 'Placed',  // Default status
-            'payment_status' => 'Pending', // Default payment status
+            'total_amount' => $total_amount,
+            'discount_amount' => $discount_amount,
+            'gross_amount' => $gross_amount,
+            'shipping_amount' => $shipping_amount,
+            'net_amount' => $net_amount,
+            'order_notes' => $request->input('order_notes'),
+            'status' => 'Placed',
+            'payment_status' => 'Pending',
         ]);
 
         // Get cart items from the request
@@ -115,17 +131,31 @@ class OrderController extends Controller
             ]);
         }
 
-        // You may want to handle payment gateway integration here, e.g., create a payment record
+        // Delete all cart items for the user
+        Cart::where('user_id', Auth::id())->delete();
 
-        // Redirect the user to the success page or order confirmation page
+        // Redirect page
         return redirect()->route('order-payment', ['order' => $order->id])->with('success', 'Order placed successfully!');
     }
 
     public function orderPayment($id)
     {
-        $paymentGateway = PaymentGateway::where('is_active', true)->orderBy('priority', 'asc')->get();
+        $paymentGateway = PaymentGateway::orderBy('priority', 'asc')->get(); //where('is_active', true)
         $order = Order::findOrFail($id);
         return view('ecommerce.frontend.order-payment', compact('order', 'paymentGateway'));
+    }
+    public function orderPaymentStore(Request $request)
+    {
+        // Find the order by its ID
+        $order = Order::findOrFail($request->order_id);
+        $order->payment_gateway_id = $request->payment_gateway_id;
+        $order->payment_number = $request->payment_number;
+        $order->transaction_number = $request->transaction_number;
+        $order->payment_status = 'Paid';
+        $order->save();
+
+        // Optionally, you can redirect or return a response after saving the order
+        return redirect()->route('user-profile')->with('success', 'nav-order');
     }
     public function defaultShippingAddress(Request $request)
     {
@@ -180,6 +210,7 @@ class OrderController extends Controller
         $data = ShippingAddress::find($request->id);
         $data->is_delete = true;
         $data->save();
+
         return response()->json(['success' => true, 'message' => 'Address successfully deleted!']);
     }
 

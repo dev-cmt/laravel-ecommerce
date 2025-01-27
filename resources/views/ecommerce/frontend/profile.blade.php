@@ -1,6 +1,6 @@
 <x-frontend-layout :title="'Profile'">
     <!-- profile area start -->
-    <section class="profile__area pt-120 pb-120">
+    <section class="profile__area pt-80 pb-80">
         <div class="container">
             <div class="profile__inner p-relative">
                 <div class="profile__shape">
@@ -13,24 +13,23 @@
                 </div>
                 <div class="row">
                     <div class="col-xxl-4 col-lg-4">
-                        <div class="profile__tab mr-40">
-                        <nav>
+                        <div class="profile__tab mr-20">
                             <div class="nav nav-tabs tp-tab-menu flex-column" id="profile-tab" role="tablist">
-                                <button class="nav-link active" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false"><span><i class="fa-regular fa-user-pen"></i></span>Profile</button>
-                                <button class="nav-link" id="nav-information-tab" data-bs-toggle="tab" data-bs-target="#nav-information" type="button" role="tab" aria-controls="nav-information" aria-selected="false"><span><i class="fa-regular fa-circle-info"></i></span> Information</button>
-                                <button class="nav-link" id="nav-address-tab" data-bs-toggle="tab" data-bs-target="#nav-address" type="button" role="tab" aria-controls="nav-address" aria-selected="false"><span><i class="fa-light fa-location-dot"></i></span> Address </button>
-                                <button class="nav-link" id="nav-order-tab" data-bs-toggle="tab" data-bs-target="#nav-order" type="button" role="tab" aria-controls="nav-order" aria-selected="false"><span><i class="fa-light fa-clipboard-list-check"></i></span> My Orders </button>
-                                <button class="nav-link" id="nav-notification-tab" data-bs-toggle="tab" data-bs-target="#nav-notification" type="button" role="tab" aria-controls="nav-notification" aria-selected="false"><span><i class="fa-regular fa-bell"></i></span> Notification</button>
-                                <button class="nav-link" id="nav-password-tab" data-bs-toggle="tab" data-bs-target="#nav-password" type="button" role="tab" aria-controls="nav-password" aria-selected="false"><span><i class="fa-regular fa-lock"></i></span> Change Password</button>
+                                <button class="nav-link {{ session('success') ? '': 'active' }}" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false"><span><i class="fa-regular fa-user-pen"></i></span>Profile</button>
+                                <button class="nav-link {{ session('success') == "nav-information" ? 'active': '' }}" id="nav-information-tab" data-bs-toggle="tab" data-bs-target="#nav-information" type="button" role="tab" aria-controls="nav-information" aria-selected="false"><span><i class="fa-regular fa-circle-info"></i></span> Information</button>
+                                <button class="nav-link {{ session('success') == "nav-address" ? 'active': '' }}" id="nav-address-tab" data-bs-toggle="tab" data-bs-target="#nav-address" type="button" role="tab" aria-controls="nav-address" aria-selected="false"><span><i class="fa-light fa-location-dot"></i></span> Address </button>
+                                <button class="nav-link {{ session('success') == "nav-order" ? 'active': '' }}" id="nav-order-tab" data-bs-toggle="tab" data-bs-target="#nav-order" type="button" role="tab" aria-controls="nav-order" aria-selected="false"><span><i class="fa-light fa-clipboard-list-check"></i></span> My Orders </button>
+                                <button class="nav-link {{ session('success') == "nav-notification" ? 'active': '' }}" id="nav-notification-tab" data-bs-toggle="tab" data-bs-target="#nav-notification" type="button" role="tab" aria-controls="nav-notification" aria-selected="false"><span><i class="fa-regular fa-bell"></i></span> Notification</button>
+                                <button class="nav-link {{ session('success') == "nav-password" ? 'active': '' }}" id="nav-password-tab" data-bs-toggle="tab" data-bs-target="#nav-password" type="button" role="tab" aria-controls="nav-password" aria-selected="false"><span><i class="fa-regular fa-lock"></i></span> Change Password</button>
                                 <span id="marker-vertical" class="tp-tab-line d-none d-sm-inline-block"></span>
                             </div>
-                        </nav>
                         </div>
+                        
                     </div>
                     <div class="col-xxl-8 col-lg-8">
                         <div class="profile__tab-content">
                         <div class="tab-content" id="profile-tabContent">
-                            <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <div class="tab-pane fade {{ session('success') ? '': 'show active' }}" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                                 <div class="profile__main">
                                     <div class="profile__main-top pb-80">
                                     <div class="row align-items-center">
@@ -133,7 +132,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="nav-information" role="tabpanel" aria-labelledby="nav-information-tab">
+                            <div class="tab-pane fade {{ session('success') == "nav-information" ? 'show active': '' }}" id="nav-information" role="tabpanel" aria-labelledby="nav-information-tab">
                                 <div class="profile__info">
                                     <h3 class="profile__info-title">Personal Details</h3>
                                     <div class="profile__info-content">
@@ -238,7 +237,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="nav-password" role="tabpanel" aria-labelledby="nav-password-tab">
+                            <div class="tab-pane fade {{ session('success') == "nav-password" ? 'show active': '' }}" id="nav-password" role="tabpanel" aria-labelledby="nav-password-tab">
                                 <div class="profile__password">
                                     <form action="#">
                                     <div class="row">
@@ -281,7 +280,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="nav-address" role="tabpanel" aria-labelledby="nav-address-tab">
+                            <div class="tab-pane fade {{ session('success') == "nav-address" ? 'show active': '' }}" id="nav-address" role="tabpanel" aria-labelledby="nav-address-tab">
                                 <div class="profile__address">
                                     <div class="row">
                                     <div class="col-md-6">
@@ -344,48 +343,50 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="nav-order" role="tabpanel" aria-labelledby="nav-order-tab">
+                            <div class="tab-pane fade {{ session('success') == "nav-order" ? 'show active': '' }}" id="nav-order" role="tabpanel" aria-labelledby="nav-order-tab">
                                 <div class="profile__ticket table-responsive">
                                     <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Order Id</th>
-                                            <th scope="col">Product Title</th>
+                                            <th scope="col">Order ID</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Size</th>
+                                            <th scope="col">Payment</th>
                                             <th scope="col">Status</th>
-                                            <th scope="col">View</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($order as $item)
                                         <tr>
-                                            <th scope="row"> #2245</th>
-                                            <td data-info="title">How can i share ?</td>
-                                            <td data-info="status pending">Pending </td>
-                                            <td><a href="#" class="tp-logout-btn">Invoice</a></td>
+                                            <th>{{$item->order_number}}</th>
+                                            <th>{{$item->created_at->format('d-m-y')}}</th>
+                                            <td>1 X {{count($item->items)}}</td>
+                                            <td>
+                                                @if($item->payment_status == "Pending")
+                                                    <a href="#" class="tp-logout-btn">Pay Now</a>
+                                                @elseif($item->payment_status == "Paid")
+                                                    <span class="text-success">Paid</span> 
+                                                @elseif($item->payment_status == "Failed")
+                                                    <span class="text-danger">Failed</span>
+                                                @elseif($item->payment_status == "Refunded")
+                                                    <span class="text-warning">Refunded</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($item->status == "Placed")
+                                                    <span class="text-info">Placed</span>
+                                                @elseif($item->status == "Processing")
+                                                    <span class="text-warning">Processing</span>
+                                                @elseif($item->status == "Shipped")
+                                                    <span class="text-primary">Shipped</span> 
+                                                @elseif($item->status == "Delivered")
+                                                    <span class="text-success">Delivered</span>
+                                                @elseif($item->status == "Cancelled")
+                                                    <span class="text-danger">Cancelled</span>
+                                                @endif
+                                            </td>
                                         </tr>
-                                        <tr>
-                                            <th scope="row"> #2220</th>
-                                            <td data-info="title">Send money, but not working</td>
-                                            <td data-info="status reply">Need your replay</td>
-                                            <td><a href="#" class="tp-logout-btn">Reply</a></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row"> #2125</th>
-                                            <td data-info="title">Balance error</td>
-                                            <td data-info="status done">Resolved</td>
-                                            <td><a href="#" class="tp-logout-btn">Invoice</a></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row"> #2124</th>
-                                            <td  data-info="title">How to decline bid</td>
-                                            <td data-info="status hold">On Hold</td>
-                                            <td><a href="#" class="tp-logout-btn">Status</a></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row"> #2121</th>
-                                            <td data-info="title">How to contact</td>
-                                            <td data-info="status done">Resolved</td>
-                                            <td><a href="#" class="tp-logout-btn">Invoice</a></td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                     </table>
                                 </div>

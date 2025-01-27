@@ -26,8 +26,8 @@ return new class extends Migration
             $table->decimal('discount', 5, 2)->nullable(); // Discount field
             $table->json('tags')->nullable(); // Tags as JSON
             $table->timestamp('publish_schedule')->nullable(); // Scheduling field
-            $table->enum('visibility', ['public', 'hidden'])->default('public'); // Default visibility
-            $table->enum('status', ['published', 'scheduled', 'draft'])->default('draft'); // Default status
+            $table->enum('visibility', ['Published', 'Scheduled', 'Draft'])->default('Published'); // Default visibility
+            $table->boolean('status')->default(true); // Default status
             
             // Meta data fields
             $table->string('meta_title')->nullable(); // Meta Title
